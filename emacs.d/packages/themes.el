@@ -9,7 +9,7 @@
   (setq calendar-longitude 85.32)
   (setq circadian-themes '((:sunrise . tango)
                            (:sunset . doom-xcode)))
-  (circadian-setup))
+  :config (circadian-setup))
 
 (use-package nyx-theme :ensure )
 

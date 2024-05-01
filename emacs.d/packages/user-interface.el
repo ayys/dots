@@ -15,7 +15,7 @@
   (setq dashboard-items '((projects . 5)
                           (bookmarks . 5)))
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
-  (dashboard-setup-startup-hook))
+  :config (dashboard-setup-startup-hook))
 
 (use-package ibuffer
   :bind (("C-x C-b" . ibuffer))
@@ -56,12 +56,12 @@
   :ensure t
   :init
   (progn
-    (eyebrowse-mode t)
     (setq eyebrowse-new-workspace t)
     (setq eyebrowse-wrap-around t)
     (setq eyebrowse-mode-line-left-delimiter " ")
     (setq eyebrowse-mode-line-right-delimiter " ")
     (setq eyebrowse-mode-line-separator " "))
+  :config (eyebrowse-mode t)
   :bind (("C-z 1" . eyebrowse-switch-to-window-config-1)
          ("C-z 2" . eyebrowse-switch-to-window-config-2)
          ("C-z 3" . eyebrowse-switch-to-window-config-3)
@@ -95,10 +95,10 @@
   :ensure t
   :init
   (progn
-    (persp-mode)
     (setq persp-nil-name "default")
     (setq persp-show-modestring nil)
-    (setq persp-sort 'created)))
+    (setq persp-sort 'created))
+  :config (persp-mode))
 
 (use-package powerline
   :load-path "~/git/powerline"
@@ -107,7 +107,8 @@
           (setq powerline-image-apple-rgb t)
           (setq powerline-default-separator-dir '(right . left))
           (setq powerline-default-separator 'wave)
-          (powerline-default-theme)))
+          )
+  :config (powerline-default-theme))
 
 (use-package centered-window :ensure t
   :init

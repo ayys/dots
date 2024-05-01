@@ -83,6 +83,8 @@ interactive `pyvenv-activate' function before `lsp'"
 ("\\.jspf\\'" . web-mode)
 ("\\.tag\\'" . web-mode)))
 
+(use-package editorconfig :ensure t)
+
 (use-package copilot
   :load-path "~/git/copilot.el"
   :defer t

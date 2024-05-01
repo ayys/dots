@@ -353,7 +353,7 @@ parses its input."
 
 (use-package exec-path-from-shell
   :ensure t
-  :init
+  :config
   (exec-path-from-shell-initialize))
 
 (use-package wrap-region
