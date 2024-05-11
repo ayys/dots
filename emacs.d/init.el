@@ -21,9 +21,7 @@
 (global-unset-key (kbd "C-x C-c"))
 (global-unset-key (kbd "C-x C-z"))
 
-(setq server-use-tcp 't)
-(setq server-port 2003)
-(setq server-address "0.0.0.0")
+(global-set-key (kbd "M-o") 'other-window)
 
 (setq byte-compile-warnings '(cl-functions))
 (setq message-log-max t)
