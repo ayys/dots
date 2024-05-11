@@ -39,7 +39,8 @@
           'delete-trailing-whitespace)
 (add-hook 'prog-mode
           'electric-pair-mode)
-(add-hook 'prog-mode 'display-line-number-mode)
+(global-display-line-numbers-mode 1)
+(display-time-mode -1)
 
 (setq mac-command-modifier 'meta)
 (setq mac-option-modifier 'super) ; make opt key do Super
@@ -127,7 +128,7 @@
 (load-directory "~/.emacs.d/packages")
 
 
-(add-to-list 'default-frame-alist '(font . "-*-PT Mono-regular-normal-normal-*-14-*-*-*-p-0-iso10646-1"))
+(add-to-list 'default-frame-alist '(font . "-*-Source Code Pro-regular-normal-normal-*-14-*-*-*-p-0-iso10646-1"))
 
 (load-file "~/.emacs.d/navapali-maps.el")
 
