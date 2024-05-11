@@ -11,13 +11,6 @@
   :ensure t
   :hook (eshell-mode . (lambda ()
                          (display-line-numbers-mode 0)
-                         (eshell/alias "e" "find-file $1")
-                         (eshell/alias "ff" "find-file $1")
-                         (eshell/alias "emacs" "find-file $1")
-                         (eshell/alias "ee" "find-file-other-window $1")
-                         (eshell/alias "gd" "magit-diff-unstaged")
-                         (eshell/alias "gds" "magit-diff-staged")
-                         (eshell/alias "d" "dired $1")
                          (add-to-list 'eshell-visual-commands "ssh")
                          (add-to-list 'eshell-visual-commands "tail")
                          (add-to-list 'eshell-visual-commands "top")))
@@ -28,7 +21,14 @@
    eshell-hist-ignoredups t
    eshell-save-history-on-exit t
    eshell-prefer-lisp-functions nil
-   eshell-destroy-buffer-when-process-dies t))
+   eshell-destroy-buffer-when-process-dies t)
+  (eshell/alias "e" "find-file $1")
+  (eshell/alias "ff" "find-file $1")
+  (eshell/alias "emacs" "find-file $1")
+  (eshell/alias "ee" "find-file-other-window $1")
+  (eshell/alias "gd" "magit-diff-unstaged")
+  (eshell/alias "gds" "magit-diff-staged")
+  (eshell/alias "d" "dired $1"))
 
 (use-package eshell-syntax-highlighting
   :ensure t
