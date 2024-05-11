@@ -146,13 +146,13 @@ interactive `pyvenv-activate' function before `lsp'"
   (rustic-rustfmt-config-alist '((edition . "2021"))))
 
 (use-package highlight-indent-guides
-
   :ensure t
-  :hook ( prog-mode . highlight-indent-guides-mode )
-  :config
-  (setq highlight-indent-guides-method 'character)
-  (setq highlight-indent-guides-character ?\|)
-  (setq highlight-indent-guides-auto-enabled t))
+  :hook ((prog-mode . highlight-indent-guides-mode)
+         (yaml-mode . highlight-indent-guides-mode))
+  :custom
+  (highlight-indent-guides-method 'bitmap)
+  (highlight-indent-guides-responsive 'top)
+  (highlight-indent-guides-bitmap-function 'highlight-indent-guides--bitmap-dots))
 
 (use-package tree-sitter :ensure t
 
