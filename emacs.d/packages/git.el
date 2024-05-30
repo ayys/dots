@@ -26,7 +26,9 @@
 
 (use-package magit
   :ensure t
-  :config (define-key magit-mode-map ";" 'my/magit-new-branch-from-main)
+  :config
+  (define-key magit-mode-map ";" 'my/magit-new-branch-from-main)
+  (setq magit-prefer-remote-upstream t)
   :bind
   (("C-x m" . magit-diff-unstaged)
    ("C-x C-g" . magit-status-quick)
