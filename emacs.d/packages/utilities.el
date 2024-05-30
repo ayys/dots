@@ -20,9 +20,15 @@
 
   :ensure t
   :bind
-  (("C-c m w" . mc/mark-all-symbols-like-this)
+  (("C-c m q" . mc/mark-previous-like-this)
+   ("C-c m t" . mc/mark-next-like-this)
+   ("C-c m w" . mc/mark-all-symbols-like-this)
    ("C-c m e" . mc/edit-lines)
    ("C-c m r" . mc/mark-all-like-this)))
+
+(use-package repeat :ensure t
+  :bind ("C-x z" . repeat)
+  :config (repeat-mode t))
 
 (use-package which-key
   :ensure t
@@ -89,6 +95,13 @@
 
   (autoload 'projectile-project-root "projectile")
   (setq consult-project-function (lambda (_) (projectile-project-root))))
+
+
+(use-package ripgrep :ensure t
+  :defer t
+  :bind (("C-c r" . ripgrep-regexp))
+  :config
+  (rg-enable-default-bindings))
 
 
 ;; Enable rich annotations using the Marginalia package
@@ -385,3 +398,12 @@ parses its input."
 
 (use-package avy :ensure t
   :bind (("C-z p" . avy-goto-char-timer)))
+
+
+(use-package conner
+  :ensure t
+  :bind (("C-x p c" . conner-run-project-command)))
+
+
+(use-package god-mode :ensure t
+  :bind (("<escape>" . god-mode-all)))
