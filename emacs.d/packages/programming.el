@@ -150,9 +150,9 @@ interactive `pyvenv-activate' function before `lsp'"
   :hook ((prog-mode . highlight-indent-guides-mode)
          (yaml-mode . highlight-indent-guides-mode))
   :custom
-  (highlight-indent-guides-method 'bitmap)
+  (highlight-indent-guides-method 'character)
   (highlight-indent-guides-responsive 'top)
-  (highlight-indent-guides-bitmap-function 'highlight-indent-guides--bitmap-dots))
+  (highlight-indent-guides-bitmap-function 'highlight-indent-guides--bitmap-line))
 
 (use-package tree-sitter :ensure t
 
