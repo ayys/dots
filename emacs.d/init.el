@@ -18,8 +18,6 @@
 (setq use-package-always-ensure t)
 
 (global-unset-key (kbd "C-z"))
-(global-unset-key (kbd "C-x C-c"))
-(global-unset-key (kbd "C-x C-z"))
 
 (global-set-key (kbd "M-o") 'other-window)
 
