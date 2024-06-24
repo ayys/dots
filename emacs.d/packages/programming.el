@@ -141,7 +141,11 @@ interactive `pyvenv-activate' function before `lsp'"
   (setq lsp-inlay-hint-enable t)
   :hook
   (rustic-mode . lsp-inlay-hints-mode)
-  (rust-ts-mode . rustic-mode)
+  (rustic-mode . lsp-deferred)
+  (rustic-mode . tree-sitter-hl-mode)
+  (rustic-mode . tree-sitter-mode)
+  (rustic-mode . lsp-ui-mode)
+
   :custom
   (rustic-rustfmt-config-alist '((edition . "2021"))))
 
@@ -156,10 +160,9 @@ interactive `pyvenv-activate' function before `lsp'"
 
 (use-package tree-sitter :ensure t
 
-  :hook ((rust-ts-mode . tree-sitter-hl-mode) (rust-ts-mode . lsp-deferred) (python-ts-mode . lsp-deferred))
+  :hook ((rustic-mode . tree-sitter-hl-mode) (rustic-mode . lsp-deferred) (python-ts-mode . lsp-deferred))
 
-  :config (add-to-list 'tree-sitter-major-mode-language-alist '(python-ts-mode . python))
-  (add-to-list 'tree-sitter-major-mode-language-alist '(rust-ts-mode . rust)))
+  :config (add-to-list 'tree-sitter-major-mode-language-alist '(python-ts-mode . python)))
 
 (use-package tree-sitter-langs
   :load-path "~/git/tree-sitter-langs"
