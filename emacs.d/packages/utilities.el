@@ -407,3 +407,8 @@ parses its input."
 
 (use-package god-mode :ensure t
   :bind (("<escape>" . god-mode-all)))
+
+
+(use-package ace-window
+  :ensure t
+  :bind (("M-o" . ace-window)))
