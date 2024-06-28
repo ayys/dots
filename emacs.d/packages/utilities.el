@@ -414,16 +414,16 @@ parses its input."
   :bind (("M-o" . ace-window)))
 
 
- (use-package key-chord :ensure t
-        :config
-        (key-chord-mode 1)
-        (key-chord-define-global " j"     'avy-goto-char-timer)
-        (key-chord-define-global " B"     'ibuffer)
-        (key-chord-define-global " b"     'consult-buffer)
-        (key-chord-define-global " p"     'projectile-switch-project)
-        (key-chord-define-global " f"     'projectile-find-file)
-        (key-chord-define-global " r"     'consult-ripgrep)
-        (key-chord-define-global " g"     'magit-status)
-        (key-chord-define-global " c"     'projectile-run-async-shell-command-in-root)
-        (key-chord-define-global " o"     'ace-window)
-        (key-chord-define-global " e"     'consult-outline))
+ ;; (use-package key-chord :ensure t
+ ;;        :config
+ ;;        (key-chord-mode 1)
+ ;;        (key-chord-define-global " j"     'avy-goto-char-timer)
+ ;;        (key-chord-define-global " B"     'ibuffer)
+ ;;        (key-chord-define-global " b"     'consult-buffer)
+ ;;        (key-chord-define-global " p"     'projectile-switch-project)
+ ;;        (key-chord-define-global " f"     'projectile-find-file)
+ ;;        (key-chord-define-global " r"     'consult-ripgrep)
+ ;;        (key-chord-define-global " g"     'magit-status)
+ ;;        (key-chord-define-global " c"     'projectile-run-async-shell-command-in-root)
+ ;;        (key-chord-define-global " o"     'ace-window)
+ ;;        (key-chord-define-global " e"     'consult-outline))
