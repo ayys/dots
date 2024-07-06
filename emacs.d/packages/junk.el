@@ -70,11 +70,12 @@
   )
 
 
-(use-package multi-vterm
+(use-package vterm-toggle
   :ensure t
   :config
   (setq multi-vterm-dedicated-window-height-percent 30)
-  :bind (("C-c s v" . multi-vterm-dedicated-toggle))
+  (setq vterm-toggle-scope 'projectile)
+  :bind (("C-c s v" . vterm-toggle))
   )
 
 (use-package eat :ensure t
