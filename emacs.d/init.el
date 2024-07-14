@@ -6,6 +6,18 @@
 (require 'package)
 (package-initialize)
 
+(use-package dashboard
+  :ensure t
+  :hook ((dashboard-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
+  :init
+  (setq dashboard-banner-logo-title "าयउ ऽकषउ")
+  (setq dashboard-startup-banner "~/junk/dashboard_pic.png")
+  (setq dashboard-set-heading-icons t)
+  (setq dashboard-items '((projects . 5)
+                          (bookmarks . 5)))
+  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+  :config (dashboard-setup-startup-hook))
+
 (eval-after-load 'gnutls
   '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
 (require 'bind-key)
@@ -23,7 +35,7 @@
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
-(load custom-file)
+
 
 (add-hook 'before-save-hook
           'delete-trailing-whitespace)
@@ -115,8 +127,9 @@
 
 (load "~/.emacs.d/load-directory.el")
 
-(run-with-timer 2 nil (lambda ()
+(run-with-timer 5 nil (lambda ()
                         (message "Loading all the packages")
+                        (load custom-file)
                         (load-directory "~/.emacs.d/packages")))
 
 

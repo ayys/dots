@@ -5,17 +5,7 @@
   :hook (after-init . (lambda () (require 'better-defaults)))
   :ensure t )
 
-(use-package dashboard
-  :ensure t
-  :hook ((dashboard-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
-  :init
-  (setq dashboard-banner-logo-title "าयउ ऽकषउ")
-  (setq dashboard-startup-banner "~/junk/dashboard_pic.png")
-  (setq dashboard-set-heading-icons t)
-  (setq dashboard-items '((projects . 5)
-                          (bookmarks . 5)))
-  (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
-  :config (dashboard-setup-startup-hook))
+
 
 (use-package ibuffer
   :bind (("C-x C-b" . ibuffer))
