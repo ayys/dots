@@ -355,7 +355,7 @@ clientkeys = gears.table.join(
               function ()
                     awful.spawn("xdotool keydown Down", false)
               end,
-              {description = "scroll doown on volume raise", group = "client"}),
+              {description = "scroll down on volume raise", group = "client"}),
     awful.key({ modkey,           }, "f",
 
         function (c)
