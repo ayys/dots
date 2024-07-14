@@ -6,14 +6,8 @@
 (require 'package)
 (package-initialize)
 
-;; Bootstrap 'use-package'
 (eval-after-load 'gnutls
   '(add-to-list 'gnutls-trustfiles "/etc/ssl/cert.pem"))
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(eval-when-compile
-(require 'use-package))
 (require 'bind-key)
 (setq use-package-always-ensure t)
 
@@ -28,10 +22,10 @@
 (set-default 'cursor-type 'bar)
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file)
 
-;; (setq profile-dotemacs-file "~/.emacs.d/init.el")
-;; (profile-dotemacs)
+(run-with-timer 1 nil (lambda ()
+                        (message "Loading custom file")
+                        (load custom-file)))
 
 (add-hook 'before-save-hook
           'delete-trailing-whitespace)
@@ -48,7 +42,7 @@
 (setq mouse-wheel-progressive-speed nil)
 (setq redisplay-dont-pause t)
 (setq initial-major-mode 'fundamental-mode)
-(setq mouse-wheel-scroll-amount '(1))
+;; (setq mouse-wheel-scroll-amount '(1))
 
 (setq ispell-program-name (executable-find "hunspell")
       ispell-dictionary "en_US-large")
@@ -123,7 +117,10 @@
 
 (load "~/.emacs.d/load-directory.el")
 
-(load-directory "~/.emacs.d/packages")
+(run-with-timer 2 nil (lambda ()
+                        (message "Loading all the packages")
+                        (load-directory "~/.emacs.d/packages")))
+
 
 
 (add-to-list 'default-frame-alist '(font . "-*-Source Code Pro-regular-normal-normal-*-14-*-*-*-p-0-iso10646-1"))

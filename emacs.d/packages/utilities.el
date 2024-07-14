@@ -353,7 +353,7 @@ parses its input."
   :load-path "~/git/noman.el")
 
 
-(use-package totp :ensure t)
+;; (use-package totp :ensure t)
 
 
 (use-package chatgpt-shell

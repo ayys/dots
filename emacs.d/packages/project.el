@@ -8,13 +8,13 @@
 
 
 (use-package fzf :ensure t
-  :bind (("C-z f" . fzf-projectile)))
+  :defer
+  :bind (("C-x f" . fzf-projectile)))
 
 
 
 (use-package projectile
   :ensure t
-  :pin melpa-stable
   :after vertico
   :init
   (projectile-mode +1)

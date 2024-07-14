@@ -50,6 +50,7 @@
   :hook (after-init . (lambda () (require 'nerd-icons))))
 
 (use-package focus
+  :bind (("C-c C-c C-l C-f" . focus-mode))
   :ensure t)
 
 (use-package eyebrowse
@@ -91,14 +92,14 @@
          ("C-c C-z _" . eyebrowse-close-window-config)
          ("C-c C-z `" . eyebrowse-switch-to-window-config)))
 
-(use-package perspective
-  :ensure t
-  :init
-  (progn
-    (setq persp-nil-name "default")
-    (setq persp-show-modestring nil)
-    (setq persp-sort 'created))
-  :config (persp-mode))
+;; (use-package perspective
+;;   :ensure t
+;;   :init
+;;   (progn
+;;     (setq persp-nil-name "default")
+;;     (setq persp-show-modestring nil)
+;;     (setq persp-sort 'created))
+;;   :config (persp-mode))
 
 (use-package powerline
   :load-path "~/git/powerline"
@@ -111,7 +112,7 @@
   :config (powerline-default-theme))
 
 (use-package centered-window :ensure t
-  :init
+  :bind (("C-c C-c C-l" . centered-window-mode))
   :config
   (setq cwm-use-vertical-padding nil)
   (setq cwm-frame-internal-border 0))
