@@ -23,9 +23,7 @@
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 
-(run-with-timer 1 nil (lambda ()
-                        (message "Loading custom file")
-                        (load custom-file)))
+(load custom-file)
 
 (add-hook 'before-save-hook
           'delete-trailing-whitespace)
