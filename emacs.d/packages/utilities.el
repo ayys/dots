@@ -430,3 +430,10 @@ parses its input."
 
 (setq key-chord-two-keys-delay .2
       key-chord-one-key-delay .2)
+
+
+(use-package valign :ensure t
+  :hook ((org-mode . valign-mode)
+         (markdown-mode . valign-mode))
+  :config (setq valign-fancy-bar nil) ;; non-nil for fancy unicode bar
+  )
