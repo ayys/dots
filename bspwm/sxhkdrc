@@ -1,6 +1,10 @@
 super + Return
 	st tmux
 
+super + Shift + Return
+	st tmuxinator backend-pg
+
+
 # program launcher
 super + @space
 	dmenu_run

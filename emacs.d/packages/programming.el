@@ -188,3 +188,9 @@ interactive `pyvenv-activate' function before `lsp'"
 
 ;; open tsx files with typescript mode
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+
+
+(use-package graphql-mode
+  :mode (("\\.gql\\'" . graphql-mode)
+         ("\\.graphql\\'" . graphql-mode))
+  :ensure t)

@@ -138,7 +138,7 @@
 
 (load-file "~/.emacs.d/navapali-maps.el")
 
-(ido-mode -1)  ;;  disable ido mode because it is annoying
+(ido-mode nil)  ;;  disable ido mode because it is annoying
 
 (setq auth-sources '((:source "~/.authinfo.gpg")))
 (setq epg-gpg-program "~/junk/gnupg/gnupg-2.4.0/bin/gpg")
