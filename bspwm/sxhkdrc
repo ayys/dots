@@ -1,8 +1,8 @@
 super + Return
 	st tmux
 
-super + Shift + Return
-	st tmuxinator backend-pg
+super + shift + Return
+        st tmuxinator backend-pg
 
 
 # program launcher
@@ -127,9 +127,3 @@ super + alt + Escape
 # switch keyboard layout
 super + shift + space
     switch_kbdlayout
-
-
-# brightness control
-
-X86MonBrightnessDown
-    xrandr --output VGA1 --brightness
