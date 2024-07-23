@@ -159,7 +159,7 @@
          (minibuffer-setup . vertico-repeat-save) ; Make sure vertico state is saved
          )
   :custom
-  (vertico-count 10)
+  (vertico-count 5)
   (vertico-resize t)
   (vertico-cycle nil)
   ;; Extensions
@@ -405,10 +405,6 @@ parses its input."
   :bind (("C-x p c" . conner-run-project-command)))
 
 
-(use-package god-mode :ensure t
-  :bind (("<escape>" . god-mode-all)))
-
-
 (use-package ace-window
   :ensure t
   :bind (("M-o" . ace-window)))
@@ -437,3 +433,7 @@ parses its input."
          (markdown-mode . valign-mode))
   :config (setq valign-fancy-bar nil) ;; non-nil for fancy unicode bar
   )
+
+
+(use-package devil :ensure t
+  :init (global-devil-mode))
