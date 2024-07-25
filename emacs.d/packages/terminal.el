@@ -1,3 +1,5 @@
+(provide 'terminal)
+
 (use-package vterm
   :defer t
   :ensure t
@@ -36,6 +38,3 @@
   :demand t
   :config
   (eshell-syntax-highlighting-global-mode +1))
-
-
-(use-package geiser :ensure t)

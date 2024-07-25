@@ -257,3 +257,6 @@
 
 (provide-theme 'typo)
 ;;; typo-theme.el ends here
+
+
+(provide 'typo-theme)

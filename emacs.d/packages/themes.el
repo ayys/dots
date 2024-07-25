@@ -1,3 +1,6 @@
+(provide 'themes)
+
+
 (use-package doom-themes :ensure t)
 (use-package ef-themes :ensure t)
 (use-package catppuccin-theme :ensure t)

@@ -1,73 +1,73 @@
-(use-package svg-tag-mode
-  :ensure t
-  :hook ((prog-mode . svg-tag-mode) (org-mode . svg-tag-mode))
-  :config
-  (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
-  (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
-  (defconst day-re "[A-Za-z]\\{3\\}")
-  (defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
-  (setq svg-tag-tags
-        `(
-          (" :\\([a-zA-Z0-9\u0900-\u097F]+\\)" . ((lambda (tag) (svg-tag-make tag))))
-          (" :\\([a-zA-Z0-9\u0900-\u097F]+[ \-]\\)" . ((lambda (tag) tag)))
-          ("\\[#[a-zA-Z0-9\u0900-\u097F]+\\]" . ( (lambda (tag)
-                                                    (svg-tag-make tag :face 'org-priority
-                                                                  :beg 2 :end -1 :margin 0))))
-          ("TODO" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0))))
-          (,(format "\\(<%s>\\)" date-re) .
-           ((lambda (tag)
-              (svg-tag-make tag :beg 1 :end -1 :margin 0))))
-          (,(format "\\(<%s \\)%s>" date-re day-time-re) .
-           ((lambda (tag)
-              (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
-          (,(format "<%s \\(%s>\\)" date-re day-time-re) .
-           ((lambda (tag)
-              (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
-          (,(format "\\(\\[%s\\]\\)" date-re) .
-           ((lambda (tag)
-              (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
-          (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
-           ((lambda (tag)
-              (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
-          (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
-           ((lambda (tag)
-              (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date)))))))
+;; (use-package svg-tag-mode
+;;   :ensure t
+;;   :hook ((prog-mode . svg-tag-mode) (org-mode . svg-tag-mode))
+;;   :config
+;;   (defconst date-re "[0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}")
+;;   (defconst time-re "[0-9]\\{2\\}:[0-9]\\{2\\}")
+;;   (defconst day-re "[A-Za-z]\\{3\\}")
+;;   (defconst day-time-re (format "\\(%s\\)? ?\\(%s\\)?" day-re time-re))
+;;   (setq svg-tag-tags
+;;         `(
+;;           (" :\\([a-zA-Z0-9\u0900-\u097F]+\\)" . ((lambda (tag) (svg-tag-make tag))))
+;;           (" :\\([a-zA-Z0-9\u0900-\u097F]+[ \-]\\)" . ((lambda (tag) tag)))
+;;           ("\\[#[a-zA-Z0-9\u0900-\u097F]+\\]" . ( (lambda (tag)
+;;                                                     (svg-tag-make tag :face 'org-priority
+;;                                                                   :beg 2 :end -1 :margin 0))))
+;;           ("TODO" . ((lambda (tag) (svg-tag-make "TODO" :face 'org-todo :inverse t :margin 0))))
+;;           (,(format "\\(<%s>\\)" date-re) .
+;;            ((lambda (tag)
+;;               (svg-tag-make tag :beg 1 :end -1 :margin 0))))
+;;           (,(format "\\(<%s \\)%s>" date-re day-time-re) .
+;;            ((lambda (tag)
+;;               (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0))))
+;;           (,(format "<%s \\(%s>\\)" date-re day-time-re) .
+;;            ((lambda (tag)
+;;               (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0))))
+;;           (,(format "\\(\\[%s\\]\\)" date-re) .
+;;            ((lambda (tag)
+;;               (svg-tag-make tag :beg 1 :end -1 :margin 0 :face 'org-date))))
+;;           (,(format "\\(\\[%s \\)%s\\]" date-re day-time-re) .
+;;            ((lambda (tag)
+;;               (svg-tag-make tag :beg 1 :inverse nil :crop-right t :margin 0 :face 'org-date))))
+;;           (,(format "\\[%s \\(%s\\]\\)" date-re day-time-re) .
+;;            ((lambda (tag)
+;;               (svg-tag-make tag :end -1 :inverse t :crop-left t :margin 0 :face 'org-date)))))))
 
 (use-package centered-window  :ensure t )
 
-(use-package company
-  :ensure t
-  :hook (prog-mode . company-mode)
-  :config
-  (add-to-list 'company-backends 'company-clang)
-  (setq company-minimum-prefix-length 2)
-  (setq company-idle-delay 0))
-(use-package company-jedi
-  :ensure t
-  :after company
-  :bind (("C-." . jedi:goto-definition)
-         ("C-," . jedi:goto-definition-pop-marker))
-  :config
-  (defun my/python-mode-hook ()
-    (add-to-list 'company-backends 'company-jedi))
-  (setq jedi:setup-keys t)
-  (setq jedi:complete-on-dot t)
-  (add-hook 'python-mode-hook 'my/python-mode-hook))
+;; (use-package company
+;;   :ensure t
+;;   :hook (prog-mode . company-mode)
+;;   :config
+;;   (add-to-list 'company-backends 'company-clang)
+;;   (setq company-minimum-prefix-length 2)
+;;   (setq company-idle-delay 0))
+;; (use-package company-jedi
+;;   :ensure t
+;;   :after company
+;;   :bind (("C-." . jedi:goto-definition)
+;;          ("C-," . jedi:goto-definition-pop-marker))
+;;   :config
+;;   (defun my/python-mode-hook ()
+;;     (add-to-list 'company-backends 'company-jedi))
+;;   (setq jedi:setup-keys t)
+;;   (setq jedi:complete-on-dot t)
+;;   (add-hook 'python-mode-hook 'my/python-mode-hook))
 
 
 
-(use-package rcirc
-  :ensure t
-  :config
-  (setq rcirc-server-alist
-        '(("irc.libera.chat"
-           :user "ays"
-           :port 6697 :encryption tls
-	   :channels ("#emacs"))
-          ("localhost"
-           :port 6668
-	   :channels ("#i2p"))))
-  )
+;; (use-package rcirc
+;;   :ensure t
+;;   :config
+;;   (setq rcirc-server-alist
+;;         '(("irc.libera.chat"
+;;            :user "ays"
+;;            :port 6697 :encryption tls
+;; 	   :channels ("#emacs"))
+;;           ("localhost"
+;;            :port 6668
+;; 	   :channels ("#i2p"))))
+;;   )
 
 
 (use-package vterm-toggle
@@ -84,9 +84,9 @@
   :hook (eat-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
 
 
-(use-package all-the-icons-dired
-  :hook (dired-mode . all-the-icons-dired-mode)
-  :ensure t)
+;; (use-package all-the-icons-dired
+;;   :hook (dired-mode . all-the-icons-dired-mode)
+;;   :ensure t)
 (use-package wc-mode
   :ensure t)
 
@@ -153,25 +153,25 @@
   (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
   (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map))
 
-(use-package emmet-mode
+;; (use-package emmet-mode
 
-  :ensure t
-  :hook web-mode)
+;;   :ensure t
+;;   :hook web-mode)
 
 
 (use-package yaml-pro
   :mode (
-         ("\\.yml\\'" . yaml-mode)
-         ("\\.yaml\\'" . yaml-mode))
+         ("\\.yml\\'" . yaml-pro-mode)
+         ("\\.yaml\\'" . yaml-pro-mode))
   :ensure t)
 
-(use-package hemera-theme  :ensure t)
 
 
-(use-package paredit
 
-  :ensure t
-  :hook ( (scheme-mode  emacs-lisp-mode) . paredit-mode ))
+;; (use-package paredit
+
+;;   :ensure t
+;;   :hook ( (scheme-mode  emacs-lisp-mode) . paredit-mode ))
 
 (use-package git-gutter
   :ensure t
@@ -196,17 +196,20 @@
 	 ("C-c j" . windmove-down)))
 
 
-(use-package company-posframe :ensure t
-  :config (company-posframe-mode t))
+;; (use-package company-posframe :ensure t
+;;   :config (company-posframe-mode t))
 
 (add-hook 'prog-mode-hook 'outline-minor-mode)
 (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 
 
-(use-package org-roam :ensure t
-  :config (setq org-roam-directory "~/docs/roam")(org-roam-db-autosync-mode)
-  :bind (("C-z C-i" . org-roam-node-insert)
-         ("C-z C-f" . org-roam-node-find)
-         ("C-z C-c" . org-roam-capture)
-         ("C-z c" . org-roam-dailies-capture-today)))
+;; (use-package org-roam :ensure t
+;;   :config (setq org-roam-directory "~/docs/roam")(org-roam-db-autosync-mode)
+;;   :bind (("C-z C-i" . org-roam-node-insert)
+;;          ("C-z C-f" . org-roam-node-find)
+;;          ("C-z C-c" . org-roam-capture)
+;;          ("C-z c" . org-roam-dailies-capture-today)))
+
+
+(provide 'junk)

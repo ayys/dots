@@ -1,3 +1,6 @@
+(provide 'programming)
+
+(use-package nix-mode :ensure t)
 
 (use-package treesit-auto
   :custom
@@ -9,8 +12,8 @@
 
 
 (use-package lsp-mode :ensure t
-  :bind (("M-." . lsp-find-definition)
-         ("M-?" . lsp-find-references))
+  ;; :bind (("M-." . lsp-find-definition)
+  ;;        ("M-?" . lsp-find-references))
 
   :hook ((tsx-ts-mode . lsp-deferred))
   )
@@ -52,8 +55,13 @@ interactive `pyvenv-activate' function before `lsp'"
          (python-ts-mode . (lambda ()
                          (require 'lsp-python-ms)
                          (ayys/py-auto-lsp)))))
-(use-package  lsp-ui :ensure t  :commands lsp-ui-mode)
-(use-package lsp-treemacs :ensure t  :commands lsp-treemacs-errors-list)
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode
+  :bind (("M-." . lsp-ui-peek-find-definitions)
+         ("M-?" . lsp-ui-peek-find-references))
+  )
+;; (use-package lsp-treemacs :ensure t  :commands lsp-treemacs-errors-list)
 
 
 (use-package ruff-format :ensure t
@@ -104,29 +112,18 @@ interactive `pyvenv-activate' function before `lsp'"
   (setq sqlformat-command 'pgformatter)
   (setq sqlformat-args '("--format-type")))
 
-(use-package separedit
-  :bind ("C-c '" . separedit)
-  :ensure t
-  :config
-  (progn
-    (setq separedit-default-mode 'markdown-mode)))
-
-
-
-
 (use-package pyvenv
   :defer t
   :ensure t)
 
 
 (use-package yasnippet
-
-  :ensure t
-  :config (yas-load-directory "~/.emacs.d/snippets")
-  :hook ( prog-mode . yas-minor-mode ))
+  :pin gnu
+  :ensure t)
 
 (use-package rustic
   :ensure t
+  :after (yasnippet rust-mode flycheck)
   :bind (:map rustic-mode-map
               ("M-j" . lsp-ui-imenu)
               ("M-?" . lsp-find-references)
@@ -136,27 +133,25 @@ interactive `pyvenv-activate' function before `lsp'"
               ("C-c C-c Q" . lsp-workspace-shutdown)
               ("C-c C-c s" . lsp-rust-analyzer-status))
   :config
-  ;; turn off
   (setq rustic-format-on-save t)
   (setq lsp-inlay-hint-enable t)
   :hook
   (rustic-mode . lsp-inlay-hints-mode)
   (rustic-mode . lsp-deferred)
-  (rustic-mode . tree-sitter-hl-mode)
-  (rustic-mode . tree-sitter-mode)
   (rustic-mode . lsp-ui-mode)
 
   :custom
   (rustic-rustfmt-config-alist '((edition . "2021"))))
 
-(use-package highlight-indent-guides
-  :ensure t
-  :hook ((prog-mode . highlight-indent-guides-mode)
-         (yaml-mode . highlight-indent-guides-mode))
-  :custom
-  (highlight-indent-guides-method 'character)
-  (highlight-indent-guides-responsive 'top)
-  (highlight-indent-guides-bitmap-function 'highlight-indent-guides--bitmap-line))
+;; (use-package highlight-indent-guides
+;;   :pin melpa-stable
+;;   :ensure t
+;;   :hook ((prog-mode . highlight-indent-guides-mode)
+;;          (yaml-mode . highlight-indent-guides-mode))
+;;   :custom
+;;   (highlight-indent-guides-method 'character)
+;;   (highlight-indent-guides-responsive 'top)
+;;   (highlight-indent-guides-bitmap-function 'highlight-indent-guides--bitmap-line))
 
 (use-package tree-sitter :ensure t
 
@@ -166,8 +161,7 @@ interactive `pyvenv-activate' function before `lsp'"
 
 (use-package tree-sitter-langs
   :load-path "~/git/tree-sitter-langs"
-  :ensure t
-  :after tree-sitter)
+  :ensure t)
 
 (setq treesit-language-source-alist
       '((bash "https://github.com/tree-sitter/tree-sitter-bash")

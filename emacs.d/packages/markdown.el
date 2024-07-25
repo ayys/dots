@@ -77,25 +77,28 @@
 
 (use-package org-project-capture :ensure t :defer t)
 
-(use-package org-projectile
-  :ensure t
-  :defer t
-  :after (org org-project-capture)
-  :bind (("C-c n p" . org-projectile:project-todo-completing-read)
-         ("C-c c" . org-capture))
+;; (use-package org-projectile
+;;   :ensure t
+;;   :defer t
+;;   :after (org org-project-capture)
+;;   :bind (("C-c n p" . org-projectile:project-todo-completing-read)
+;;          ("C-c c" . org-capture))
 
-  :hook ((org-capture-after-finalize . ayys/org-projectile:update-agenda-files)
-         (org-agenda-mode . ayys/org-projectile:update-agenda-files))
-  :init
-  (progn
-    (org-project-capture-per-project)
-    (setq org-project-capture-projects-file ".todo/todo.org")
-    (ayys/org-projectile:update-agenda-files)
-    (setq org-capture-templates
-      '(("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks")
-         "* TODO %?\n  %i\n  %a")
-        ("j" "Journal" entry (file+datetree "~/org/journal.org")
-         "* %?\nEntered on %U\n  %i\n  %a")))
-    (add-to-list 'org-capture-templates
-                 (org-projectile-project-todo-entry)))
-  )
+;;   :hook ((org-capture-after-finalize . ayys/org-projectile:update-agenda-files)
+;;          (org-agenda-mode . ayys/org-projectile:update-agenda-files))
+;;   :init
+;;   (progn
+;;     (org-project-capture-per-project)
+;;     (setq org-project-capture-projects-file ".todo/todo.org")
+;;     (ayys/org-projectile:update-agenda-files)
+;;     (setq org-capture-templates
+;;       '(("t" "Todo" entry (file+headline "~/org/gtd.org" "Tasks")
+;;          "* TODO %?\n  %i\n  %a")
+;;         ("j" "Journal" entry (file+datetree "~/org/journal.org")
+;;          "* %?\nEntered on %U\n  %i\n  %a")))
+;;     (add-to-list 'org-capture-templates
+;;                  (org-projectile-project-todo-entry)))
+;;   )
+
+
+(provide 'markdown)

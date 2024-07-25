@@ -1,5 +1,7 @@
-(use-package all-the-icons
-  :ensure t)
+(provide 'user-interface)
+
+;; (use-package all-the-icons
+;;   :ensure t)
 
 (use-package better-defaults
   :hook (after-init . (lambda () (require 'better-defaults)))
@@ -25,9 +27,9 @@
             (ibuffer-do-sort-by-major-mode)))))
     (add-hook 'ibuffer-hook #'modi/ibuffer-customization)))
 
-(use-package disable-mouse
-  :ensure t
-  :hook (vterm-mode . disable-mouse-mode))
+;; (use-package disable-mouse
+;;   :ensure t
+;;   :hook (vterm-mode . disable-mouse-mode))
 
 (use-package nyan-mode :ensure t
   :hook ((fundamental-mode . nyan-mode))

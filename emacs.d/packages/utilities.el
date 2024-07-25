@@ -1,3 +1,6 @@
+(provide 'utilities)
+
+
 (use-package drag-stuff
   :ensure t
   :hook (prog-mode . drag-stuff-mode )
@@ -35,26 +38,24 @@
   :config
   (which-key-mode))
 
-
 (use-package rg
   :ensure t
   :defer t
-  :after (grep-mode)
-  )
+  :after drag-stuff)
 
-(use-package howm :ensure t
-  :defer t
-  :config
-  (progn
-    (setq howm-home-directory "~/docs/howm")
-    (setq howm-directory "~/docs/howm/")
-    (setq howm-keyword-file (expand-file-name ".howm-keys" howm-home-directory))
-    (setq howm-history-file (expand-file-name ".howm-history" howm-home-directory))
-    (add-hook 'howm-mode-hook 'howm-mode-set-buffer-name)
-    (add-hook 'after-save-hook 'howm-mode-set-buffer-name)
-    (define-key howm-menu-mode-map "\C-h" nil)
-    (define-key riffle-summary-mode-map "\C-h" nil)
-    (define-key howm-view-contents-mode-map "\C-h" nil)))
+;; (use-package howm :ensure t
+;;   :defer t
+;;   :config
+;;   (progn
+;;     (setq howm-home-directory "~/docs/howm")
+;;     (setq howm-directory "~/docs/howm/")
+;;     (setq howm-keyword-file (expand-file-name ".howm-keys" howm-home-directory))
+;;     (setq howm-history-file (expand-file-name ".howm-history" howm-home-directory))
+;;     (add-hook 'howm-mode-hook 'howm-mode-set-buffer-name)
+;;     (add-hook 'after-save-hook 'howm-mode-set-buffer-name)
+;;     (define-key howm-menu-mode-map "\C-h" nil)
+;;     (define-key riffle-summary-mode-map "\C-h" nil)
+;;     (define-key howm-view-contents-mode-map "\C-h" nil)))
 
 (defun vterm-all-names ()
   (let ((buffer-names (mapcar #'buffer-name (buffer-list))))
@@ -75,7 +76,7 @@
   (consult-buffer '(consult--source-vterm)))
 
 (use-package consult
-  :init
+  :pin melpa-stable
   :ensure t
   :bind (         ;; Replacing default keybindings with consult versions
          ("C-s" . consult-line)           ; Line-based search
@@ -122,7 +123,6 @@
   (require 'marginalia)
   (marginalia-mode))
 
-
 (use-package all-the-icons-completion
   :ensure t
   :after (marginalia all-the-icons)
@@ -133,7 +133,7 @@
 
 
 (use-package vertico
-  :demand t                             ; Otherwise won't get loaded immediately
+  :pin melpa-stable
   :ensure t
   :bind
     (("M-C-." . vertico-repeat)
@@ -220,34 +220,34 @@
   (savehist-mode))
 
 ;; A few more useful configurations...
-(use-package emacs
-  :init
-  ;; Add prompt indicator to `completing-read-multiple'.
-  ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
-  (defun crm-indicator (args)
-    (cons (format "[CRM%s] %s"
-                  (replace-regexp-in-string
-                   "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
-                   crm-separator)
-                  (car args))
-          (cdr args)))
+;; (use-package emacs
+;;   :init
+;;   ;; Add prompt indicator to `completing-read-multiple'.
+;;   ;; We display [CRM<separator>], e.g., [CRM,] if the separator is a comma.
+;;   (defun crm-indicator (args)
+;;     (cons (format "[CRM%s] %s"
+;;                   (replace-regexp-in-string
+;;                    "\\`\\[.*?]\\*\\|\\[.*?]\\*\\'" ""
+;;                    crm-separator)
+;;                   (car args))
+;;           (cdr args)))
 
 
 
-  (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
+;;   (advice-add #'completing-read-multiple :filter-args #'crm-indicator)
 
-  ;; Do not allow the cursor in the minibuffer prompt
-  (setq minibuffer-prompt-properties
-        '(read-only t cursor-intangible t face minibuffer-prompt))
-  (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
+;;   ;; Do not allow the cursor in the minibuffer prompt
+;;   (setq minibuffer-prompt-properties
+;;         '(read-only t cursor-intangible t face minibuffer-prompt))
+;;   (add-hook 'minibuffer-setup-hook #'cursor-intangible-mode)
 
-  ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
-  ;; Vertico commands are hidden in normal buffers.
-  ;; (setq read-extended-command-predicate
-  ;;       #'command-completion-default-include-p)
+;;   ;; Emacs 28: Hide commands in M-x which do not work in the current mode.
+;;   ;; Vertico commands are hidden in normal buffers.
+;;   ;; (setq read-extended-command-predicate
+;;   ;;       #'command-completion-default-include-p)
 
-  ;; Enable recursive minibuffers
-  (setq enable-recursive-minibuffers t))
+;;   ;; Enable recursive minibuffers
+;;   (setq enable-recursive-minibuffers t))
 
 ;; Optionally use the `orderless' completion style.
 (use-package orderless
@@ -356,13 +356,13 @@ parses its input."
 ;; (use-package totp :ensure t)
 
 
-(use-package chatgpt-shell
-  :defer t
-  :ensure t
-  :custom
-  ((chatgpt-shell-openai-key
-    (lambda ()
-      (auth-source-pass-get 'secret "openai-secret")))))
+;; (use-package chatgpt-shell
+;;   :defer t
+;;   :ensure t
+;;   :custom
+;;   ((chatgpt-shell-openai-key
+;;     (lambda ()
+;;       (auth-source-pass-get 'secret "openai-secret")))))
 
 (use-package exec-path-from-shell
   :ensure t
@@ -400,9 +400,9 @@ parses its input."
   :bind (("C-z p" . avy-goto-char-timer)))
 
 
-(use-package conner
-  :ensure t
-  :bind (("C-x p c" . conner-run-project-command)))
+;; (use-package conner
+;;   :ensure t
+;;   :bind (("C-x p c" . conner-run-project-command)))
 
 
 (use-package ace-window
@@ -410,22 +410,22 @@ parses its input."
   :bind (("M-o" . ace-window)))
 
 
- (use-package key-chord :ensure t
-        :config
-        (key-chord-mode 1)
-        (key-chord-define-global ";j"     'avy-goto-char-timer)
-        (key-chord-define-global ";B"     'ibuffer)
-        (key-chord-define-global ";b"     'consult-buffer)
-        (key-chord-define-global ";p"     'projectile-switch-project)
-        (key-chord-define-global ";f"     'projectile-find-file)
-        (key-chord-define-global ";r"     'consult-ripgrep)
-        (key-chord-define-global ";g"     'magit-status)
-        (key-chord-define-global ";c"     'projectile-run-async-shell-command-in-root)
-        (key-chord-define-global ";o"     'ace-window)
-        (key-chord-define-global ";e"     'consult-outline))
+ ;; (use-package key-chord :ensure t
+ ;;        :config
+ ;;        (key-chord-mode 1)
+ ;;        (key-chord-define-global ";j"     'avy-goto-char-timer)
+ ;;        (key-chord-define-global ";B"     'ibuffer)
+ ;;        (key-chord-define-global ";b"     'consult-buffer)
+ ;;        (key-chord-define-global ";p"     'projectile-switch-project)
+ ;;        (key-chord-define-global ";f"     'projectile-find-file)
+ ;;        (key-chord-define-global ";r"     'consult-ripgrep)
+ ;;        (key-chord-define-global ";g"     'magit-status)
+ ;;        (key-chord-define-global ";c"     'projectile-run-async-shell-command-in-root)
+ ;;        (key-chord-define-global ";o"     'ace-window)
+ ;;        (key-chord-define-global ";e"     'consult-outline))
 
-(setq key-chord-two-keys-delay .2
-      key-chord-one-key-delay .2)
+;; (setq key-chord-two-keys-delay .2
+;;       key-chord-one-key-delay .2)
 
 
 (use-package valign :ensure t

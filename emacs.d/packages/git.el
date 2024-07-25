@@ -24,6 +24,12 @@
   (interactive)
   (magit-branch-and-checkout (string-to-branch-name (read-string "Branch name: ")) "main"))
 
+(use-package magit-todos
+  :ensure t
+  :after magit
+  :config
+  (magit-todos-mode))
+
 (use-package magit
   :ensure t
   :config
@@ -50,15 +56,11 @@
          (forge-post-mode . my-fetch-all-forge-topics)
          (forge-post-mode . display-fill-column-indicator-mode)))
 
-(use-package magit-todos
-  :ensure t
-  :after magit
-  :config
-  (magit-todos-mode))
 
-(use-package treemacs-magit
-  :after (treemacs magit)
-  :ensure t )
+
+;; (use-package treemacs-magit
+;;   :after (treemacs magit)
+;;   :ensure t )
 
 (use-package blamer
   :ensure t
@@ -74,3 +76,6 @@
 
 (use-package git-link
   :ensure t)
+
+
+(provide 'git)

@@ -1,1 +1,1 @@
-
+(provide 'rust)
