@@ -119,6 +119,11 @@ interactive `pyvenv-activate' function before `lsp'"
 
 (use-package yasnippet
   :pin gnu
+  :hook (prog-mode . yas-minor-mode)
+  :ensure t)
+
+(use-package company
+  :hook (prog-mode . yas-minor-mode)
   :ensure t)
 
 (use-package rustic
