@@ -131,7 +131,7 @@
 (load "junk")
 (load "markdown")
 (load "programming")
-(load "project")
+(load "ayys-project")
 (load "rust")
 (load "terminal")
 (load "themes")

@@ -1,4 +1,4 @@
-(provide 'project)
+(provide 'ayys-project)
 
 (defun open-project-readme ()
   "Open the README.md file in the project root, ignoring case."
