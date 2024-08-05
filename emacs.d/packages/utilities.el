@@ -437,3 +437,8 @@ parses its input."
 
 (use-package devil :ensure t
   :init (global-devil-mode))
+
+
+
+(use-package separedit :ensure t
+  :bind ("C-c '" . 'separedit))
