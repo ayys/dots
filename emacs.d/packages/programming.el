@@ -69,12 +69,14 @@ interactive `pyvenv-activate' function before `lsp'"
   :hook (python-mode . ruff-format-on-save-mode)
   (python-ts-mode . ruff-format-on-save-mode))
 
-;; (use-package fixmee
-;;   :hook (prog-mode . fixmee-mode)
-;;   :ensure t
-;;   :config
-;;   (require 'button-lock))
+(use-package fixmee
+  :hook (prog-mode . fixmee-mode)
+  :ensure t
+  :config
+  (require 'button-lock))
+
 ;; (use-package realgud :ensure t)
+
 (use-package web-mode :defer t :ensure t
   :mode (
 ("\\.html?\\'" . web-mode)
@@ -123,12 +125,12 @@ interactive `pyvenv-activate' function before `lsp'"
   :ensure t)
 
 (use-package company
-  :hook (prog-mode . yas-minor-mode)
+  :hook ((prog-mode . yas-minor-mode)
+         (prog-mode . company-mode))
   :ensure t)
 
 (use-package rustic
   :ensure t
-  :after (yasnippet rust-mode flycheck)
   :bind (:map rustic-mode-map
               ("M-j" . lsp-ui-imenu)
               ("M-?" . lsp-find-references)
@@ -141,10 +143,10 @@ interactive `pyvenv-activate' function before `lsp'"
   (setq rustic-format-on-save t)
   (setq lsp-inlay-hint-enable t)
   :hook
+  (rustic-mode . tree-sitter-hl-mode)
+  (rustic-mode . lsp)
   (rustic-mode . lsp-inlay-hints-mode)
-  (rustic-mode . lsp-deferred)
   (rustic-mode . lsp-ui-mode)
-
   :custom
   (rustic-rustfmt-config-alist '((edition . "2021"))))
 
@@ -159,9 +161,10 @@ interactive `pyvenv-activate' function before `lsp'"
 ;;   (highlight-indent-guides-bitmap-function 'highlight-indent-guides--bitmap-line))
 
 (use-package tree-sitter :ensure t
-
-  :hook ((rustic-mode . tree-sitter-hl-mode) (rustic-mode . lsp-deferred) (python-ts-mode . lsp-deferred))
-
+  :hook ( (python-ts-mode . lsp-deferred)
+          (rust-ts-mode . lsp-inlay-hints-mode)
+          (rust-ts-mode . lsp-ui-mode)
+          (rust-ts-mode . lsp-deferred))
   :config (add-to-list 'tree-sitter-major-mode-language-alist '(python-ts-mode . python)))
 
 (use-package tree-sitter-langs
