@@ -170,21 +170,4 @@
 (global-set-key (kbd "M-[") 'beginning-of-buffer)
 (global-set-key (kbd "M-]") 'end-of-buffer)
 
-;; enable color in shell output
-;; (defun xterm-color-colorize-shell-command-output ()
-;;   "Colorize `shell-command' output."
-;;   (let ((bufs
-;;          (seq-remove
-;;           (lambda (x)
-;;             (not (or (string-prefix-p " *Echo Area" (buffer-name x))
-;;                      (string-prefix-p "*Shell Command" (buffer-name x)))))
-;;           (buffer-list))))
-;;     (dolist (buf bufs)
-;;       (with-current-buffer buf
-;;         (xterm-color-colorize-buffer)))))
-
-;; (defun xterm-color-colorize-shell-command-output-advice (proc &rest rest)
-;;   (xterm-color-colorize-shell-command-output))
-
-;; (advice-add 'shell-command :after #'xterm-color-colorize-shell-command-output-advice)
-;; (advice-remove 'shell-command #'xterm-color-colorize-shell-command-output-advice)
+(setq x-select-enable-primary nil)
