@@ -34,8 +34,9 @@
 (global-subword-mode)
 (set-default 'cursor-type 'bar)
 
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-
+(let ((custom-file-path (expand-file-name "custom.el" user-emacs-directory)))
+  (when (file-exists-p custom-file-path)
+    (setq custom-file custom-file-path)))
 (add-hook 'before-save-hook
           'delete-trailing-whitespace)
 (add-hook 'prog-mode
