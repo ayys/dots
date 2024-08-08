@@ -40,11 +40,11 @@
 
 (use-package rg
   :ensure t
-  :defer t
+  
   :after drag-stuff)
 
 ;; (use-package howm :ensure t
-;;   :defer t
+;;   
 ;;   :config
 ;;   (progn
 ;;     (setq howm-home-directory "~/docs/howm")
@@ -99,7 +99,7 @@
 
 
 (use-package ripgrep :ensure t
-  :defer t
+  
   :bind (("C-c r" . ripgrep-regexp))
   :config
   (rg-enable-default-bindings))
@@ -357,7 +357,7 @@ parses its input."
 
 
 ;; (use-package chatgpt-shell
-;;   :defer t
+;;   
 ;;   :ensure t
 ;;   :custom
 ;;   ((chatgpt-shell-openai-key
@@ -371,7 +371,7 @@ parses its input."
 
 (use-package wrap-region
   :ensure t
-  :defer t
+  
   :hook (prog-mode . wrap-region-mode)
   :config
   (wrap-region-global-mode t))

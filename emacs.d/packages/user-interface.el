@@ -38,7 +38,7 @@
 
 (use-package nerd-icons
   :ensure t
-  :defer t
+  
   :hook (after-init . (lambda () (require 'nerd-icons))))
 
 (use-package focus

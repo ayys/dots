@@ -1,7 +1,7 @@
 (provide 'terminal)
 
 (use-package vterm
-  :defer t
+  
   :ensure t
   :bind (:map vterm-mode-map ("C-q" . vterm-send-next-key))
   :config (setq vterm-shell "bash")
@@ -9,7 +9,7 @@
   :hook ((vterm-mode . (lambda () (interactive) (display-line-numbers-mode 0)))))
 
 ;; (use-package eshell
-;;   :defer t
+;;   
 ;;   :ensure t
 ;;   :hook (eshell-mode . (lambda ()
 ;;                          (display-line-numbers-mode 0)

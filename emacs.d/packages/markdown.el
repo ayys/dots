@@ -1,6 +1,6 @@
 (use-package org
   :ensure t
-  :defer t
+  
   :bind
   (("C-c a" . org-agenda)
    ("C-c C-h" . org-html-export-to-html)
@@ -27,24 +27,24 @@
 
 (use-package org-bullets
   :ensure t
-  :defer t
+  
   :hook (org-mode . org-bullets-mode))
 (use-package org-appear
   :ensure t
-  :defer t
+  
   :hook (org-mode . org-appear-mode))
 (use-package org-superstar
   :ensure t
-  :defer t
+  
   :hook (org-mode . org-superstar-mode)
   :config
   (setq org-superstar-special-todo-items t))
 (use-package org-rainbow-tags :ensure t
-  :defer t
+  
   :hook ((org-mode . org-rainbow-tags-mode)))
 
 (use-package markdown-mode
-  :defer t
+  
   :ensure t
   :mode (("README\\.md\\'" . gfm-mode)
          ("\\.md\\'" . markdown-mode)
@@ -75,11 +75,11 @@
   (dolist (file (ayys/org-projectile-todo-files))
     (add-to-list 'org-agenda-files file)))
 
-(use-package org-project-capture :ensure t :defer t)
+(use-package org-project-capture :ensure t )
 
 ;; (use-package org-projectile
 ;;   :ensure t
-;;   :defer t
+;;   
 ;;   :after (org org-project-capture)
 ;;   :bind (("C-c n p" . org-projectile:project-todo-completing-read)
 ;;          ("C-c c" . org-capture))

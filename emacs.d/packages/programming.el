@@ -48,7 +48,7 @@ interactive `pyvenv-activate' function before `lsp'"
 
 (use-package lsp-python-ms
   :ensure t
-  :defer t
+  
   :hook ((python-mode . (lambda ()
                          (require 'lsp-python-ms)
                          (ayys/py-auto-lsp)))
@@ -115,7 +115,7 @@ interactive `pyvenv-activate' function before `lsp'"
   (setq sqlformat-args '("--format-type")))
 
 (use-package pyvenv
-  :defer t
+  
   :ensure t)
 
 
@@ -125,8 +125,7 @@ interactive `pyvenv-activate' function before `lsp'"
   :ensure t)
 
 (use-package company
-  :hook ((prog-mode . yas-minor-mode)
-         (prog-mode . company-mode))
+  :hook ((prog-mode . company-mode))
   :ensure t)
 
 (use-package rustic
