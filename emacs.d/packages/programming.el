@@ -12,9 +12,6 @@
 
 
 (use-package lsp-mode :ensure t
-  ;; :bind (("M-." . lsp-find-definition)
-  ;;        ("M-?" . lsp-find-references))
-
   :hook ((tsx-ts-mode . lsp-deferred))
   )
 
@@ -61,21 +58,11 @@ interactive `pyvenv-activate' function before `lsp'"
   :bind (("M-." . lsp-ui-peek-find-definitions)
          ("M-?" . lsp-ui-peek-find-references))
   )
-;; (use-package lsp-treemacs :ensure t  :commands lsp-treemacs-errors-list)
-
 
 (use-package ruff-format :ensure t
 
   :hook (python-mode . ruff-format-on-save-mode)
   (python-ts-mode . ruff-format-on-save-mode))
-
-(use-package fixmee
-  :hook (prog-mode . fixmee-mode)
-  :ensure t
-  :config
-  (require 'button-lock))
-
-;; (use-package realgud :ensure t)
 
 (use-package web-mode :defer t :ensure t
   :mode (
@@ -93,19 +80,8 @@ interactive `pyvenv-activate' function before `lsp'"
 ("\\.jspf\\'" . web-mode)
 ("\\.tag\\'" . web-mode)))
 
-(use-package editorconfig :ensure t)
-
-(use-package copilot
-  :load-path "~/git/copilot.el"
-  :defer t
-  :hook
-  ((prog-mode . copilot-mode)
-   (org-mode . copilot-mode)
-   (markdown-mode . copilot-mode))
-  :config
-  (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-  (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion))
-
+(use-package editorconfig
+  :ensure t)
 
 (use-package sqlformat
   :ensure t
@@ -115,17 +91,13 @@ interactive `pyvenv-activate' function before `lsp'"
   (setq sqlformat-args '("--format-type")))
 
 (use-package pyvenv
-  
   :ensure t)
 
 
 (use-package yasnippet
-  :pin gnu
-  :hook (prog-mode . yas-minor-mode)
   :ensure t)
 
-(use-package company
-  :hook ((prog-mode . company-mode))
+(use-package flycheck
   :ensure t)
 
 (use-package rustic
@@ -148,16 +120,6 @@ interactive `pyvenv-activate' function before `lsp'"
   (rustic-mode . lsp-ui-mode)
   :custom
   (rustic-rustfmt-config-alist '((edition . "2021"))))
-
-;; (use-package highlight-indent-guides
-;;   :pin melpa-stable
-;;   :ensure t
-;;   :hook ((prog-mode . highlight-indent-guides-mode)
-;;          (yaml-mode . highlight-indent-guides-mode))
-;;   :custom
-;;   (highlight-indent-guides-method 'character)
-;;   (highlight-indent-guides-responsive 'top)
-;;   (highlight-indent-guides-bitmap-function 'highlight-indent-guides--bitmap-line))
 
 (use-package tree-sitter :ensure t
   :hook ( (python-ts-mode . lsp-deferred)

@@ -1,11 +1,9 @@
-(use-package magit-delta
-  :ensure t
-  :hook (magit-mode . magit-delta-mode)
-  :config
-  (setq magit-delta-delta-args
-  '("--24-bit-color" "always"
-    "--features" "magit-delta"
-    "--color-only")))
+(defun my-fetch-all-forge-topics ()
+  "Fetch all topics from the forge remote."
+  (when (and (derived-mode-p 'forge-topic-mode)
+             ;; Add any additional conditions to verify topic creation
+             )
+    (forge-pull)))
 
 (defun string-to-branch-name (str)
   "Turns a string into a branch name by replacing spaces with dashes and lowercasing it."
@@ -24,11 +22,7 @@
   (interactive)
   (magit-branch-and-checkout (string-to-branch-name (read-string "Branch name: ")) "main"))
 
-(use-package magit-todos
-  :ensure t
-  :after magit
-  :config
-  (magit-todos-mode))
+
 
 (use-package magit
   :ensure t
@@ -40,13 +34,20 @@
    ("C-x C-g" . magit-status-quick)
    ("C-x g" . magit-status)))
 
-(defun my-fetch-all-forge-topics ()
-  "Fetch all topics from the forge remote."
-  (when (and (derived-mode-p 'forge-topic-mode)
-             ;; Add any additional conditions to verify topic creation
-             )
-    (forge-pull)))
+(use-package magit-todos
+  :ensure t
+  :after magit
+  :config
+  (magit-todos-mode))
 
+(use-package magit-delta
+  :ensure t
+  :hook (magit-mode . magit-delta-mode)
+  :config
+  (setq magit-delta-delta-args
+  '("--24-bit-color" "always"
+    "--features" "magit-delta"
+    "--color-only")))
 
 (use-package forge
   :ensure t
@@ -55,12 +56,6 @@
          (forge-post-mode . turn-on-flyspell)
          (forge-post-mode . my-fetch-all-forge-topics)
          (forge-post-mode . display-fill-column-indicator-mode)))
-
-
-
-;; (use-package treemacs-magit
-;;   :after (treemacs magit)
-;;   :ensure t )
 
 (use-package blamer
   :ensure t
@@ -73,9 +68,7 @@
                    :height 0.7
                    :italic t))))
 
-
 (use-package git-link
   :ensure t)
-
 
 (provide 'git)
