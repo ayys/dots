@@ -58,18 +58,18 @@
       ns-function-modifier 'hyper)
 
 ;; Display Time
-
 (display-time-mode 1)
 (display-time)
 
 
 ;; disable menu-bar, scroll-bar and tool-bar
-
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
 
 
+;; Ido mode disable
+(ido-mode 'buffers)
 
 (add-to-list 'load-path "~/.emacs.d/packages")
 (load "typo-theme")
