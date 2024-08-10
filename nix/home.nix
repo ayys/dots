@@ -85,6 +85,15 @@
     enable = true;
   };
 
+  programs.git = {
+    enable = true;
+    userName  = "ayys";
+    extraConfig = {
+      push = { autoSetupRemote = true; };
+    };
+
+  };
+
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
