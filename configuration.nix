@@ -5,7 +5,6 @@
     [
       # Include the results of the hardware scan.
       ./hardware-configuration.nix
-      <home-manager/nixos>
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -89,66 +88,6 @@
       lohit-fonts.devanagari
       proggyfonts
     ];
-  };
-
-  home-manager.backupFileExtension = "backup";
-  home-manager.useGlobalPkgs = true;
-  home-manager.users.ayys = {pkgs, ...}: {
-    home.packages = with pkgs; [
-      htop
-      git
-      fortune
-      editorconfig-core-c
-      ripgrep
-      nodejs
-      yarn
-      slack
-      tmux
-      tmuxinator
-      pyenv
-      cmake
-      aspell
-      kubectl
-      google-cloud-sdk
-      k9s
-      postgresql_16
-      tmuxinator
-      atuin
-      eza
-      gnumake
-      gcc
-      libtool
-      delta
-      gh
-      killall
-    ];
-
-    programs.zoxide.enable = true;
-
-    home.file = {
-      ".config/awesome/rc.lua".source = /home/ayys/git/dots/awesome/rc.lua;
-      ".emacs.d/init.el".source = /home/ayys/git/dots/emacs.d/init.el;
-      ".emacs.d/early-init.el".source = /home/ayys/git/dots/emacs.d/early-init.el;
-      ".emacs.d/navapali-maps.el".source = /home/ayys/git/dots/emacs.d/navapali-maps.el;
-      ".emacs.d/packages".source = /home/ayys/git/dots/emacs.d/packages;
-      ".emacs.d/copilot.el".source = /home/ayys/git/dots/emacs.d/copilot.el;
-      ".emacs.d/snippets".source = /home/ayys/git/dots/emacs.d/snippets;
-      ".config/bspwm/bspwmrc".source = /home/ayys/git/dots/bspwm/bspwmrc;
-      ".config/sxhkd/sxhkdrc".source = /home/ayys/git/dots/bspwm/sxhkdrc;
-      ".config/hypr/hyprland.conf".source = /home/ayys/git/dots/hypr/hyprland.conf;
-      ".config/waybar/config.jsonc".source = /home/ayys/git/dots/waybar/config.jsonc;
-      ".config/waybar/style.css".source = /home/ayys/git/dots/waybar/style.css;
-      ".Xmodmap".source = /home/ayys/git/dots/Xmodmap;
-    };
-    programs.bash = {
-      enable = true;
-    };
-    home.shellAliases = {
-      rebuild = "nixos-rebuild --flake $HOME/git/dots#ayys -I nixos-config=$HOME/git/dots/configuration.nix --use-remote-sudo switch";
-    };
-    # The state version is required and should stay at the version you
-    # originally installed.
-    home.stateVersion = "24.05";    
   };
 
   # Enable automatic login for the user.
