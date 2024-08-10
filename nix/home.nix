@@ -55,6 +55,7 @@
     libtool
     delta
     gh
+    rustup
   ];
 
   home.file = {
