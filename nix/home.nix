@@ -77,7 +77,7 @@
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
   };
   home.shellAliases = {
-    rebuild = "nixos-rebuild --flake $HOME/git/dots#ayys --use-remote-sudo switch";
+    rebuild = "nixos-rebuild --flake $HOME/git/dots/nix#ayys --use-remote-sudo switch";
   };
   programs.zoxide.enable = true;
   programs.bash = {
