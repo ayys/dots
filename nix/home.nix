@@ -68,19 +68,19 @@
   programs.zoxide.enable = true;
 
   home.file = {
-    ".config/awesome/rc.lua".source = ./awesome/rc.lua;
-    ".emacs.d/init.el".source = ./emacs.d/init.el;
-    ".emacs.d/early-init.el".source = ./emacs.d/early-init.el;
-    ".emacs.d/navapali-maps.el".source = ./emacs.d/navapali-maps.el;
-    ".emacs.d/packages".source = ./emacs.d/packages;
-    ".emacs.d/copilot.el".source = ./emacs.d/copilot.el;
-    ".emacs.d/snippets".source = ./emacs.d/snippets;
-    ".config/bspwm/bspwmrc".source = ./bspwm/bspwmrc;
-    ".config/sxhkd/sxhkdrc".source = ./bspwm/sxhkdrc;
-    ".config/hypr/hyprland.conf".source = ./hypr/hyprland.conf;
-    ".config/waybar/config.jsonc".source = ./waybar/config.jsonc;
-    ".config/waybar/style.css".source = ./waybar/style.css;
-    ".Xmodmap".source = ./Xmodmap;
+    ".config/awesome/rc.lua".source = ../awesome/rc.lua;
+    ".emacs.d/init.el".source = ../emacs.d/init.el;
+    ".emacs.d/early-init.el".source = ../emacs.d/early-init.el;
+    ".emacs.d/navapali-maps.el".source = ../emacs.d/navapali-maps.el;
+    ".emacs.d/packages".source = ../emacs.d/packages;
+    ".emacs.d/copilot.el".source = ../emacs.d/copilot.el;
+    ".emacs.d/snippets".source = ../emacs.d/snippets;
+    ".config/bspwm/bspwmrc".source = ../bspwm/bspwmrc;
+    ".config/sxhkd/sxhkdrc".source = ../bspwm/sxhkdrc;
+    ".config/hypr/hyprland.conf".source = ../hypr/hyprland.conf;
+    ".config/waybar/config.jsonc".source = ../waybar/config.jsonc;
+    ".config/waybar/style.css".source = ../waybar/style.css;
+    ".Xmodmap".source = ../Xmodmap;
   };
 
   home.sessionVariables = {
