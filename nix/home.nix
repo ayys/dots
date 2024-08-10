@@ -68,19 +68,19 @@
   programs.zoxide.enable = true;
 
   home.file = {
-    ".config/awesome/rc.lua".source = ~/git/dots/awesome/rc.lua;
-    ".emacs.d/init.el".source = ~/git/dots/emacs.d/init.el;
-    ".emacs.d/early-init.el".source = ~/git/dots/emacs.d/early-init.el;
-    ".emacs.d/navapali-maps.el".source = ~/git/dots/emacs.d/navapali-maps.el;
-    ".emacs.d/packages".source = ~/git/dots/emacs.d/packages;
-    ".emacs.d/copilot.el".source = ~/git/dots/emacs.d/copilot.el;
-    ".emacs.d/snippets".source = ~/git/dots/emacs.d/snippets;
-    ".config/bspwm/bspwmrc".source = ~/git/dots/bspwm/bspwmrc;
-    ".config/sxhkd/sxhkdrc".source = ~/git/dots/bspwm/sxhkdrc;
-    ".config/hypr/hyprland.conf".source = ~/git/dots/hypr/hyprland.conf;
-    ".config/waybar/config.jsonc".source = ~/git/dots/waybar/config.jsonc;
-    ".config/waybar/style.css".source = ~/git/dots/waybar/style.css;
-    ".Xmodmap".source = ~/git/dots/Xmodmap;
+    ".config/awesome/rc.lua".source = ./awesome/rc.lua;
+    ".emacs.d/init.el".source = ./emacs.d/init.el;
+    ".emacs.d/early-init.el".source = ./emacs.d/early-init.el;
+    ".emacs.d/navapali-maps.el".source = ./emacs.d/navapali-maps.el;
+    ".emacs.d/packages".source = ./emacs.d/packages;
+    ".emacs.d/copilot.el".source = ./emacs.d/copilot.el;
+    ".emacs.d/snippets".source = ./emacs.d/snippets;
+    ".config/bspwm/bspwmrc".source = ./bspwm/bspwmrc;
+    ".config/sxhkd/sxhkdrc".source = ./bspwm/sxhkdrc;
+    ".config/hypr/hyprland.conf".source = ./hypr/hyprland.conf;
+    ".config/waybar/config.jsonc".source = ./waybar/config.jsonc;
+    ".config/waybar/style.css".source = ./waybar/style.css;
+    ".Xmodmap".source = ./Xmodmap;
   };
 
   home.sessionVariables = {

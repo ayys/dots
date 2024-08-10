@@ -107,7 +107,7 @@
     wget
 
     (pkgs.emacsWithPackagesFromUsePackage {
-      config = /home/ayys/.emacs.d/init.el;
+      config = ../emacs.d/init.el;
       defaultInitFile = true;
       alwaysEnsure = true;
       package = pkgs.emacs-unstable;
@@ -120,6 +120,7 @@
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
+      sha256 = "1n8nmggg51kpy3vjfxz2sb41d3jh3yyxfxzhrz97sw80f9phzg1s";
     }))
   ];
 
