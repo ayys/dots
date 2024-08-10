@@ -56,7 +56,6 @@
     delta
     gh
   ];
-  programs.zoxide.enable = true;
 
   home.file = {
     ".config/awesome/rc.lua".source = ../awesome/rc.lua;
