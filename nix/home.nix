@@ -18,7 +18,7 @@
 
   # Install unfree programs
   # nix.package = pkgs.nix;
-    nixpkgs = {
+  nixpkgs = {
     config = {
       # Disable if you don't want unfree packages
       allowUnfree = true;
@@ -27,17 +27,8 @@
     };
   };
 
-  # This value determines the Home Manager release that your configuration is
-  # compatible with. This helps avoid breakage when a new Home Manager release
-  # introduces backwards incompatible changes.
-  #
-  # You should not change this value, even if you update Home Manager. If you do
-  # want to update the value, then make sure to first check the Home Manager
-  # release notes.
-  home.stateVersion = "23.11"; # Please read the comment before changing.
+  home.stateVersion = "23.05"; # Please read the comment before changing.
 
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = with pkgs; [
     htop
     git
@@ -85,6 +76,13 @@
 
   home.sessionVariables = {
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
+  };
+  home.shellAliases = {
+    rebuild = "nixos-rebuild --flake $HOME/git/dots#ayys --use-remote-sudo switch";
+  };
+  programs.zoxide.enable = true;
+  programs.bash = {
+    enable = true;
   };
 
   # Let Home Manager install and manage itself.
