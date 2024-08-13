@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs,  ... }:
 
 {
   imports =
@@ -8,6 +8,8 @@
     ];
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  nix.settings.trusted-users = ["root" "@wheel"];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -82,13 +84,23 @@
       liberation_ttf
       fira-code
       fira-code-symbols
+      hack-font
+      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Hack" ]; })
+      python311Packages.python
+      python311Packages.pip
+      python311Packages.python-lsp-server
+      python311Packages.pylsp-mypy
+      python311Packages.python-lsp-ruff
+      hackgen-nf-font
       mplus-outline-fonts.githubRelease
       dina-font
       source-code-pro
       lohit-fonts.devanagari
       proggyfonts
+      inputs.ayys-st.packages."${pkgs.system}".st
     ];
   };
+
 
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = true;
@@ -105,7 +117,6 @@
   environment.systemPackages = with pkgs; [
     vim
     wget
-
     (pkgs.emacsWithPackagesFromUsePackage {
       config = ../emacs.d/init.el;
       defaultInitFile = true;

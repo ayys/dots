@@ -44,7 +44,7 @@
     cmake
     aspell
     kubectl
-    google-cloud-sdk
+    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
     k9s
     postgresql_16
     tmuxinator
@@ -56,6 +56,10 @@
     delta
     gh
     rustup
+    devenv
+    redis
+    docker
+    doppler
   ];
 
   home.file = {
