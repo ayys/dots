@@ -34,7 +34,7 @@
 ;;   :hook (after-init . (lambda () (require 'nerd-icons))))
 
 (use-package focus
-  :bind (("C-c C-c C-l C-f" . focus-mode))
+  :bind (("C-x C-l C-f" . focus-mode))
   :ensure t)
 
 (use-package powerline
@@ -48,7 +48,7 @@
   :config (powerline-default-theme))
 
 (use-package centered-window :ensure t
-  :bind (("C-c C-c C-l" . centered-window-mode))
+  :bind (("C-x C-c C-l" . centered-window-mode))
   :config
   (setq cwm-use-vertical-padding nil)
   (setq cwm-frame-internal-border 0))

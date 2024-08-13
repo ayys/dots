@@ -157,3 +157,6 @@ interactive `pyvenv-activate' function before `lsp'"
   :mode (("\\.gql\\'" . graphql-mode)
          ("\\.graphql\\'" . graphql-mode))
   :ensure t)
+
+
+(use-package lua-mode :ensure t)
