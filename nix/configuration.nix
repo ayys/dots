@@ -33,13 +33,13 @@
 
   # Enable the X11 windowing system.
   # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = true;
+  services.xserver.enable = false;
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
-  services.displayManager.defaultSession = "plasmax11";
+  services.displayManager.defaultSession = "hyprland";
   services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm.wayland.enable = false;
+  services.displayManager.sddm.wayland.enable = true;
   
 
   # Configure keymap in X11
@@ -98,6 +98,17 @@
       lohit-fonts.devanagari
       proggyfonts
       inputs.ayys-st.packages."${pkgs.system}".st
+      inputs.cargo2nix.packages."${pkgs.system}".cargo2nix
+      xorg.xmodmap
+      feh
+      meson
+      wayland-protocols
+      wayland-utils
+      wl-clipboard
+      wlroots
+      kitty
+      wofi
+      dunst
     ];
   };
 
@@ -109,6 +120,26 @@
   # Install firefox.
   programs.firefox.enable = true;
 
+  programs.hyprland = {
+    enable = true; 
+    xwayland.enable = true;
+  };
+
+  programs.waybar.enable = true;
+
+  # Hint Electon apps to use wayland
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+  };
+
+  services.dbus.enable = true;
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+    ];
+  };
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
@@ -133,6 +164,11 @@
       url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
       sha256 = "1n8nmggg51kpy3vjfxz2sb41d3jh3yyxfxzhrz97sw80f9phzg1s";
     }))
+    (self: super: {
+      waybar = super.waybar.overrideAttrs (oldAttrs: {
+        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+      });
+    })
   ];
 
 
