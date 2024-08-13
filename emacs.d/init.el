@@ -1264,3 +1264,5 @@ parses its input."
 
 (use-package separedit :ensure t
   :bind ("C-c '" . 'separedit))
+
+(use-package lua-mode :ensure t)
