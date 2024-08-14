@@ -98,7 +98,6 @@
       lohit-fonts.devanagari
       proggyfonts
       inputs.ayys-st.packages."${pkgs.system}".st
-      inputs.cargo2nix.packages."${pkgs.system}".cargo2nix
       xorg.xmodmap
       feh
       meson
@@ -106,8 +105,6 @@
       wayland-utils
       wl-clipboard
       wlroots
-      kitty
-      wofi
       dunst
     ];
   };
@@ -143,26 +140,27 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     vim
     wget
-    (pkgs.emacsWithPackagesFromUsePackage {
+    killall
+  ];
+
+  services.emacs = {
+    enable = true;
+    defaultEditor = true;
+    package = pkgs.emacsWithPackagesFromUsePackage {
       config = ../emacs.d/init.el;
       defaultInitFile = true;
       alwaysEnsure = true;
       package = pkgs.emacs-unstable;
-    })
-  ];
-
-  services.emacs.package = pkgs.emacs-unstable;
-  services.emacs.enable = true;
-  services.emacs.defaultEditor = true;
+    };
+  };
+  
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-      sha256 = "1n8nmggg51kpy3vjfxz2sb41d3jh3yyxfxzhrz97sw80f9phzg1s";
+      sha256 = "0i5jxpr9rbhcxsaxlk8yp87qhn00fbzcrmyr5r335f7m6mgzf8c8";
     }))
     (self: super: {
       waybar = super.waybar.overrideAttrs (oldAttrs: {
@@ -183,7 +181,7 @@
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

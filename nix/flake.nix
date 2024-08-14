@@ -19,10 +19,6 @@
       url = "github:ayys/st";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    cargo2nix = {
-      url = "github:cargo2nix/cargo2nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs@{ self, nixpkgs, home-manager, ... }: {

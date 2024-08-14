@@ -60,6 +60,8 @@
     redis
     docker
     doppler
+    kitty
+    wofi
   ];
 
   home.file = {
@@ -67,7 +69,6 @@
     ".emacs.d/init.el".source = ../emacs.d/init.el;
     ".emacs.d/early-init.el".source = ../emacs.d/early-init.el;
     ".emacs.d/navapali-maps.el".source = ../emacs.d/navapali-maps.el;
-    ".emacs.d/packages".source = ../emacs.d/packages;
     ".emacs.d/copilot.el".source = ../emacs.d/copilot.el;
     ".emacs.d/snippets".source = ../emacs.d/snippets;
     ".config/bspwm/bspwmrc".source = ../bspwm/bspwmrc;
@@ -75,6 +76,7 @@
     ".config/hypr/hyprland.conf".source = ../hypr/hyprland.conf;
     ".config/waybar/config.jsonc".source = ../waybar/config.jsonc;
     ".config/waybar/style.css".source = ../waybar/style.css;
+    ".config/kitty/kitty.conf".source = ../kitty/kitty.conf;
     ".Xmodmap".source = ../Xmodmap;
   };
 
