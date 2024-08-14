@@ -62,6 +62,7 @@
     doppler
     kitty
     wofi
+    wasmer
   ];
 
   home.file = {
