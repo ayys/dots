@@ -620,6 +620,7 @@ autorunApps =
     "unclutter -idle 0 & disown",
     "picom & disown",
     "nm-applet & disown",
+    "feh --bg-scale ~/Downloads/4906909.jpg"
 }
 
 if autorun then
