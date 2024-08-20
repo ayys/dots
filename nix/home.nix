@@ -61,8 +61,10 @@
     docker
     doppler
     kitty
-    wofi
+    rofi
     wasmer
+    steam-run
+    corepack
   ];
 
   home.file = {
@@ -86,6 +88,7 @@
   };
   home.shellAliases = {
     rebuild = "nixos-rebuild --flake $HOME/git/dots/nix#ayys --use-remote-sudo switch";
+    git-rm-ws = "git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
   };
   programs.zoxide.enable = true;
   programs.bash = {

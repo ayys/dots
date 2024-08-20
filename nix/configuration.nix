@@ -31,22 +31,26 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
-  # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
-  services.xserver.enable = false;
-
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
-  services.displayManager.defaultSession = "hyprland";
+  services.displayManager.defaultSession = "plasmax11";
   services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
+  services.displayManager.sddm.wayland.enable = false;
   
 
   # Configure keymap in X11
   services.xserver = {
+    enable = true;
     xkb = {
       layout = "us";
       variant = "";
+    };
+    windowManager.awesome = {
+      enable = true;
+      luaModules = with pkgs.luaPackages; [
+        luarocks # is the package manager for Lua modules
+        luadbi-mysql # Database abstraction layer
+      ];
     };
   };
 
@@ -101,33 +105,27 @@
       xorg.xmodmap
       feh
       meson
-      wayland-protocols
-      wayland-utils
-      wl-clipboard
-      wlroots
-      dunst
     ];
   };
 
 
   # Enable automatic login for the user.
-  services.displayManager.autoLogin.enable = true;
+  services.displayManager.autoLogin.enable = false;
   services.displayManager.autoLogin.user = "ayys";
 
-  # Install firefox.
   programs.firefox.enable = true;
 
-  programs.hyprland = {
-    enable = true; 
-    xwayland.enable = true;
-  };
+  # programs.hyprland = {
+  #   enable = true; 
+  #   xwayland.enable = true;
+  # };
+  # programs.waybar.enable = true;
 
-  programs.waybar.enable = true;
 
-  # Hint Electon apps to use wayland
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-  };
+  # # Hint Electon apps to use wayland
+  # environment.sessionVariables = {
+  #   NIXOS_OZONE_WL = "1";
+  # };
 
   services.dbus.enable = true;
   xdg.portal = {
@@ -177,6 +175,15 @@
     enable = true;
     enableSSHSupport = true;
   };
+
+  systemd.user.services.xrandr = {
+    description = "Set xrandr settings on startup";
+    serviceConfig = {
+      ExecStart = "${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-1 --rotate right";
+    };
+    wantedBy = [ "graphical-session.target" ];
+  };
+
 
   # List services that you want to enable:
 
