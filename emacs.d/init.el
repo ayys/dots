@@ -556,6 +556,12 @@ interactive `pyvenv-activate' function before `lsp'"
                            (:sunset . catppuccin)))
   :config (circadian-setup))
 
+(use-package emacs
+  :bind (("C-'" . load-theme)
+         ("C-\"" . disable-theme)
+         ("C-:" . goto-line))
+  )
+
 (use-package nyx-theme :ensure t)
 (use-package hima-theme  :ensure t)
 (use-package tao-theme
