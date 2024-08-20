@@ -56,7 +56,7 @@ end
 beautiful.init(gears.filesystem.get_themes_dir()  .. "default/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "st dvtm-status"
+terminal = "st tmux"
 editor = "emacs"
 editor_cmd = "st emacs -nw"
 
@@ -291,8 +291,10 @@ globalkeys = gears.table.join(
         {description = "go back", group = "client"}),
 
     -- Standard program
-    awful.key({ modkey,           }, "Return", function () awful.spawn("emacsclient -c -e '(eat)'") end,
+    awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open emacs terminal", group = "launcher"}),
+    awful.key({ modkey,           }, "r", function () awful.spawn("firefox") end,
+              {description = "open firefox", group = "launcher"}),
     awful.key({ modkey,         "Shift"  }, "Return", function () awful.spawn(terminal) end,
               {description = "open ST terminal", group = "launcher"}),
     awful.key({ modkey,           }, "e", function () awful.spawn("emacsclient -c") end,
@@ -346,7 +348,7 @@ globalkeys = gears.table.join(
               end,
               {description = "lua execute prompt", group = "awesome"}),
     -- Menubar
-    awful.key({ modkey,           }, "p", function () awful.spawn("dmenu_run") end,
+    awful.key({ modkey,           }, "p", function () awful.spawn("rofi -show drun") end,
               {description = "open dmenu", group = "launcher"})
 )
 
@@ -604,7 +606,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 autorun = true
 autorunApps =
 {
-    "emacs --daemon",
     "setxkbmap -option ctrl:nocaps",
     "xset r rate 300 20",
     "xset m 1/1 4",
