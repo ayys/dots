@@ -79,6 +79,10 @@
         (when readme
           (find-file readme))))))
 
+(defun revert-buffer-no-confirm ()
+  "Revert buffer without confirmation."
+  (interactive) (revert-buffer t t))
+
 (use-package projectile
   :ensure t
   :after vertico
@@ -559,6 +563,7 @@ interactive `pyvenv-activate' function before `lsp'"
 (use-package emacs
   :bind (("C-'" . load-theme)
          ("C-\"" . disable-theme)
+         ("C-c C-/" . revert-buffer-no-confirm)
          ("C-:" . goto-line))
   )
 
