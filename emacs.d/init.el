@@ -869,6 +869,7 @@ interactive `pyvenv-activate' function before `lsp'"
 (use-package powerline
   :load-path "~/git/powerline"
   :init (progn
+          (setq powerline-display-minor-modes nil)
           (setq powerline-arrow-shape 'arrow14) ;; give your mode-line curves
           (setq powerline-image-apple-rgb t)
           (setq powerline-default-separator-dir '(right . left))
