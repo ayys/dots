@@ -97,13 +97,13 @@
                ("-" . projectile-run-async-shell-command-in-root)
                ("r" . open-project-readme)))
   :config (progn
-    (setq projectile-sort-order 'recently-active)
-    (setq projectile-indexing-method 'hybrid)
-    (define-key projectile-mode-map (kbd "C-c -") 'projectile-run-async-shell-command-in-root)
-    (setq projectile-enable-caching t)
-    (setq projectile-switch-project-action #'magit-status)
-    (setq projectile-completion-system 'default)
-    (setq projectile-project-search-path '("~/git"))))
+            (setq projectile-sort-order 'recently-active)
+            (setq projectile-indexing-method 'hybrid)
+            (define-key projectile-mode-map (kbd "C-c -") 'projectile-run-async-shell-command-in-root)
+            (setq projectile-enable-caching t)
+            (setq projectile-switch-project-action #'magit-status)
+            (setq projectile-completion-system 'default)
+            (setq projectile-project-search-path '("~/git"))))
 (defun my-fetch-all-forge-topics ()
   "Fetch all topics from the forge remote."
   (when (and (derived-mode-p 'forge-topic-mode)
@@ -317,8 +317,6 @@
   :config
   (add-to-list 'org-latex-packages-alist
                '("AUTO" "babel" t ("pdflatex")))
-  (define-key org-mode-map (kbd "`") #'org-insert-tilde)
-  (define-key org-mode-map (kbd "~") #'org-insert-backtick)
   (define-key org-mode-map (kbd "C-c C-r") 'verb-command-map)
   (setq org-agenda-files '())
   (setq org-log-done t)
