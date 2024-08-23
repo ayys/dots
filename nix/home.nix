@@ -65,6 +65,7 @@
     wasmer
     steam-run
     corepack
+    dolphin
   ];
 
   home.file = {
