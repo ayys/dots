@@ -180,7 +180,7 @@
   systemd.user.services.xrandr = {
     description = "Set xrandr settings on startup";
     serviceConfig = {
-      ExecStart = "${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-1 --rotate right";
+      ExecStart = "${pkgs.xorg.xrandr}/bin/xrandr --output HDMI-1 --rotate normal";
     };
     wantedBy = [ "graphical-session.target" ];
   };
