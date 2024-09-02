@@ -91,6 +91,7 @@
       hack-font
       (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Hack" ]; })
       python311Packages.python
+      python311Packages.ipython
       python311Packages.pip
       python311Packages.python-lsp-server
       python311Packages.pylsp-mypy
@@ -158,7 +159,7 @@
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-      sha256 = "0i5jxpr9rbhcxsaxlk8yp87qhn00fbzcrmyr5r335f7m6mgzf8c8";
+      sha256 = "150409xv0vn4z09sm15z5j9ka9pj4jb5gy4jkwahx19l4yikijyh";
     }))
     (self: super: {
       waybar = super.waybar.overrideAttrs (oldAttrs: {
