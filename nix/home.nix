@@ -62,10 +62,11 @@
     doppler
     kitty
     rofi
-    wasmer
     steam-run
     corepack
     dolphin
+    file
+    unzip
   ];
 
   home.file = {

@@ -116,6 +116,9 @@
 
   programs.firefox.enable = true;
 
+  programs.nix-ld.enable = true;
+
+
   # programs.hyprland = {
   #   enable = true; 
   #   xwayland.enable = true;
@@ -159,7 +162,7 @@
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
       url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-      sha256 = "150409xv0vn4z09sm15z5j9ka9pj4jb5gy4jkwahx19l4yikijyh";
+      sha256 = "15c6ricr17k8iy6h719b0dcgra148ky7b8yc4r17p7lmg2n5b6k6";
     }))
     (self: super: {
       waybar = super.waybar.overrideAttrs (oldAttrs: {
@@ -190,6 +193,8 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  virtualisation.docker.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

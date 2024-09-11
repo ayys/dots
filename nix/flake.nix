@@ -11,10 +11,6 @@
     };
     home-manager.url = "github:nix-community/home-manager/release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    wasmer-git = {
-      url = "github:wasmerio/wasmer/v4.3.5";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     ayys-st = {
       url = "github:ayys/st";
       inputs.nixpkgs.follows = "nixpkgs";
