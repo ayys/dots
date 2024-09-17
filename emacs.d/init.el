@@ -1281,4 +1281,11 @@ parses its input."
 
 (use-package goto-last-change)
 
-(use-package kele)
+(use-package kele
+  :config
+  (kele-mode 1)
+  (bind-key (kbd "M-C-k") kele-command-map kele-mode-map))
+
+
+(use-package tabnine
+  :hook (prog-mode . tabnine-mode))

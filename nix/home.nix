@@ -30,52 +30,53 @@
   home.stateVersion = "23.05"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
-    htop
-    git
-    fortune
-    editorconfig-core-c
-    ripgrep
-    nodejs
-    yarn
-    slack
-    tmux
-    tmuxinator
-    pyenv
-    cmake
-    aspell
-    kubectl
     (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
-    k9s
-    postgresql_16
-    tmuxinator
+    aspell
     atuin
-    eza
-    gnumake
-    gcc
-    libtool
-    delta
-    gh
-    rustup
-    devenv
-    redis
-    docker
-    doppler
-    kitty
-    rofi
-    steam-run
-    corepack
-    dolphin
-    file
-    unzip
     autoconf
     automake
     bison
+    cmake
+    corepack
+    delta
+    devenv
+    docker
+    dolphin
+    doppler
+    editorconfig-core-c
+    eza
+    file
+    fortune
+    gcc
     gettext
-    gperf
-    m4
-    tree
+    gh
+    git
+    gnumake
     go
+    gperf
+    htop
+    k9s
+    kitty
+    kubectl
     libcap
+    libtool
+    m4
+    nodejs
+    poetry
+    postgresql_16
+    pyenv
+    redis
+    ripgrep
+    rofi
+    rustup
+    slack
+    steam-run
+    tmux
+    tmuxinator
+    tmuxinator
+    tree
+    unzip
+    yarn
   ];
 
   home.file = {
