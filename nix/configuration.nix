@@ -80,7 +80,7 @@
   users.users.ayys = {
     isNormalUser = true;
     description = "Ayush";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk
@@ -106,6 +106,7 @@
       xorg.xmodmap
       feh
       meson
+      wasmer
     ];
   };
 
@@ -152,7 +153,7 @@
       config = ../emacs.d/init.el;
       defaultInitFile = true;
       alwaysEnsure = true;
-      package = pkgs.emacs-unstable;
+      package = pkgs.emacs;
     };
   };
   

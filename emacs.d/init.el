@@ -474,6 +474,7 @@ interactive `pyvenv-activate' function before `lsp'"
 
 
 (use-package yasnippet
+  :hook (prog-mode . yas-minor-mode )
   :ensure t)
 
 (use-package flycheck
@@ -1276,3 +1277,8 @@ parses its input."
   :bind ("C-c '" . 'separedit))
 
 (use-package lua-mode :ensure t)
+
+
+(use-package goto-last-change)
+
+(use-package kele)

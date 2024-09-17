@@ -67,6 +67,15 @@
     dolphin
     file
     unzip
+    autoconf
+    automake
+    bison
+    gettext
+    gperf
+    m4
+    tree
+    go
+    libcap
   ];
 
   home.file = {
