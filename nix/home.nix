@@ -77,6 +77,17 @@
     tree
     unzip
     yarn
+    poetry
+    jq
+    mysql84
+    postman
+    inkscape
+    cmake
+    extra-cmake-modules
+    pkg-config
+    fmt
+    json_c
+    devenv
   ];
 
   home.file = {
@@ -106,6 +117,8 @@
   programs.bash = {
     enable = true;
   };
+
+  programs.direnv.enable = true;
 
   programs.git = {
     enable = true;

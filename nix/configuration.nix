@@ -31,11 +31,24 @@
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.UTF-8";
 
+  i18n.inputMethod = {
+    enabled = "ibus";    # Set IBus as the input method framework
+    ibus.engines = with pkgs.ibus-engines; [
+      m17n   # Enable m17n engine (which supports typing in Devanagari)
+    ];
+  };
+
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
   services.displayManager.defaultSession = "plasmax11";
   services.desktopManager.plasma6.enable = true;
   services.displayManager.sddm.wayland.enable = false;
+  services.xserver.displayManager.sessionCommands = ''
+  export GTK_IM_MODULE=ibus
+  export QT_IM_MODULE=ibus
+  export XMODIFIERS=@im=ibus
+  ibus-daemon -drx
+'';
   
 
   # Configure keymap in X11
@@ -94,6 +107,7 @@
       python311Packages.ipython
       python311Packages.pip
       python311Packages.python-lsp-server
+      python311Packages.requests
       python311Packages.pylsp-mypy
       python311Packages.python-lsp-ruff
       hackgen-nf-font
@@ -159,8 +173,8 @@
   
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/emacs-overlay/archive/master.tar.gz";
-      sha256 = "15c6ricr17k8iy6h719b0dcgra148ky7b8yc4r17p7lmg2n5b6k6";
+      url = "https://github.com/nix-community/emacs-overlay/archive/6fd1f939e4453206d131744aee904c019f216ecd.tar.gz";
+      sha256 = "060gc3vv5552iqv6ljclnv2f784l77xqd2ilccfb5790xkd5i08m";
     }))
     (self: super: {
       waybar = super.waybar.overrideAttrs (oldAttrs: {
@@ -169,6 +183,11 @@
     })
   ];
 
+  programs.nix-ld.enable = true;
+  programs.nix-ld.libraries = with pkgs; [
+    # Add any missing dynamic libraries for unpackaged programs
+    # here, NOT in environment.systemPackages
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -185,6 +204,7 @@
     };
     wantedBy = [ "graphical-session.target" ];
   };
+  nix.settings.auto-optimise-store = true;
 
 
   # List services that you want to enable:

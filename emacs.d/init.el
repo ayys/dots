@@ -474,7 +474,7 @@ interactive `pyvenv-activate' function before `lsp'"
 
 
 (use-package yasnippet
-  :hook (prog-mode . yas-minor-mode )
+  :hook (prog-mode . yas-minor-mode)
   :ensure t)
 
 (use-package flycheck
@@ -1286,6 +1286,4 @@ parses its input."
   (kele-mode 1)
   (bind-key (kbd "M-C-k") kele-command-map kele-mode-map))
 
-
-(use-package tabnine
-  :hook (prog-mode . tabnine-mode))
+(use-package cyberpunk-theme)
