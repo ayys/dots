@@ -1287,3 +1287,7 @@ parses its input."
   (bind-key (kbd "M-C-k") kele-command-map kele-mode-map))
 
 (use-package cyberpunk-theme)
+
+(use-package direnv
+ :config
+ (direnv-mode))
