@@ -79,6 +79,7 @@
     yarn
     poetry
     jq
+    yq
     mysql84
     postman
     inkscape
@@ -88,6 +89,7 @@
     fmt
     json_c
     devenv
+    xclip
   ];
 
   home.file = {
