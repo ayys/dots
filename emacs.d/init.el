@@ -556,7 +556,7 @@ interactive `pyvenv-activate' function before `lsp'"
   (setq calendar-latitude 27.71)
   (setq calendar-longitude 85.32)
   (setq circadian-themes '((:sunrise . ef-deuteranopia-light)
-                           (:sunset . catppuccin)))
+                           (:sunset . doom-dark+)))
   :config (circadian-setup))
 
 (use-package emacs
@@ -1291,3 +1291,21 @@ parses its input."
 (use-package direnv
  :config
  (direnv-mode))
+
+(use-package copilot
+  :vc (:url "https://github.com/copilot-emacs/copilot.el"
+            :rev :newest
+            :branch "main")
+  :config
+  (require 'copilot)
+  (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+  (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+  (global-copilot-mode t))
+
+
+(use-package string-inflection
+  :ensure t
+  :bind ("C-c C-u" . string-inflection-all-cycle)  
+  )
+
+

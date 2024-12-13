@@ -32,7 +32,8 @@
   i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.inputMethod = {
-    enabled = "ibus";    # Set IBus as the input method framework
+    enable = true;
+    type = "ibus";    # Set IBus as the input method framework
     ibus.engines = with pkgs.ibus-engines; [
       m17n   # Enable m17n engine (which supports typing in Devanagari)
     ];
@@ -50,6 +51,16 @@
   ibus-daemon -drx
 '';
   
+  services.emacs = {
+    enable = true;
+    defaultEditor = true;
+    package = pkgs.emacsWithPackagesFromUsePackage {
+      config = ../emacs.d/init.el;
+      defaultInitFile = true;
+      alwaysEnsure = true;
+      package = pkgs.emacs;
+    };
+  };
 
   # Configure keymap in X11
   services.xserver = {
@@ -96,7 +107,7 @@
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       noto-fonts-emoji
       liberation_ttf
       fira-code
@@ -129,8 +140,6 @@
   services.displayManager.autoLogin.enable = false;
   services.displayManager.autoLogin.user = "ayys";
 
-  programs.firefox.enable = true;
-
   # programs.hyprland = {
   #   enable = true; 
   #   xwayland.enable = true;
@@ -160,16 +169,6 @@
     killall
   ];
 
-  services.emacs = {
-    enable = true;
-    defaultEditor = true;
-    package = pkgs.emacsWithPackagesFromUsePackage {
-      config = ../emacs.d/init.el;
-      defaultInitFile = true;
-      alwaysEnsure = true;
-      package = pkgs.emacs;
-    };
-  };
   
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {

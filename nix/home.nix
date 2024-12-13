@@ -39,7 +39,6 @@
     cmake
     corepack
     delta
-    devenv
     docker
     dolphin
     doppler
@@ -90,7 +89,13 @@
     json_c
     devenv
     xclip
+    nasm
+    qemu_full
+    pavucontrol
+    chromium
+    nix-index
   ];
+
 
   home.file = {
     ".config/awesome/rc.lua".source = ../awesome/rc.lua;
@@ -112,13 +117,24 @@
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
   };
   home.shellAliases = {
-    rebuild = "nixos-rebuild --flake $HOME/git/dots/nix#ayys --use-remote-sudo switch";
+    rebuild = "nixos-rebuild --flake $HOME/git/dots/nix#ayys --use-remote-sudo switch ; nix-collect-garbage";
+    rb = "rebuild";
     git-rm-ws = "git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
   };
   programs.zoxide.enable = true;
   programs.bash = {
     enable = true;
   };
+
+  programs.firefox = {
+    enable  = true;
+    package = pkgs.firefox-bin;
+  };
+
+  home.file.".local/bin/linear-firefox".text = ''
+    #!/bin/sh
+    firefox --new-window --kiosk "https://linear.app"
+  '';
 
   programs.direnv.enable = true;
 
@@ -128,8 +144,29 @@
     extraConfig = {
       push = { autoSetupRemote = true; };
     };
-
   };
+
+  systemd.user.services.set-wallpaper = {
+    Unit.Description = "Set wallpaper using feh";
+    Install.WantedBy = [ "graphical-session.target" ];
+    Service.ExecStart = "${pkgs.writeShellScript "wallpaper-switch" ''
+        #!bash
+        ${pkgs.feh}/bin/feh --bg-scale --randomize ~/git/dotfiles/Wallpapers/
+      ''}";
+  };
+
+  systemd.user.timers.set-wallpaper = {
+    Unit.Description = "Auto wallpaper changer";
+    Timer = {
+      OnBootSec = "10s";
+      OnUnitInactiveSec = "10s";
+      Unit = "set-wallpaper.service";
+    };
+    Install.WantedBy = ["timers.target" "graphical-session.target"];
+  };
+
+  systemd.user.targets.graphical-session.target.enable = true; # Ensure the graphical session target is enabled  
+
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;

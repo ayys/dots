@@ -171,7 +171,7 @@ end
 
 
 gears.timer {
-    timeout   = 24 * 60 * 60, -- 24 hours in seconds
+    timeout   = 60 * 60, -- 1 hr in seconds
     autostart = true,
     callback  = function()
         screen.emit_signal("request:wallpaper")
@@ -227,7 +227,6 @@ awful.screen.connect_for_each_screen(function(s)
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            mykeyboardlayout,
             wibox.widget.systray(),
             mytextclock,
             s.mylayoutbox,
@@ -332,10 +331,6 @@ globalkeys = gears.table.join(
                   end
               end,
               {description = "restore minimized", group = "client"}),
-
-    -- Prompt
-    awful.key({ modkey },            "r",     function () awful.screen.focused().mypromptbox:run() end,
-              {description = "run prompt", group = "launcher"}),
 
     awful.key({ modkey }, "x",
               function ()
