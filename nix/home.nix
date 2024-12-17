@@ -16,7 +16,26 @@
     homeDirectory = "/home/ayys";
   };
 
-  # Install unfree programs
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+
+    shellAliases = {
+      ll = "ls -l";
+    };
+    history = {
+      size = 10000;
+      path = "${config.xdg.dataHome}/zsh/history";
+    };
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" "thefuck" ];
+      theme = "robbyrussell";
+    };
+  };
+
   # nix.package = pkgs.nix;
   nixpkgs = {
     config = {
@@ -30,23 +49,29 @@
   home.stateVersion = "23.05"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
-    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
     aspell
     atuin
     autoconf
     automake
     bison
+    chromium
+    cmake
     cmake
     corepack
     delta
+    devenv
     docker
     dolphin
     doppler
     editorconfig-core-c
+    extra-cmake-modules
     eza
     file
+    fmt
     fortune
     gcc
+    gdb
+    gdbgui
     gettext
     gh
     git
@@ -54,46 +79,44 @@
     go
     gperf
     htop
+    inkscape
+    jq
+    json_c
     k9s
     kitty
     kubectl
     libcap
     libtool
     m4
+    mysql84
+    nasm
+    nix-index
     nodejs
+    pavucontrol
+    pkg-config
+    poetry
     poetry
     postgresql_16
+    postman
     pyenv
+    qemu_full
     redis
     ripgrep
     rofi
     rustup
     slack
     steam-run
+    thefuck
     tmux
     tmuxinator
     tmuxinator
     tree
     unzip
-    yarn
-    poetry
-    jq
-    yq
-    mysql84
-    postman
-    inkscape
-    cmake
-    extra-cmake-modules
-    pkg-config
-    fmt
-    json_c
-    devenv
     xclip
-    nasm
-    qemu_full
-    pavucontrol
-    chromium
-    nix-index
+    yarn
+    yq
+    xdiskusage
+(google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
   ];
 
 
@@ -117,8 +140,9 @@
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
   };
   home.shellAliases = {
-    rebuild = "nixos-rebuild --flake $HOME/git/dots/nix#ayys --use-remote-sudo switch ; nix-collect-garbage";
+    rebuild = "nixos-rebuild --flake $HOME/git/dots/nix#ayys --use-remote-sudo switch";
     rb = "rebuild";
+    gc = "nix-collect-garbage";
     git-rm-ws = "git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
   };
   programs.zoxide.enable = true;
@@ -169,5 +193,7 @@
 
 
   # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
+   programs.home-manager = {
+     enable = true;
+   };
 }

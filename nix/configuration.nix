@@ -9,6 +9,13 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
+
   nix.settings.trusted-users = ["root" "@wheel"];
 
   # Bootloader.
@@ -58,7 +65,7 @@
       config = ../emacs.d/init.el;
       defaultInitFile = true;
       alwaysEnsure = true;
-      package = pkgs.emacs;
+      package = pkgs.emacs-git;
     };
   };
 
@@ -105,6 +112,7 @@
     isNormalUser = true;
     description = "Ayush";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
+    shell = pkgs.zsh;
     packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans
@@ -128,6 +136,7 @@
       lohit-fonts.devanagari
       proggyfonts
       inputs.ayys-st.packages."${pkgs.system}".st
+      inputs.wasmenv.packages."${pkgs.system}".wasmenv
       xorg.xmodmap
       feh
       meson
@@ -145,13 +154,12 @@
   #   xwayland.enable = true;
   # };
   # programs.waybar.enable = true;
-
+  programs.zsh.enable = true;
 
   # # Hint Electon apps to use wayland
   # environment.sessionVariables = {
   #   NIXOS_OZONE_WL = "1";
   # };
-
   services.dbus.enable = true;
   xdg.portal = {
     enable = true;
@@ -203,7 +211,9 @@
     };
     wantedBy = [ "graphical-session.target" ];
   };
+
   nix.settings.auto-optimise-store = true;
+  nix.optimise.automatic = true;
 
 
   # List services that you want to enable:

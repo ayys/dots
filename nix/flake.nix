@@ -15,6 +15,10 @@
       url = "github:ayys/st";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    wasmenv = {
+      url = "github:ayys/wasmenv/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     lla = {
       url = "github:triyanox/lla";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -30,6 +34,7 @@
           (import ./configuration.nix)
           home-manager.nixosModules.home-manager
           {
+            home-manager.backupFileExtension = "backup";
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.users.ayys = import ./home.nix;

@@ -477,6 +477,9 @@ interactive `pyvenv-activate' function before `lsp'"
   :hook (prog-mode . yas-minor-mode)
   :ensure t)
 
+(use-package yasnippet-snippets
+  :ensure t)
+
 (use-package flycheck
   :ensure t)
 
