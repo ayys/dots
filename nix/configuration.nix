@@ -66,6 +66,19 @@
       defaultInitFile = true;
       alwaysEnsure = true;
       package = pkgs.emacs-git;
+      extraEmacsPackages = epkgs: [
+        epkgs.buildRecipe {
+          pname = "copilot";
+          version = "latest";
+          src = pkgs.fetchFromGitHub {
+            owner = "copilot-emacs";
+            repo = "copilot.el";
+            rev = "b7bff7b934837744688fd74191ecffb83b3bcc05"; # Replace this with a specific commit hash for reproducibility
+            sha256 = "sha256-placeholder"; # Replace with the actual SHA256 hash
+          };
+          elispFiles = ["copilot.el"];
+        }
+      ];
     };
   };
 
@@ -112,7 +125,6 @@
     isNormalUser = true;
     description = "Ayush";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
-    shell = pkgs.zsh;
     packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans
@@ -154,7 +166,6 @@
   #   xwayland.enable = true;
   # };
   # programs.waybar.enable = true;
-  programs.zsh.enable = true;
 
   # # Hint Electon apps to use wayland
   # environment.sessionVariables = {
