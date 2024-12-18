@@ -4,8 +4,6 @@
            (file-exists-p custom-file))
   (load custom-file nil :nomessage))
 
-
-(require 'use-package)
 (setq use-package-always-ensure t)
 (setq native-comp-deferred-compilation t)
 
@@ -1295,15 +1293,15 @@ parses its input."
  :config
  (direnv-mode))
 
+(setq use-package-verbose t)
+
 (use-package copilot
   :vc (:url "https://github.com/copilot-emacs/copilot.el"
             :rev :newest
             :branch "main")
-  :config
-  (require 'copilot)
-  (define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-  (define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
-  (global-copilot-mode t))
+  :bind (("<tab>" . copilot-accept-completion)
+         ("TAB" . copilot-accept-completion))
+  :hook (prog-mode . copilot-mode))
 
 
 (use-package string-inflection
