@@ -7,6 +7,10 @@
 (setq use-package-always-ensure t)
 (setq native-comp-deferred-compilation t)
 
+(global-set-key (kbd "<XF86AudioRaiseVolume>") 'text-scale-increase)
+(global-set-key (kbd "<XF86AudioLowerVolume>") 'text-scale-decrease)
+
+
 (use-package dashboard
   :ensure t
   :hook ((dashboard-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
@@ -1310,3 +1314,34 @@ parses its input."
   )
 
 
+(use-package elfeed
+  :ensure t
+  :defer t
+  :commands (elfeed)
+  :custom
+  (url-queue-timeout 30)
+  (elfeed-feeds
+   '(("https://mazzo.li/rss.xml" c low-level unix)
+     ("https://simblob.blogspot.com/feeds/posts/default" gamedev math algorithms)
+     ("https://box2d.org/posts/index.xml" gamedev math algorithms)
+     "https://davidgomes.com/rss/"
+     ("https://fabiensanglard.net/rss.xml" retrogaming)
+     ("https://ferd.ca/feed.rss" distsys)
+     "https://blog.singleton.io/index.xml"
+     ("https://johnnysswlab.com/feed/" cpp performance)
+     ("https://jvns.ca/atom.xml" webdev)
+     ("https://matklad.github.io/feed.xml" low-level programming)
+     ("https://jonathan-frere.com/index.xml" programming)
+     ("https://notes.eatonphil.com/rss.xml" distsys programming)
+     ("https://samwho.dev/blog" programming visualization)
+     ("https://wingolog.org/feed/atom" compilers guile scheme)
+     ("https://jakelazaroff.com/rss.xml" webdev)
+     ("https://www.localfirstnews.com/rss/" local-first)
+     ("https://www.internalpointers.com/rss" networking concurrency)
+     ("https://hazelweakly.me/rss.xml" observability)
+     ("https://norvig.com/rss-feed.xml" software)
+     ("https://hnrss.org/frontpage" hackernews)
+     ("https://blog.rust-lang.org/feed.xml" rust)
+     ("https://turreta.com/feed/" rust)
+     ("http://blog.japaric.io/index.xml" rust)
+     ("https://pythonspeed.com/atom.xml" python))))

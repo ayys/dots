@@ -54,7 +54,6 @@
     gdbgui
     gettext
     gh
-    git
     gnumake
     go
     gperf
@@ -124,6 +123,7 @@
     rb = "rebuild";
     gc = "nix-collect-garbage";
     git-rm-ws = "git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
+    re = "systemctl restart --user emacs";
   };
   programs.zoxide.enable = true;
   programs.bash = {
@@ -144,6 +144,7 @@
 
   programs.git = {
     enable = true;
+    package = pkgs.gitFull;
     userName  = "ayys";
     extraConfig = {
       push = { autoSetupRemote = true; };
