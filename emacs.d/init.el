@@ -1346,4 +1346,12 @@ parses its input."
      ("https://blog.rust-lang.org/feed.xml" rust)
      ("https://turreta.com/feed/" rust)
      ("http://blog.japaric.io/index.xml" rust)
+     ("https://pypi.org/rss/project/django/releases.xml" python django release pypi)
      ("https://pythonspeed.com/atom.xml" python))))
+
+
+(use-package gited)
+
+
+(use-package key-chord)
+(use-package bind-chord)
