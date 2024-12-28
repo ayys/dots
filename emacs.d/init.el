@@ -1279,6 +1279,8 @@ parses its input."
   :init (global-devil-mode))
 
 (use-package separedit :ensure t
+  :config (setq separedit-default-mode 'markdown-mode)
+  
   :bind ("C-c '" . 'separedit))
 
 (use-package lua-mode :ensure t)
