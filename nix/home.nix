@@ -77,6 +77,7 @@
     poetry
     postgresql_16
     postman
+    insomnia
     pyenv
     qemu_full
     redis
@@ -91,6 +92,7 @@
     tmuxinator
     tree
     unzip
+    hydroxide
     xclip
     yarn
     yq
@@ -99,6 +101,16 @@
   ];
 
 
+  systemd.user.services.hydroxide = {
+    Unit.Description = "Hydroxide - ProtonMail Bridge";
+    Install.WantedBy = [ "default.target" ];
+    Service = {
+      ExecStart = "${pkgs.hydroxide}/bin/hydroxide serve";
+      Restart = "always";
+      RestartSec = 5;
+    };
+  };
+  
   home.file = {
     ".config/awesome/rc.lua".source = ../awesome/rc.lua;
     ".emacs.d/init.el".source = ../emacs.d/init.el;
@@ -119,6 +131,7 @@
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
   };
   home.shellAliases = {
+    ls="exa";
     rebuild = "nixos-rebuild --flake $HOME/git/dots/nix#ayys --use-remote-sudo switch";
     rb = "rebuild";
     gc = "nix-collect-garbage";
@@ -128,6 +141,9 @@
   programs.zoxide.enable = true;
   programs.bash = {
     enable = true;
+    bashrcExtra = ''
+export HISTCONTROL=ignoreboth:erasedups
+'';
   };
 
   programs.firefox = {
@@ -144,7 +160,7 @@
 
   programs.git = {
     enable = true;
-    package = pkgs.gitFull;
+    package = pkgs.git;
     userName  = "ayys";
     extraConfig = {
       push = { autoSetupRemote = true; };
