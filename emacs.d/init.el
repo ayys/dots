@@ -476,33 +476,40 @@ interactive `pyvenv-activate' function before `lsp'"
 (use-package flycheck
   :ensure t)
 
-(use-package rustic
-  :ensure t
-  :bind (:map rustic-mode-map
-              ("M-j" . lsp-ui-imenu)
-              ("M-?" . lsp-find-references)
-              ("C-c C-c a" . lsp-execute-code-action)
-              ("C-c C-c r" . lsp-rename)
-              ("C-c C-c q" . lsp-workspace-restart)
-              ("C-c C-c Q" . lsp-workspace-shutdown)
-              ("C-c C-c s" . lsp-rust-analyzer-status))
-  :config
-  (setq rustic-format-on-save t)
-  (setq lsp-inlay-hint-enable t)
-  :hook
-  (rustic-mode . tree-sitter-hl-mode)
-  (rustic-mode . lsp)
-  (rustic-mode . lsp-inlay-hints-mode)
-  (rustic-mode . lsp-ui-mode)
-  :custom
-  (rustic-rustfmt-config-alist '((edition . "2021"))))
+(use-package rust-mode
+  :init
+  (setq rust-mode-treesitter-derive t))
+
+;; (use-package rustic
+;;   :ensure t
+;;   :bind (:map rustic-mode-map
+;;               ("M-j" . lsp-ui-imenu)
+;;               ("M-?" . lsp-find-references)
+;;               ("C-c C-c a" . lsp-execute-code-action)
+;;               ("C-c C-c r" . lsp-rename)
+;;               ("C-c C-c q" . lsp-workspace-restart)
+;;               ("C-c C-c Q" . lsp-workspace-shutdown)
+;;               ("C-c C-c s" . lsp-rust-analyzer-status))
+;;   :config
+;;   (setq rustic-format-on-save t)
+;;   (setq lsp-inlay-hint-enable t)
+;;   :hook
+;;   (rustic-mode . tree-sitter-hl-mode)
+;;   (rustic-mode . lsp)
+;;   (rustic-mode . lsp-inlay-hints-mode)
+;;   (rustic-mode . lsp-ui-mode)
+;;   :custom
+;;   (rustic-rustfmt-config-alist '((edition . "2021"))))
 
 (use-package tree-sitter :ensure t
-  :hook ( (python-ts-mode . lsp-deferred)
-          (rust-ts-mode . lsp-inlay-hints-mode)
-          (rust-ts-mode . lsp-ui-mode)
-          (rust-ts-mode . lsp-deferred))
-  :config (add-to-list 'tree-sitter-major-mode-language-alist '(python-ts-mode . python)))
+  :hook ((python-ts-mode . lsp-deferred)
+         (rust-mode . lsp-deferred)
+         (rust-mode . lsp-inlay-hints-mode)
+         (rust-mode . lsp-ui-mode)
+         (rust-mode . tree-sitter-hl-mode))
+  :config
+  (add-to-list 'tree-sitter-major-mode-language-alist '(python-ts-mode . python))
+  (add-to-list 'tree-sitter-major-mode-language-alist '(rust-mode . rust)))
 
 (use-package tree-sitter-langs
   :load-path "~/git/tree-sitter-langs"
