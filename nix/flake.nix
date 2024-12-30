@@ -16,7 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wasmenv = {
-      url = "github:ayys/wasmenv/master";
+      url = "github:ayys/wasmenv/0.2.5";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     lla = {
