@@ -114,6 +114,7 @@
   home.file = {
     ".config/awesome/rc.lua".source = ../awesome/rc.lua;
     ".emacs.d/init.el".source = ../emacs.d/init.el;
+    ".emacs.d/prelude.el".source = ../emacs.d/prelude.el;
     ".emacs.d/early-init.el".source = ../emacs.d/early-init.el;
     ".emacs.d/navapali-maps.el".source = ../emacs.d/navapali-maps.el;
     ".emacs.d/copilot.el".source = ../emacs.d/copilot.el;
