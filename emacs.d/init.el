@@ -1,4 +1,4 @@
-(load-file "prelude.el")
+(load-file (expand-file-name "prelude.el" (file-name-directory (or load-file-name buffer-file-name))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;Key bindings;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
