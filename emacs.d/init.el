@@ -404,8 +404,8 @@ parses its input."
 ;;   :custom
 ;;   (rustic-rustfmt-config-alist '((edition . "2021"))))
 (use-package lsp-mode :ensure t
-  :hook ((tsx-ts-mode . lsp-deferred))
-  )
+  :hook ((tsx-ts-mode . lsp-deferred)
+         (rust-ts-mode . lsp-deferred)))
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
