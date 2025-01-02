@@ -144,6 +144,11 @@
     enable = true;
     bashrcExtra = ''
 export HISTCONTROL=ignoreboth:erasedups
+
+# bash config for wasmenv
+# copy this to ~/.bashrc
+export WASMENV_DIR="/home/ayys/.config/wasmenv"
+[ -s "/home/ayys/.config/wasmenv/wasmenv.sh" ] && source "/home/ayys/.config/wasmenv/wasmenv.sh"
 '';
   };
 
