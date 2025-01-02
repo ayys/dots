@@ -534,7 +534,7 @@ parses its input."
 (use-package magit
   :ensure t
   :config
-  (Define-key magit-mode-map ";" 'my/magit-new-branch-from-main)
+  (define-key magit-mode-map ";" 'my/magit-new-branch-from-main)
   (setq magit-prefer-remote-upstream t)
   :bind
   (("C-x m" . magit-diff-unstaged)
