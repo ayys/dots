@@ -276,16 +276,16 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1735544819,
-        "narHash": "sha256-TGQFtkb7YtQtZfmAupbUSrHqOLk43VRJM0j6a20eR/I=",
+        "lastModified": 1735808851,
+        "narHash": "sha256-3H0Fi9UICLbDO0BS0n1QzJM0IRFKelFwIhbBses/rAM=",
         "owner": "ayys",
         "repo": "wasmenv",
-        "rev": "c4b5ff8a8c90f8b52a261ca1bc02d501f64629c7",
+        "rev": "9f3ef8e06b8c473b58dda371f58beede0ee3612c",
         "type": "github"
       },
       "original": {
         "owner": "ayys",
-        "ref": "0.2.5",
+        "ref": "0.2.6",
         "repo": "wasmenv",
         "type": "github"
       }
