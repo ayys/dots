@@ -97,6 +97,7 @@
     yarn
     yq
     xdiskusage
+    gitoxide
 (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
   ];
 
@@ -133,11 +134,6 @@
   };
   home.shellAliases = {
     ls="exa";
-    rebuild = "nixos-rebuild --flake $HOME/git/dots/nix#ayys --use-remote-sudo switch";
-    rb = "rebuild";
-    gc = "nix-collect-garbage";
-    git-rm-ws = "git diff -U0 -w --no-color | git apply --cached --ignore-whitespace --unidiff-zero -";
-    re = "systemctl restart --user emacs";
   };
   programs.zoxide.enable = true;
   programs.bash = {
@@ -152,15 +148,56 @@ export WASMENV_DIR="/home/ayys/.config/wasmenv"
 '';
   };
 
+
   programs.firefox = {
     enable  = true;
     package = pkgs.firefox-bin;
   };
 
-  home.file.".local/bin/linear-firefox".text = ''
+  home.file.".local/bin/rb" = {
+    text = ''
+    #!/bin/sh
+    nixos-rebuild --flake $HOME/git/dots/nix#ayys --use-remote-sudo switch
+  '';
+    executable = true;
+  }; 
+
+  home.file.".local/bin/gc" = {
+    text = ''  
+    #!/bin/sh
+    nix-collect-garbage -d
+  '';
+    executable = true;
+  }; 
+
+
+  home.file.".local/bin/linear-firefox" = {
+    text = ''
     #!/bin/sh
     firefox --new-window --kiosk "https://linear.app"
   '';
+    executable = true;
+  }; 
+
+  home.file.".local/bin/re" = {
+    text = ''
+    #!/bin/sh
+    systemctl restart --user emacs
+  '';
+    executable = true;
+  }; 
+
+  home.file.".local/bin/tm-be" = {
+    text = ''
+    #!/bin/sh
+    tmuxinator backend-pg
+  '';
+    executable = true;
+  };
+
+  home.sessionPath = [
+    "$HOME/.local/bin"    
+  ];
 
   programs.direnv.enable = true;
 

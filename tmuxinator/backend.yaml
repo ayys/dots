@@ -1,0 +1,15 @@
+name: backend with postgres
+windows:
+  - server:
+      layout: tiled
+      panes:
+        - make migrate gunicorn config=local_postgres
+  - auxilary:
+      layout: tiled
+      panes:
+        - docker-compose -f compose.yaml up
+        - make celery config=local_postgres
+  - k9s:
+      layout: tiled
+      panes:
+        - k9s

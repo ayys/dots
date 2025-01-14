@@ -92,7 +92,9 @@
     (diminish 'python-ts-mode "")
     (diminish 'rainbow-mode "")
     (diminish 'ruff-format-on-save-mode "")
-    (diminish 'rustic-mode "")
+    (diminish 'rustic-mode "🦀ic")
+    (diminish 'rust-ts-mode "🦀ts")
+    (diminish 'rust-mode "🦀")
     (diminish 'tree-sitter-mode "")
     (diminish 'undo-tree-mode "")
     (diminish 'visual-line-mode "")
@@ -382,17 +384,21 @@ parses its input."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package rust-mode
   :init
-  (setq rust-mode-treesitter-derive t))
+  (setq rust-mode-treesitter-derive t)
+  :bind (:map rust-ts-mode-map
+              ("M-j" . lsp-ui-imenu)
+              ("M-?" . lsp-find-references)
+              ("C-c C-c a" . lsp-execute-code-action)
+              ("C-c C-c r" . lsp-rename)
+              ("C-c C-c q" . lsp-workspace-restart)
+              ("C-c C-c Q" . lsp-workspace-shutdown)
+              ("C-c C-c s" . lsp-rust-analyzer-status))
+  :hook (rust-ts-mode . lsp-deferred)
+  :config
+  (setq lsp-inlay-hint-enable t))
+
 ;; (use-package rustic
 ;;   :ensure t
-;;   :bind (:map rustic-mode-map
-;;               ("M-j" . lsp-ui-imenu)
-;;               ("M-?" . lsp-find-references)
-;;               ("C-c C-c a" . lsp-execute-code-action)
-;;               ("C-c C-c r" . lsp-rename)
-;;               ("C-c C-c q" . lsp-workspace-restart)
-;;               ("C-c C-c Q" . lsp-workspace-shutdown)
-;;               ("C-c C-c s" . lsp-rust-analyzer-status))
 ;;   :config
 ;;   (setq rustic-format-on-save t)
 ;;   (setq lsp-inlay-hint-enable t)
@@ -403,9 +409,11 @@ parses its input."
 ;;   (rustic-mode . lsp-ui-mode)
 ;;   :custom
 ;;   (rustic-rustfmt-config-alist '((edition . "2021"))))
+
 (use-package lsp-mode :ensure t
   :hook ((tsx-ts-mode . lsp-deferred)
          (rust-ts-mode . lsp-deferred)))
+
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
@@ -429,13 +437,12 @@ parses its input."
   (global-treesit-auto-mode))
 (use-package tree-sitter :ensure t
   :hook ((python-ts-mode . lsp-deferred)
-         (rust-mode . lsp-deferred)
-         (rust-mode . lsp-inlay-hints-mode)
-         (rust-mode . lsp-ui-mode)
-         (rust-mode . tree-sitter-hl-mode))
+         (rust-ts-mode . lsp-deferred)
+         (rust-ts-mode . lsp-inlay-hints-mode)
+         (rust-ts-mode . lsp-ui-mode))
   :config
   (add-to-list 'tree-sitter-major-mode-language-alist '(python-ts-mode . python))
-  (add-to-list 'tree-sitter-major-mode-language-alist '(rust-mode . rust)))
+  (add-to-list 'tree-sitter-major-mode-language-alist '(rust-ts-mode . rust)))
 (use-package tree-sitter-langs
   :load-path "~/git/tree-sitter-langs"
   :ensure t)
@@ -524,7 +531,8 @@ parses its input."
   :ensure t)
 (use-package direnv
   :config
-  (direnv-mode))
+  (direnv-mode)
+  :custom (setq direnv-always-show-summary nil))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -699,7 +707,8 @@ parses its input."
 ;;;;;;;;;;;;Terminal;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package eat :ensure t
-  :bind (("M-RET" . eat))
+  :bind (("M-RET" . ayys/eat-terminal-split))
+  :bind (:map eat-mode-map ("C-<return>" . ayys/eat-terminal-split))
   :hook (eat-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
 (use-package vterm
   :ensure t

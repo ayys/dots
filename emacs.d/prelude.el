@@ -160,3 +160,14 @@ interactive `pyvenv-activate' function before `lsp'"
   "Create a new branch from main."
   (interactive)
   (magit-branch-and-checkout (string-to-branch-name (read-string "Branch name: ")) "main"))
+
+
+
+
+
+(defun ayys/eat-terminal-split ()
+  "Create a new Eat terminal in a split frame and switch to it."
+  (interactive)
+  (let ((split-window (split-window-below)))
+    (select-window split-window)
+    (eat)))
