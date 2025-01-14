@@ -805,3 +805,10 @@ parses its input."
      ("http://blog.japaric.io/index.xml" rust)
      ("https://pypi.org/rss/project/django/releases.xml" python django release pypi)
      ("https://pythonspeed.com/atom.xml" python))))
+
+
+(use-package recentf
+  :bind (("C-x C-r" . recentf-open-files))
+  :config (progn
+            (setq recentf-max-menu-items 50)
+            (setq recentf-max-saved-items 50)))
