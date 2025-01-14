@@ -98,6 +98,7 @@
     yq
     xdiskusage
     gitoxide
+    bacon
 (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
   ];
 
@@ -113,13 +114,14 @@
   };
   
   home.file = {
-    ".config/awesome/rc.lua".source = ../awesome/rc.lua;
-    ".emacs.d/init.el".source = ../emacs.d/init.el;
-    ".emacs.d/prelude.el".source = ../emacs.d/prelude.el;
-    ".emacs.d/early-init.el".source = ../emacs.d/early-init.el;
-    ".emacs.d/navapali-maps.el".source = ../emacs.d/navapali-maps.el;
-    ".emacs.d/copilot.el".source = ../emacs.d/copilot.el;
-    ".emacs.d/snippets".source = ../emacs.d/snippets;
+    ".config/tmuxinator/backend.yaml".source = ../tmuxinator/backend.yaml;
+    ".config/awesome/rc.lua".source = ../awesome/rc.lua;    
+    ".config/emacs/init.el".source = ../emacs.d/init.el;
+    ".config/emacs/prelude.el".source = ../emacs.d/prelude.el;
+    ".config/emacs/early-init.el".source = ../emacs.d/early-init.el;
+    ".config/emacs/navapali-maps.el".source = ../emacs.d/navapali-maps.el;
+    ".config/emacs/copilot.el".source = ../emacs.d/copilot.el;
+    ".config/emacs/snippets".source = ../emacs.d/snippets;
     ".config/bspwm/bspwmrc".source = ../bspwm/bspwmrc;
     ".config/sxhkd/sxhkdrc".source = ../bspwm/sxhkdrc;
     ".config/hypr/hyprland.conf".source = ../hypr/hyprland.conf;
@@ -190,7 +192,7 @@ export WASMENV_DIR="/home/ayys/.config/wasmenv"
   home.file.".local/bin/tm-be" = {
     text = ''
     #!/bin/sh
-    tmuxinator backend-pg
+    tmuxinator backend
   '';
     executable = true;
   };

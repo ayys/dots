@@ -166,8 +166,11 @@ interactive `pyvenv-activate' function before `lsp'"
 
 
 (defun ayys/eat-terminal-split ()
-  "Create a new Eat terminal in a split frame and switch to it."
+  "Create a new Eat terminal in a split frame and switch to it.
+If the current buffer is an Eat buffer, switch to the previous buffer instead."
   (interactive)
-  (let ((split-window (split-window-below)))
-    (select-window split-window)
-    (eat)))
+  (if (string-match-p "eat\\*$" (buffer-name))
+      (switch-to-prev-buffer)
+    (let ((split-window (split-window-below)))
+      (select-window split-window)
+      (eat-project))))

@@ -344,7 +344,7 @@ parses its input."
   (setq undo-tree-visualizer-timestamps t)
   (setq undo-tree-visualizer-diff t)
   (setq undo-tree-auto-save-history t)
-  (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+  (setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/undo")))
   (setq undo-tree-visualizer-relative-timestamps t)
   (setq undo-tree-visualizer-timestamps t))
 (use-package smartparens :ensure t
@@ -442,6 +442,7 @@ parses its input."
          (rust-ts-mode . lsp-ui-mode))
   :config
   (add-to-list 'tree-sitter-major-mode-language-alist '(python-ts-mode . python))
+  (add-to-list 'tree-sitter-major-mode-language-alist '(yaml-ts-mode . yaml))
   (add-to-list 'tree-sitter-major-mode-language-alist '(rust-ts-mode . rust)))
 (use-package tree-sitter-langs
   :load-path "~/git/tree-sitter-langs"
@@ -526,8 +527,8 @@ parses its input."
   :ensure t)
 (use-package yaml-pro
   :mode (
-         ("\\.yml\\'" . yaml-pro-mode)
-         ("\\.yaml\\'" . yaml-pro-mode))
+         ("\\.yml\\'" . yaml-ts-mode)
+         ("\\.yaml\\'" . yaml-ts-mode))
   :ensure t)
 (use-package direnv
   :config
@@ -707,8 +708,9 @@ parses its input."
 ;;;;;;;;;;;;Terminal;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package eat :ensure t
-  :bind (("M-RET" . ayys/eat-terminal-split))
-  :bind (:map eat-mode-map ("C-<return>" . ayys/eat-terminal-split))
+  :bind (("M-RET" . eat-project))
+  :bind (:map eat-mode-map
+              ("M-<return>" . ayys/eat-terminal-split))
   :hook (eat-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
 (use-package vterm
   :ensure t
