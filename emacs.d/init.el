@@ -417,9 +417,9 @@ parses its input."
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
-  :bind (("M-." . lsp-ui-peek-find-definitions)
-         ("M-?" . lsp-ui-peek-find-references))
-  )
+  :bind (("M-." . lsp-find-definition)
+         ("M-?" . lsp-find-references)))
+
 (use-package lsp-python-ms
   :ensure t
   
@@ -442,6 +442,7 @@ parses its input."
          (rust-ts-mode . lsp-ui-mode))
   :config
   (add-to-list 'tree-sitter-major-mode-language-alist '(python-ts-mode . python))
+  (add-to-list 'tree-sitter-major-mode-language-alist '(graphql-ts-mode . graphql))
   (add-to-list 'tree-sitter-major-mode-language-alist '(yaml-ts-mode . yaml))
   (add-to-list 'tree-sitter-major-mode-language-alist '(rust-ts-mode . rust)))
 (use-package tree-sitter-langs
@@ -462,7 +463,7 @@ parses its input."
                ("r" . open-project-readme)))
   :config (progn
             (setq projectile-sort-order 'recently-active)
-            (setq projectile-indexing-method 'hybrid)
+            (setq projectile-indexing-method 'native)
             (define-key projectile-mode-map (kbd "C-c -") 'projectile-run-async-shell-command-in-root)
             (setq projectile-enable-caching t)
             (setq projectile-switch-project-action #'magit-status)
@@ -522,9 +523,8 @@ parses its input."
   :ensure t)
 (use-package lua-mode :ensure t)
 (use-package graphql-mode
-  :mode (("\\.gql\\'" . graphql-mode)
-         ("\\.graphql\\'" . graphql-mode))
-  :ensure t)
+  :ensure t
+  :mode ("\\.graphql\\'" "\\.gql\\'"))
 (use-package yaml-pro
   :mode (
          ("\\.yml\\'" . yaml-ts-mode)
@@ -812,3 +812,7 @@ parses its input."
   :config (progn
             (setq recentf-max-menu-items 50)
             (setq recentf-max-saved-items 50)))
+
+
+(use-package webjump
+  :bind (("C-x C-x" . webjump)))

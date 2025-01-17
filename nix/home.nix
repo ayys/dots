@@ -73,8 +73,6 @@
     nodejs
     pavucontrol
     pkg-config
-    poetry
-    poetry
     postgresql_16
     postman
     insomnia
@@ -99,7 +97,8 @@
     xdiskusage
     gitoxide
     bacon
-(google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
+    live-server
+    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
   ];
 
 

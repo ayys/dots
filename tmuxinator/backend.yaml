@@ -1,4 +1,6 @@
 name: backend with postgres
+root: ~/git/work/backend
+
 windows:
   - server:
       layout: tiled
