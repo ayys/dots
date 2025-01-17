@@ -138,6 +138,8 @@
       feh
       meson
       wasmer
+      man-pages
+      man-pages-posix
     ];
   };
 
@@ -173,6 +175,12 @@
     killall
   ];
 
+  documentation.dev.enable = true;
+
+  documentation.man = {
+    man-db.enable = false;
+    mandoc.enable = true;
+  };
   
   nixpkgs.overlays = [
     (import (builtins.fetchTarball {
