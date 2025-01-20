@@ -759,17 +759,7 @@ parses its input."
 (use-package devil :ensure
   :bind (("C-," . global-devil-mode))
   :init (global-devil-mode))
-(use-package kele
-  :config
-  (kele-mode 1)
-  (bind-key (kbd "M-C-k") kele-command-map kele-mode-map))
-(use-package copilot
-  :vc (:url "https://github.com/copilot-emacs/copilot.el"
-            :rev :newest
-            :branch "main")
-  :bind (("<tab>" . copilot-accept-completion)
-         ("TAB" . copilot-accept-completion))
-  :hook (prog-mode . copilot-mode))
+
 (use-package string-inflection
   :ensure t
   :bind ("C-c C-u" . string-inflection-all-cycle))
@@ -816,3 +806,9 @@ parses its input."
 
 (use-package webjump
   :bind (("C-x C-x" . webjump)))
+
+
+(use-package rfc-mode)
+
+(use-package ido
+  :config (ido-mode -1))

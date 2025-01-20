@@ -126,6 +126,7 @@
       python311Packages.requests
       python311Packages.pylsp-mypy
       python311Packages.python-lsp-ruff
+      python311Packages.ruff
       hackgen-nf-font
       mplus-outline-fonts.githubRelease
       dina-font
