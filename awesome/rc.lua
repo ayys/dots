@@ -160,7 +160,8 @@ local tasklist_buttons = gears.table.join(
 local function set_wallpaper(s)
 -- Wallpaper
     if beautiful.wallpaper then
-        local wallpaper = pick_random_file("~/git/dots/wallpapers")
+        local wallpaper_dir = os.getenv("HOME") .. "/git/dots/wallpapers"
+        local wallpaper = pick_random_file(wallpaper_dir)
         -- If wallpaper is a function, call it with the screen
         if type(wallpaper) == "function" then
             wallpaper = wallpaper(s)
