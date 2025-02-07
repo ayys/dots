@@ -151,7 +151,7 @@
    ("M-F" . vertico-multiform-flat)
    ("M-R" . vertico-multiform-reverse)
    ("M-U" . vertico-multiform-unobtrusive)
-   ("C-l" . kb/vertico-multiform-flat-toggle))  ; Ensure kb/vertico-multiform-flat-toggle is defined
+)
   :hook ((rfn-eshadow-update-overlay . vertico-directory-tidy) ; Clean up file path when typing
          (minibuffer-setup . vertico-repeat-save) ; Make sure vertico state is saved
          )
@@ -167,13 +167,6 @@
   (require 'vertico)
   (require 'vertico-multiform)
   (require 'vertico-repeat)
-  (defun kb/vertico-multiform-flat-toggle ()
-    "Toggle between flat and reverse."
-    (interactive)
-    (vertico-multiform--display-toggle 'vertico-flat-mode)
-    (if vertico-flat-mode
-        (vertico-multiform--temporary-mode 'vertico-reverse-mode -1)
-      (vertico-multiform--temporary-mode 'vertico-reverse-mode 1)))
   (defun kb/vertico-quick-embark (&optional arg)
     "Embark on candidate using quick keys."
     (interactive)
@@ -463,7 +456,7 @@ parses its input."
                ("r" . open-project-readme)))
   :config (progn
             (setq projectile-sort-order 'recently-active)
-            (setq projectile-indexing-method 'native)
+            (setq projectile-indexing-method 'alien)
             (define-key projectile-mode-map (kbd "C-c -") 'projectile-run-async-shell-command-in-root)
             (setq projectile-enable-caching t)
             (setq projectile-switch-project-action #'magit-status)
