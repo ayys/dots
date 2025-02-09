@@ -798,9 +798,7 @@ parses its input."
 
 
 (use-package webjump
-  :bind (("C-x C-x" . webjump)))
-
-
+  :bind (("C-c C-o" . webjump)))
 (use-package rfc-mode)
 
 (use-package ido
@@ -818,10 +816,10 @@ parses its input."
   :ensure t
   :init
   (add-hook 'ibuffer-hook
-    (lambda ()
-      (ibuffer-projectile-set-filter-groups)
-      (unless (eq ibuffer-sorting-mode 'alphabetic)
-        (ibuffer-do-sort-by-alphabetic))))
+            (lambda ()
+              (ibuffer-projectile-set-filter-groups)
+              (unless (eq ibuffer-sorting-mode 'alphabetic)
+                (ibuffer-do-sort-by-alphabetic))))
   :config
   ;; define size-h column (human readable)
   (define-ibuffer-column size-h
@@ -833,12 +831,22 @@ parses its input."
      (t (format "%8dB" (buffer-size)))))
   
   (setq ibuffer-formats
-      '((mark modified read-only " "
-              (name 25 25 :left :elide)
-              " "
-              (size-h 9 -1 :right)       ;; use human readable size
-              " "
-              (mode 16 16 :left :elide)
-              " "
-              project-relative-file)))   ;; Display filenames relative to project root
+        '((mark modified read-only " "
+                (name 25 25 :left :elide)
+                " "
+                (size-h 9 -1 :right)       ;; use human readable size
+                " "
+                (mode 16 16 :left :elide)
+                " "
+                project-relative-file)))   ;; Display filenames relative to project root
   )
+
+
+
+(use-package guru-mode
+  :hook ((prog-mode . guru-mode)))
+
+(use-package easy-kill
+  :ensure t
+  :bind ([remap kill-ring-save] . easy-kill))
+
