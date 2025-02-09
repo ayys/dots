@@ -24,7 +24,7 @@
   (setq dashboard-startup-banner "~/junk/dashboard_pic.png")
   (setq dashboard-set-heading-icons t)
   (setq dashboard-items '((projects . 5)
-                          (bookmarks . 5)))
+                           (bookmarks . 5)))
   (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
   :config (dashboard-setup-startup-hook))
 (use-package wc-mode
@@ -48,7 +48,7 @@
   (setq calendar-latitude 27.71)
   (setq calendar-longitude 85.32)
   (setq circadian-themes '((:sunrise . ef-deuteranopia-light)
-                           (:sunset . doom-dark+)))
+                            (:sunset . doom-dark+)))
   :config (circadian-setup))
 (use-package nyan-mode :ensure t
   :hook ((fundamental-mode . nyan-mode))
@@ -109,23 +109,23 @@
 (use-package windmove
   :ensure t
   :bind (("C-c h" . windmove-left)
-	 ("C-c l" . windmove-right)
-	 ("C-c k" . windmove-up)
-	 ("C-c j" . windmove-down)))
+          ("C-c l" . windmove-right)
+          ("C-c k" . windmove-up)
+          ("C-c j" . windmove-down)))
 (use-package consult
   :ensure t
   :bind (         ;; Replacing default keybindings with consult versions
-         ("C-s" . consult-line)           ; Line-based search
-         ("C-x b" . consult-buffer)       ; Enhanced buffer switcher
-         ("C-x v" . consult-vterm-buffer)       ; vterm buffer switcher
-         ("C-c b" . consult-project-buffer)       ; Enhanced buffer switcher
-         ("C-x r b" . consult-bookmark)   ; Bookmarks
-         ("C-c d" . consult-ripgrep)      ; run ripgrep on project
-         ("C-c h" . consult-outline)      ; Grep for headings in the file
-         )
+          ("C-s" . consult-line)           ; Line-based search
+          ("C-x b" . consult-buffer)       ; Enhanced buffer switcher
+          ("C-x v" . consult-vterm-buffer)       ; vterm buffer switcher
+          ("C-c b" . consult-project-buffer)       ; Enhanced buffer switcher
+          ("C-x r b" . consult-bookmark)   ; Bookmarks
+          ("C-c d" . consult-ripgrep)      ; run ripgrep on project
+          ("C-c h" . consult-outline)      ; Grep for headings in the file
+          )
   :config
   (setq xref-show-xrefs-function #'consult-xref
-        xref-show-definitions-function #'consult-xref)
+    xref-show-definitions-function #'consult-xref)
   (consult-customize :preview-key nil)
   (setq consult-narrow-key "<") ;; "C-+"
   (autoload 'projectile-project-root "projectile")
@@ -134,27 +134,27 @@
   :ensure t
   :bind
   (("M-C-." . vertico-repeat)
-   :map vertico-map
-   ("<tab>" . vertico-insert)
-   ("<escape>" . minibuffer-keyboard-quit)
-   ("?" . minibuffer-completion-help)
-   ("C-M-n" . vertico-next-group)
-   ("C-M-p" . vertico-previous-group)
-   ("<backspace>" . vertico-directory-delete-char)
-   ("C-w" . vertico-directory-delete-word)
-   ("C-<backspace>" . vertico-directory-delete-word)
-   ("RET" . vertico-directory-enter)
-   ("C-i" . vertico-quick-insert)
-   ("C-o" . vertico-quick-exit)
-   ("M-o" . kb/vertico-quick-embark)  ; Ensure kb/vertico-quick-embark is defined
-   ("M-G" . vertico-multiform-grid)
-   ("M-F" . vertico-multiform-flat)
-   ("M-R" . vertico-multiform-reverse)
-   ("M-U" . vertico-multiform-unobtrusive)
-)
+    :map vertico-map
+    ("<tab>" . vertico-insert)
+    ("<escape>" . minibuffer-keyboard-quit)
+    ("?" . minibuffer-completion-help)
+    ("C-M-n" . vertico-next-group)
+    ("C-M-p" . vertico-previous-group)
+    ("<backspace>" . vertico-directory-delete-char)
+    ("C-w" . vertico-directory-delete-word)
+    ("C-<backspace>" . vertico-directory-delete-word)
+    ("RET" . vertico-directory-enter)
+    ("C-i" . vertico-quick-insert)
+    ("C-o" . vertico-quick-exit)
+    ("M-o" . kb/vertico-quick-embark)  ; Ensure kb/vertico-quick-embark is defined
+    ("M-G" . vertico-multiform-grid)
+    ("M-F" . vertico-multiform-flat)
+    ("M-R" . vertico-multiform-reverse)
+    ("M-U" . vertico-multiform-unobtrusive)
+    )
   :hook ((rfn-eshadow-update-overlay . vertico-directory-tidy) ; Clean up file path when typing
-         (minibuffer-setup . vertico-repeat-save) ; Make sure vertico state is saved
-         )
+          (minibuffer-setup . vertico-repeat-save) ; Make sure vertico state is saved
+          )
   :custom
   (vertico-count 5)
   (vertico-resize t)
@@ -177,13 +177,13 @@
   ;; https://github.com/minad/vertico#tramp-hostname-completion
   (defun kb/basic-remote-try-completion (string table pred point)
     (and (vertico--remote-p string)
-         (completion-basic-try-completion string table pred point)))
+      (completion-basic-try-completion string table pred point)))
   (defun kb/basic-remote-all-completions (string table pred point)
     (and (vertico--remote-p string)
-         (completion-basic-all-completions string table pred point)))
+      (completion-basic-all-completions string table pred point)))
   (add-to-list 'completion-styles-alist
-               '(basic-remote           ; Name of `completion-style'
-                 kb/basic-remote-try-completion kb/basic-remote-all-completions nil))
+    '(basic-remote           ; Name of `completion-style'
+       kb/basic-remote-try-completion kb/basic-remote-all-completions nil))
   :config
   (vertico-mode)
   ;; Extensions
@@ -191,13 +191,13 @@
   ;; Prefix the current candidate with “» ”. From
   ;; https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
   (advice-add #'vertico--format-candidate :around
-              (lambda (orig cand prefix suffix index _start)
-                (setq cand (funcall orig cand prefix suffix index _start))
-                (concat
-                 (if (= vertico--index index)
-                     (propertize "» " 'face 'vertico-current)
-                   "  ")
-                 cand)))
+    (lambda (orig cand prefix suffix index _start)
+      (setq cand (funcall orig cand prefix suffix index _start))
+      (concat
+        (if (= vertico--index index)
+          (propertize "» " 'face 'vertico-current)
+          "  ")
+        cand)))
   )
 (use-package marginalia
   :ensure t
@@ -205,7 +205,7 @@
   ;; available in the *Completions* buffer, add it to the
   ;; `completion-list-mode-map'.
   :bind (:map minibuffer-local-map
-              ("M-A" . marginalia-cycle))
+          ("M-A" . marginalia-cycle))
   ;; The :init section is always executed.
   :init
   ;; Marginalia must be activated in the :init section of use-package such that
@@ -218,27 +218,27 @@
   (completion-styles '(orderless))
   (completion-category-defaults nil)    ; I want to be in control!
   (completion-category-overrides
-   '((file (styles basic-remote ; For `tramp' hostname completion with `vertico'
-                   orderless
-                   ))
-     ))
+    '((file (styles basic-remote ; For `tramp' hostname completion with `vertico'
+              orderless
+              ))
+       ))
   (orderless-component-separator 'orderless-escapable-split-on-space)
   (orderless-matching-styles
-   '(orderless-literal
-     orderless-prefixes
-     orderless-initialism
-     orderless-regexp
-     ;; orderless-flex
-     ;; orderless-strict-leading-initialism
-     ;; orderless-strict-initialism
-     ;; orderless-strict-full-initialism
-     ;; orderless-without-literal          ; Recommended for dispatches instead
-     ))
+    '(orderless-literal
+       orderless-prefixes
+       orderless-initialism
+       orderless-regexp
+       ;; orderless-flex
+       ;; orderless-strict-leading-initialism
+       ;; orderless-strict-initialism
+       ;; orderless-strict-full-initialism
+       ;; orderless-without-literal          ; Recommended for dispatches instead
+       ))
   (orderless-style-dispatchers
-   '(prot-orderless-literal-dispatcher
-     prot-orderless-strict-initialism-dispatcher
-     prot-orderless-flex-dispatcher
-     ))
+    '(prot-orderless-literal-dispatcher
+       prot-orderless-strict-initialism-dispatcher
+       prot-orderless-flex-dispatcher
+       ))
   :init
   (defun orderless--strict-*-initialism (component &optional anchored)
     "Match a COMPONENT as a strict initialism, optionally ANCHORED.
@@ -251,7 +251,7 @@ the first word of the candidate.  If ANCHORED is `both' require
 that the first and last initials appear in the first and last
 words of the candidate, respectively."
     (orderless--separated-by
-        '(seq (zero-or-more alpha) word-end (zero-or-more (not alpha)))
+      '(seq (zero-or-more alpha) word-end (zero-or-more (not alpha)))
       (cl-loop for char across component collect `(seq word-start ,char))
       (when anchored '(seq (group buffer-start) (zero-or-more (not alpha))))
       (when (eq anchored 'both)
@@ -307,20 +307,20 @@ parses its input."
 (use-package expand-region
   :ensure t
   :bind (("C-=" . er/expand-region)
-         ("C--" . er/contract-region)))
+          ("C--" . er/contract-region)))
 (use-package highlight-symbol
   :ensure t
   :bind (("C-c C-n" . highlight-symbol-next)
-	 ("C-c r" . highlight-symbol-query-replace)
-	 ("C-c C-b" . highlight-symbol-prev)))
+          ("C-c r" . highlight-symbol-query-replace)
+          ("C-c C-b" . highlight-symbol-prev)))
 (use-package multiple-cursors
   :ensure t
   :bind
   (("C-c m q" . mc/mark-previous-like-this)
-   ("C-c m t" . mc/mark-next-like-this)
-   ("C-c m w" . mc/mark-all-symbols-like-this)
-   ("C-c m e" . mc/edit-lines)
-   ("C-c m r" . mc/mark-all-like-this)))
+    ("C-c m t" . mc/mark-next-like-this)
+    ("C-c m w" . mc/mark-all-symbols-like-this)
+    ("C-c m e" . mc/edit-lines)
+    ("C-c m r" . mc/mark-all-like-this)))
 (use-package repeat :ensure t
   :bind ("C-x z" . repeat)
   :config (repeat-mode t))
@@ -352,9 +352,9 @@ parses its input."
   :config
   (setq hl-paren-delay 0.0)
   (setq hl-paren-colors '("Springgreen3"
-                          "IndianRed1"
-                          "IndianRed3"
-                          "IndianRed4"))
+                           "IndianRed1"
+                           "IndianRed3"
+                           "IndianRed4"))
   (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
   (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
   (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
@@ -368,7 +368,7 @@ parses its input."
   :ensure t
   :hook (prog-mode . drag-stuff-mode )
   :bind (("M-p" . drag-stuff-up)
-	 ("M-n" . drag-stuff-down)))
+          ("M-n" . drag-stuff-down)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -379,13 +379,13 @@ parses its input."
   :init
   (setq rust-mode-treesitter-derive t)
   :bind (:map rust-ts-mode-map
-              ("M-j" . lsp-ui-imenu)
-              ("M-?" . lsp-find-references)
-              ("C-c C-c a" . lsp-execute-code-action)
-              ("C-c C-c r" . lsp-rename)
-              ("C-c C-c q" . lsp-workspace-restart)
-              ("C-c C-c Q" . lsp-workspace-shutdown)
-              ("C-c C-c s" . lsp-rust-analyzer-status))
+          ("M-j" . lsp-ui-imenu)
+          ("M-?" . lsp-find-references)
+          ("C-c C-c a" . lsp-execute-code-action)
+          ("C-c C-c r" . lsp-rename)
+          ("C-c C-c q" . lsp-workspace-restart)
+          ("C-c C-c Q" . lsp-workspace-shutdown)
+          ("C-c C-c s" . lsp-rust-analyzer-status))
   :hook (rust-ts-mode . lsp-deferred)
   :config
   (setq lsp-inlay-hint-enable t))
@@ -405,13 +405,13 @@ parses its input."
 
 (use-package lsp-mode :ensure t
   :hook ((tsx-ts-mode . lsp-deferred)
-         (rust-ts-mode . lsp-deferred)))
+          (rust-ts-mode . lsp-deferred)))
 
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
   :bind (("M-." . lsp-find-definition)
-         ("M-?" . lsp-find-references)))
+          ("M-?" . lsp-find-references)))
 
 (use-package lsp-python-ms
   :ensure t
@@ -419,9 +419,9 @@ parses its input."
   :hook ((python-mode . (lambda ()
                           (require 'lsp-python-ms)
                           (ayys/py-auto-lsp)))
-         (python-ts-mode . (lambda ()
-                             (require 'lsp-python-ms)
-                             (ayys/py-auto-lsp)))))
+          (python-ts-mode . (lambda ()
+                              (require 'lsp-python-ms)
+                              (ayys/py-auto-lsp)))))
 (use-package treesit-auto
   :custom
   (treesit-auto-install 'prompt)
@@ -430,9 +430,9 @@ parses its input."
   (global-treesit-auto-mode))
 (use-package tree-sitter :ensure t
   :hook ((python-ts-mode . lsp-deferred)
-         (rust-ts-mode . lsp-deferred)
-         (rust-ts-mode . lsp-inlay-hints-mode)
-         (rust-ts-mode . lsp-ui-mode))
+          (rust-ts-mode . lsp-deferred)
+          (rust-ts-mode . lsp-inlay-hints-mode)
+          (rust-ts-mode . lsp-ui-mode))
   :config
   (add-to-list 'tree-sitter-major-mode-language-alist '(python-ts-mode . python))
   (add-to-list 'tree-sitter-major-mode-language-alist '(graphql-ts-mode . graphql))
@@ -447,13 +447,13 @@ parses its input."
   :init
   (projectile-mode +1)
   :bind ((:map projectile-mode-map
-               ("s-p" . projectile-command-map)
-               ("C-c p" . projectile-command-map))
-         (:map projectile-command-map
-               ("RET" . projectile-run-async-shell-command-in-root)
-               ("!" . projectile-run-shell-command-in-root)
-               ("-" . projectile-run-async-shell-command-in-root)
-               ("r" . open-project-readme)))
+           ("s-p" . projectile-command-map)
+           ("C-c p" . projectile-command-map))
+          (:map projectile-command-map
+            ("RET" . projectile-run-async-shell-command-in-root)
+            ("!" . projectile-run-shell-command-in-root)
+            ("-" . projectile-run-async-shell-command-in-root)
+            ("r" . open-project-readme)))
   :config (progn
             (setq projectile-sort-order 'recently-active)
             (setq projectile-indexing-method 'alien)
@@ -499,29 +499,35 @@ parses its input."
   (python-ts-mode . ruff-format-on-save-mode))
 (use-package web-mode :defer t :ensure t
   :mode (
-         ("\\.html?\\'" . web-mode)
-         ("\\.mustache\\'" . web-mode)
-         ("\\.phtml\\'" . web-mode)
-         ("\\.tpl\\.php\\'" . web-mode)
-         ("\\.erb\\'" . web-mode)
-         ("\\.djhtml\\'" . web-mode)
-         ("\\.as[cp]x\\'" . web-mode)
-         ("\\.[agj]sp\\'" . web-mode)
-         ("\\.php\\'" . web-mode)
-         ("\\.twig\\'" . web-mode)
-         ("\\.jsp\\'" . web-mode)
-         ("\\.jspf\\'" . web-mode)
-         ("\\.tag\\'" . web-mode)))
+          ("\\.html?\\'" . web-mode)
+          ("\\.mustache\\'" . web-mode)
+          ("\\.phtml\\'" . web-mode)
+          ("\\.tpl\\.php\\'" . web-mode)
+          ("\\.erb\\'" . web-mode)
+          ("\\.djhtml\\'" . web-mode)
+          ("\\.as[cp]x\\'" . web-mode)
+          ("\\.[agj]sp\\'" . web-mode)
+          ("\\.php\\'" . web-mode)
+          ("\\.twig\\'" . web-mode)
+          ("\\.jsp\\'" . web-mode)
+          ("\\.jspf\\'" . web-mode)
+          ("\\.tag\\'" . web-mode)))
+
+
 (use-package editorconfig
-  :ensure t)
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+
 (use-package lua-mode :ensure t)
+
 (use-package graphql-mode
   :ensure t
   :mode ("\\.graphql\\'" "\\.gql\\'"))
 (use-package yaml-pro
   :mode (
-         ("\\.yml\\'" . yaml-ts-mode)
-         ("\\.yaml\\'" . yaml-ts-mode))
+          ("\\.yml\\'" . yaml-ts-mode)
+          ("\\.yaml\\'" . yaml-ts-mode))
   :ensure t)
 (use-package direnv
   :config
@@ -540,8 +546,8 @@ parses its input."
   (setq magit-prefer-remote-upstream t)
   :bind
   (("C-x m" . magit-diff-unstaged)
-   ("C-x C-g" . magit-status-quick)
-   ("C-x g" . magit-status)))
+    ("C-x C-g" . magit-status-quick)
+    ("C-x g" . magit-status)))
 (use-package magit-todos
   :ensure t
   :after magit
@@ -552,16 +558,16 @@ parses its input."
   :hook (magit-mode . magit-delta-mode)
   :config
   (setq magit-delta-delta-args
-        '("--24-bit-color" "always"
-          "--features" "magit-delta"
-          "--color-only")))
+    '("--24-bit-color" "always"
+       "--features" "magit-delta"
+       "--color-only")))
 (use-package forge
   :ensure t
   :after magit
   :hook ((forge-post-mode . auto-fill-mode)
-         (forge-post-mode . turn-on-flyspell)
-         (forge-post-mode . my-fetch-all-forge-topics)
-         (forge-post-mode . display-fill-column-indicator-mode)))
+          (forge-post-mode . turn-on-flyspell)
+          (forge-post-mode . my-fetch-all-forge-topics)
+          (forge-post-mode . display-fill-column-indicator-mode)))
 (use-package blamer
   :ensure t
   :bind (("C-c i" . blamer-show-commit-info))
@@ -570,8 +576,8 @@ parses its input."
   (blamer-min-offset 50)
   :custom-face
   (blamer-face ((t :foreground "#7a88cf"
-                   :height 0.7
-                   :italic t))))
+                  :height 0.7
+                  :italic t))))
 (use-package git-link
   :ensure t)
 (use-package git-gutter
@@ -606,7 +612,7 @@ parses its input."
 (use-package dired-narrow
   :ensure t
   :bind (:map dired-mode-map
-              ("/" . dired-narrow-regexp)))
+          ("/" . dired-narrow-regexp)))
 (use-package dired-rainbow
   :ensure t
   :config
@@ -650,19 +656,19 @@ parses its input."
   
   :bind
   (("C-c a" . org-agenda)
-   ("C-c C-h" . org-html-export-to-html)
-   ("C-c l" . org-store-link))
+    ("C-c C-h" . org-html-export-to-html)
+    ("C-c l" . org-store-link))
   :hook ((org-mode . auto-fill-mode)
-         (org-mode . display-fill-column-indicator-mode)
-         )
+          (org-mode . display-fill-column-indicator-mode)
+          )
   :config
   (add-to-list 'org-latex-packages-alist
-               '("AUTO" "babel" t ("pdflatex")))
+    '("AUTO" "babel" t ("pdflatex")))
   (define-key org-mode-map (kbd "C-c C-r") 'verb-command-map)
   (setq org-agenda-files '())
   (setq org-log-done t)
   (add-to-list 'org-latex-packages-alist
-               '("AUTO" "polyglossia" t ("xelatex" "lualatex"))))
+    '("AUTO" "polyglossia" t ("xelatex" "lualatex"))))
 (use-package org-bullets
   :ensure t
   
@@ -684,12 +690,12 @@ parses its input."
   
   :ensure t
   :mode (("README\\.md\\'" . gfm-mode)
-         ("\\.md\\'" . markdown-mode)
-         ("\\.markdown\\'" . markdown-mode))
+          ("\\.md\\'" . markdown-mode)
+          ("\\.markdown\\'" . markdown-mode))
   :hook ((org-mode . auto-fill-mode)
-         (markdown-mode . auto-fill-mode)
-         (org-mode . display-fill-column-indicator-mode)
-         (markdown-mode . display-fill-column-indicator-mode))
+          (markdown-mode . auto-fill-mode)
+          (org-mode . display-fill-column-indicator-mode)
+          (markdown-mode . display-fill-column-indicator-mode))
   :init (setq markdown-command "multimarkdown")
   :config
   (setq markdown-fontify-code-blocks-natively t))
@@ -703,7 +709,7 @@ parses its input."
 (use-package eat :ensure t
   :bind (("M-RET" . eat-project))
   :bind (:map eat-mode-map
-              ("M-<return>" . ayys/eat-terminal-split))
+          ("M-<return>" . ayys/eat-terminal-split))
   :hook (eat-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
 (use-package vterm
   :ensure t
@@ -719,9 +725,9 @@ parses its input."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package emacs
   :bind (("C-'" . load-theme)
-         ("C-\"" . disable-theme)
-         ("C-c C-/" . revert-buffer-no-confirm)
-         ("C-:" . goto-line)))
+          ("C-\"" . disable-theme)
+          ("C-c C-/" . revert-buffer-no-confirm)
+          ("C-:" . goto-line)))
 (use-package focus
   :bind (("C-c C-l C-f" . focus-mode))
   :ensure t)
@@ -746,7 +752,7 @@ parses its input."
   (exec-path-from-shell-initialize))
 (use-package valign :ensure t
   :hook ((org-mode . valign-mode)
-         (markdown-mode . valign-mode))
+          (markdown-mode . valign-mode))
   :config (setq valign-fancy-bar nil) ;; non-nil for fancy unicode bar
   )
 (use-package devil :ensure
@@ -763,31 +769,31 @@ parses its input."
   :custom
   (url-queue-timeout 30)
   (elfeed-feeds
-   '(("https://mazzo.li/rss.xml" c low-level unix)
-     ("https://simblob.blogspot.com/feeds/posts/default" gamedev math algorithms)
-     ("https://box2d.org/posts/index.xml" gamedev math algorithms)
-     "https://davidgomes.com/rss/"
-     ("https://fabiensanglard.net/rss.xml" retrogaming)
-     ("https://ferd.ca/feed.rss" distsys)
-     "https://blog.singleton.io/index.xml"
-     ("https://johnnysswlab.com/feed/" cpp performance)
-     ("https://jvns.ca/atom.xml" webdev)
-     ("https://matklad.github.io/feed.xml" low-level programming)
-     ("https://jonathan-frere.com/index.xml" programming)
-     ("https://notes.eatonphil.com/rss.xml" distsys programming)
-     ("https://samwho.dev/blog" programming visualization)
-     ("https://wingolog.org/feed/atom" compilers guile scheme)
-     ("https://jakelazaroff.com/rss.xml" webdev)
-     ("https://www.localfirstnews.com/rss/" local-first)
-     ("https://www.internalpointers.com/rss" networking concurrency)
-     ("https://hazelweakly.me/rss.xml" observability)
-     ("https://norvig.com/rss-feed.xml" software)
-     ("https://hnrss.org/frontpage" hackernews)
-     ("https://blog.rust-lang.org/feed.xml" rust)
-     ("https://turreta.com/feed/" rust)
-     ("http://blog.japaric.io/index.xml" rust)
-     ("https://pypi.org/rss/project/django/releases.xml" python django release pypi)
-     ("https://pythonspeed.com/atom.xml" python))))
+    '(("https://mazzo.li/rss.xml" c low-level unix)
+       ("https://simblob.blogspot.com/feeds/posts/default" gamedev math algorithms)
+       ("https://box2d.org/posts/index.xml" gamedev math algorithms)
+       "https://davidgomes.com/rss/"
+       ("https://fabiensanglard.net/rss.xml" retrogaming)
+       ("https://ferd.ca/feed.rss" distsys)
+       "https://blog.singleton.io/index.xml"
+       ("https://johnnysswlab.com/feed/" cpp performance)
+       ("https://jvns.ca/atom.xml" webdev)
+       ("https://matklad.github.io/feed.xml" low-level programming)
+       ("https://jonathan-frere.com/index.xml" programming)
+       ("https://notes.eatonphil.com/rss.xml" distsys programming)
+       ("https://samwho.dev/blog" programming visualization)
+       ("https://wingolog.org/feed/atom" compilers guile scheme)
+       ("https://jakelazaroff.com/rss.xml" webdev)
+       ("https://www.localfirstnews.com/rss/" local-first)
+       ("https://www.internalpointers.com/rss" networking concurrency)
+       ("https://hazelweakly.me/rss.xml" observability)
+       ("https://norvig.com/rss-feed.xml" software)
+       ("https://hnrss.org/frontpage" hackernews)
+       ("https://blog.rust-lang.org/feed.xml" rust)
+       ("https://turreta.com/feed/" rust)
+       ("http://blog.japaric.io/index.xml" rust)
+       ("https://pypi.org/rss/project/django/releases.xml" python django release pypi)
+       ("https://pythonspeed.com/atom.xml" python))))
 
 
 (use-package recentf
@@ -807,38 +813,38 @@ parses its input."
 
 (use-package copilot
   :bind (:map copilot-completion-map
-              ("<tab>" . copilot-accept-completion)
-              ("TAB" . copilot-accept-completion))
+          ("<tab>" . copilot-accept-completion)
+          ("TAB" . copilot-accept-completion))
   :hook ((prog-mode . copilot-mode))
-)
+  )
 
 (use-package ibuffer-projectile
   :ensure t
   :init
   (add-hook 'ibuffer-hook
-            (lambda ()
-              (ibuffer-projectile-set-filter-groups)
-              (unless (eq ibuffer-sorting-mode 'alphabetic)
-                (ibuffer-do-sort-by-alphabetic))))
+    (lambda ()
+      (ibuffer-projectile-set-filter-groups)
+      (unless (eq ibuffer-sorting-mode 'alphabetic)
+        (ibuffer-do-sort-by-alphabetic))))
   :config
   ;; define size-h column (human readable)
   (define-ibuffer-column size-h
     (:name "Size" :inline t)
     (cond
-     ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
-     ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
-     ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
-     (t (format "%8dB" (buffer-size)))))
+      ((> (buffer-size) 1000000) (format "%7.1fM" (/ (buffer-size) 1000000.0)))
+      ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
+      ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
+      (t (format "%8dB" (buffer-size)))))
   
   (setq ibuffer-formats
-        '((mark modified read-only " "
-                (name 25 25 :left :elide)
-                " "
-                (size-h 9 -1 :right)       ;; use human readable size
-                " "
-                (mode 16 16 :left :elide)
-                " "
-                project-relative-file)))   ;; Display filenames relative to project root
+    '((mark modified read-only " "
+        (name 25 25 :left :elide)
+        " "
+        (size-h 9 -1 :right)       ;; use human readable size
+        " "
+        (mode 16 16 :left :elide)
+        " "
+        project-relative-file)))   ;; Display filenames relative to project root
   )
 
 
