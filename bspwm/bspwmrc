@@ -1,13 +1,8 @@
 #! /bin/sh
-killall sxhkd || true
-DISPLAY=:0 run-sxhkd &
-
 source ~/.profile
 
 killall panel || true
 panel &
-
-picom &
 
 xmodmap ~/.Xmodmap
 
@@ -35,4 +30,4 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 
-feh --recursive --bg-fill --randomize ~/git/dotfiles/Wallpapers/ &
+feh --recursive --bg-fill --randomize ~/git/dots/wallpapers/ &

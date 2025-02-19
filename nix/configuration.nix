@@ -81,10 +81,15 @@
         luadbi-mysql # Database abstraction layer
       ];
     };
+    windowManager.bspwm = {
+      enable = true;
+      configFile = ../bspwm/bspwmrc;
+      sxhkd.configFile = ../bspwm/sxhkdrc;
+    };
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing.enable = false;
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
@@ -111,6 +116,7 @@
     description = "Ayush";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
+      dolphin
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji

@@ -1,4 +1,5 @@
 ;; Load custom file
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file :no-error-if-file-is-missing)
 
@@ -10,6 +11,10 @@
 (require 'linum)
 ;; Basic Settings
 (setq org-confirm-babel-evaluate nil)
+
+;; C-c <Right> <Left> to undo and redo window configuration
+(winner-mode)
+
 
 (global-unset-key (kbd "C-z"))
 (defun vterm-all-names ()
@@ -73,7 +78,7 @@
 (delete-selection-mode 1)
 (set-default 'cursor-type 'bar)
 ;; Font stuff
-(setq font-name "-*-Source Code Pro-regular-normal-normal-*-14-*-*-*-p-0-iso10646-1")
+(setq font-name "-*-Hack-regular-normal-normal-*-14-*-*-*-p-0-iso10646-1")
 (setq-default frame-alist `((font . ,font-name)))
 (add-to-list 'default-frame-alist `(font . ,font-name))
 ;; macOS Key Modifiers
@@ -173,3 +178,5 @@ If the current buffer is an Eat buffer, switch to the previous buffer instead."
     (let ((split-window (split-window-below)))
       (select-window split-window)
       (eat-project))))
+
+

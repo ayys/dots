@@ -691,6 +691,7 @@ parses its input."
   :ensure t
   :mode (("README\\.md\\'" . gfm-mode)
           ("\\.md\\'" . markdown-mode)
+          ("\\.mdx\\'" . markdown-mode)
           ("\\.markdown\\'" . markdown-mode))
   :hook ((org-mode . auto-fill-mode)
           (markdown-mode . auto-fill-mode)
@@ -855,4 +856,5 @@ parses its input."
 (use-package easy-kill
   :ensure t
   :bind ([remap kill-ring-save] . easy-kill))
-
+(use-package terraform-mode)
+(use-package denote)
