@@ -130,6 +130,10 @@
     ".config/waybar/config.jsonc".source = ../waybar/config.jsonc;
     ".config/waybar/style.css".source = ../waybar/style.css;
     ".config/kitty/kitty.conf".source = ../kitty/kitty.conf;
+    ".config/tz.txt".source = ../bspwm/tz.txt;
+    ".local/bin/panel".source = ../bspwm/panel;
+    ".local/bin/panel_bar".source = ../bspwm/panel_bar;
+    ".local/bin/panel_colors".source = ../bspwm/panel_colors;
     ".Xmodmap".source = ../Xmodmap;
   };
 

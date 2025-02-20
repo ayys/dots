@@ -1,0 +1,34 @@
+#! /bin/sh
+
+function dates {
+    date +'%Y.%m.%d %a ' | tr '\n' ' '
+    for tz in $(cat ~/.config/tz.txt);
+    do
+        echo -e $tz ": "; TZ=$tz date +'%H:%M'
+    done | tr '\n' ' '
+}
+
+
+if xdo id -a "$PANEL_WM_NAME" > /dev/null ; then
+	printf "%s\n" "The panel is already running." >&2
+	exit 1
+fi
+
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+xtitle -sf 'T%s\n' > "$PANEL_FIFO" &
+echo "S"$(dates) > "$PANEL_FIFO" &
+while sleep 30; do echo "S"$(dates); done > "$PANEL_FIFO" &
+bspc subscribe report > "$PANEL_FIFO" &
+
+. panel_colors
+
+panel_bar < "$PANEL_FIFO" | lemonbar -b -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
+
+wid=$(xdo id -m -a "$PANEL_WM_NAME")
+xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"
+
+wait

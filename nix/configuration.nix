@@ -44,15 +44,10 @@
 
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
-  services.displayManager.defaultSession = "plasmax11";
+  services.displayManager.defaultSession = "none+bspwm";
   services.desktopManager.plasma6.enable = true;
   services.displayManager.sddm.wayland.enable = false;
-  services.xserver.displayManager.sessionCommands = ''
-  export GTK_IM_MODULE=ibus
-  export QT_IM_MODULE=ibus
-  export XMODIFIERS=@im=ibus
-  ibus-daemon -drx
-'';
+  
   
   services.emacs = {
     enable = true;
@@ -74,17 +69,20 @@
       layout = "us";
       variant = "";
     };
-    windowManager.awesome = {
-      enable = true;
-      luaModules = with pkgs.luaPackages; [
-        luarocks # is the package manager for Lua modules
-        luadbi-mysql # Database abstraction layer
-      ];
-    };
-    windowManager.bspwm = {
-      enable = true;
-      configFile = ../bspwm/bspwmrc;
-      sxhkd.configFile = ../bspwm/sxhkdrc;
+    xkbOptions = "ctrl:nocaps";
+    windowManager = {
+      awesome = {
+        enable = true;
+        luaModules = with pkgs.luaPackages; [
+          luarocks # is the package manager for Lua modules
+          luadbi-mysql # Database abstraction layer
+        ];
+      };
+      bspwm = {
+        enable = true;
+        configFile = ../bspwm/bspwmrc;
+        sxhkd.configFile = ../bspwm/sxhkdrc;
+      };
     };
   };
 
@@ -232,10 +230,30 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
+  services.nginx = {
+    enable = true;
+    virtualHosts = {
+      "frontend.local" = {
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:3000";
+        };
+      };
+      "backend.local" = {
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:8000";
+        };
+      };
+    };
+  };
+
   virtualisation.docker.enable = true;
 
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 8000 3000 22 ];
+  networking.extraHosts = ''
+127.0.0.1 frontend.local
+127.0.0.1 backend.local
+  '';
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
