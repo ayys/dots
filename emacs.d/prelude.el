@@ -13,7 +13,7 @@
 (setq org-confirm-babel-evaluate nil)
 
 ;; C-c <Right> <Left> to undo and redo window configuration
-(winner-mode)
+(tab-bar-history-mode)
 
 
 (global-unset-key (kbd "C-z"))
@@ -180,3 +180,7 @@ If the current buffer is an Eat buffer, switch to the previous buffer instead."
       (eat-project))))
 
 
+
+
+(setq global-mark-ring-max 256)
+(setq mark-ring-max 256)

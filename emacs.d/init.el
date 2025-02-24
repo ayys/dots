@@ -122,6 +122,7 @@
           ("C-x r b" . consult-bookmark)   ; Bookmarks
           ("C-c d" . consult-ripgrep)      ; run ripgrep on project
           ("C-c h" . consult-outline)      ; Grep for headings in the file
+          ("C-x <SPC>" . consult-global-mark)      ; Grep for headings in the file
           )
   :config
   (setq xref-show-xrefs-function #'consult-xref
@@ -700,7 +701,15 @@ parses its input."
   :init (setq markdown-command "multimarkdown")
   :config
   (setq markdown-fontify-code-blocks-natively t))
-(use-package org-project-capture :ensure t )
+(use-package org-project-capture
+  :bind (("C-c n p" . org-project-capture-project-todo-completing-read))
+  :ensure t
+  :config
+  (progn
+    (setq org-project-capture-backend
+          (make-instance 'org-project-capture-project-backend))
+    (setq org-project-capture-per-project-filepath ".todo/TODO.org")
+    (org-project-capture-per-project)))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -853,8 +862,7 @@ parses its input."
 (use-package guru-mode
   :hook ((prog-mode . guru-mode)))
 
-(use-package easy-kill
-  :ensure t
-  :bind ([remap kill-ring-save] . easy-kill))
 (use-package terraform-mode)
 (use-package denote)
+
+
