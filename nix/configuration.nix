@@ -68,8 +68,8 @@
     xkb = {
       layout = "us";
       variant = "";
+      options = "ctrl:nocaps";
     };
-    xkbOptions = "ctrl:nocaps";
     windowManager = {
       awesome = {
         enable = true;
