@@ -29,6 +29,24 @@
   home.stateVersion = "23.05"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
+
+    # fonts
+    noto-fonts
+    vistafonts
+    go-font
+    noto-fonts-cjk-sans
+    noto-fonts-emoji
+    liberation_ttf
+    fira-code
+    fira-code-symbols
+    hack-font
+    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Hack" ]; })
+    dina-font
+    source-code-pro
+    lohit-fonts.devanagari
+    cascadia-code
+    # END fonts
+
     aspell
     atuin
     autoconf
@@ -102,6 +120,7 @@
     xtitle
     lemonbar
     xdo
+    xcape
     (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
   ];
 
@@ -111,7 +130,7 @@
     Install.WantedBy = [ "default.target" ];
     Service = {
       ExecStart = "${pkgs.hydroxide}/bin/hydroxide serve";
-      Restart = "always";
+      Restart = "always"; 
       RestartSec = 5;
     };
   };
@@ -232,6 +251,15 @@ export WASMENV_DIR PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
       ''}";
   };
 
+  systemd.user.services.xcape-control-config = {
+    Unit.Description = "config xcape to treat tapping control as capslock";
+    Install.WantedBy = [ "graphical-session.target" ];
+    Service.ExecStart = "${pkgs.writeShellScript "xcape-control-escape" ''
+        #!bash
+        ${pkgs.xcape}/bin/xcape -e 'Control_L=Escape' -f
+      ''}";
+  };
+
   systemd.user.timers.set-wallpaper = {
     Unit.Description = "Auto wallpaper changer";
     Timer = {
@@ -241,6 +269,8 @@ export WASMENV_DIR PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
     };
     Install.WantedBy = ["timers.target" "graphical-session.target"];
   };
+
+  fonts.fontconfig.enable = true;
 
 
   services.picom.enable = true;
