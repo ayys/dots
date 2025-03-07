@@ -865,4 +865,5 @@ parses its input."
 (use-package terraform-mode)
 (use-package denote)
 
-
+(use-package kubed
+  :bind ("C-c k" . kubed-transient))
