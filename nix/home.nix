@@ -98,7 +98,6 @@
     redis
     ripgrep
     rofi
-    rustup
     slack
     steam-run
     thefuck
@@ -256,7 +255,7 @@ export WASMENV_DIR PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
     Install.WantedBy = [ "graphical-session.target" ];
     Service.ExecStart = "${pkgs.writeShellScript "xcape-control-escape" ''
         #!bash
-        ${pkgs.xcape}/bin/xcape -e 'Control_L=Escape' -f
+        ${pkgs.xcape}/xcape -e 'Control_L=Escape;Shift_L=Shift_L|Shift_L' -f -t 400
       ''}";
   };
 

@@ -13,7 +13,7 @@
   nix.gc = {
     automatic = true;
     dates = "weekly";
-    options = "--delete-older-than 30d";
+    options = "--delete-older-than 7d";
   };
 
   nix.settings.trusted-users = ["root" "@wheel"];
@@ -81,6 +81,12 @@
       bspwm = {
         enable = true;
       };
+      herbstluftwm = {
+        enable = true;
+      };
+      exwm = {
+        enable = true;
+      };
     };
   };
 
@@ -145,6 +151,7 @@
       wasmer
       man-pages
       man-pages-posix
+      inputs.ayys-uv.packages."${pkgs.system}".uv
     ];
   };
 
@@ -178,6 +185,7 @@
     vim
     wget
     killall
+    inputs.rust-overlay.packages.x86_64-linux.stable.toolchain
   ];
 
   documentation.dev.enable = true;
@@ -188,10 +196,13 @@
   };
   
   nixpkgs.overlays = [
+    (_: super: let pkgs = inputs.rust-overlay.inputs.nixpkgs.legacyPackages.${super.system}; in inputs.rust-overlay.overlays.default pkgs pkgs)
+
     (import (builtins.fetchTarball {
       url = "https://github.com/nix-community/emacs-overlay/archive/6fd1f939e4453206d131744aee904c019f216ecd.tar.gz";
       sha256 = "060gc3vv5552iqv6ljclnv2f784l77xqd2ilccfb5790xkd5i08m";
     }))
+
     (self: super: {
       waybar = super.waybar.overrideAttrs (oldAttrs: {
         mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];

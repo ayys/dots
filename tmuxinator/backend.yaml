@@ -5,7 +5,7 @@ windows:
   - server:
       layout: tiled
       panes:
-        - make migrate gunicorn config=local_postgres
+        - make migrate hypercorn config=local_postgres
   - auxilary:
       layout: tiled
       panes:

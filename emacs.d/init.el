@@ -765,9 +765,7 @@ parses its input."
           (markdown-mode . valign-mode))
   :config (setq valign-fancy-bar nil) ;; non-nil for fancy unicode bar
   )
-(use-package devil :ensure
-  :bind (("C-," . global-devil-mode))
-  :init (global-devil-mode))
+
 
 (use-package string-inflection
   :ensure t
