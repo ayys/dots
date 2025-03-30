@@ -120,6 +120,7 @@
     lemonbar
     xdo
     xcape
+    dig
     (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
   ];
 
@@ -142,6 +143,7 @@
     ".config/emacs/early-init.el".source = ../emacs.d/early-init.el;
     ".config/emacs/navapali-maps.el".source = ../emacs.d/navapali-maps.el;
     ".config/emacs/copilot.el".source = ../emacs.d/copilot.el;
+    ".config/emacs/packages/sxhkd-mode.el".source = ../emacs.d/packages/sxhkd-mode.el;
     ".config/bspwm/bspwmrc".source = ../bspwm/bspwmrc;
     ".config/sxhkd/sxhkdrc".source = ../bspwm/sxhkdrc;
     ".config/hypr/hyprland.conf".source = ../hypr/hyprland.conf;
@@ -171,10 +173,6 @@ export HISTCONTROL=ignoreboth:erasedups
 # copy this to ~/.bashrc
 WASMENV_DIR="/home/ayys/.config/wasmenv"
 [ -s "/home/ayys/.config/wasmenv/wasmenv.sh" ] && source "/home/ayys/.config/wasmenv/wasmenv.sh"
-PANEL_FIFO=/tmp/panel-fifo
-PANEL_HEIGHT=24
-PANEL_FONT="-*-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
-PANEL_WM_NAME=bspwm_panel
 export WASMENV_DIR PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
 '';
   };

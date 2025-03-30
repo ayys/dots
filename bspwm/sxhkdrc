@@ -8,6 +8,10 @@ super + p
 super + w
         feh --recursive --bg-fill --randomize ~/git/dots/wallpapers/
 
+super + r
+        firefox
+
+
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd

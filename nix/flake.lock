@@ -29,14 +29,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1,
-        "narHash": "sha256-GmRMhyMH305kos/v9GdYIS4yEfD68uakAX+aWeC91cQ=",
-        "path": "./uv",
-        "type": "path"
+        "lastModified": 1742818860,
+        "narHash": "sha256-UuVkCbkFuoC616OykaMSx4hUxKjP00cgtcWmDXs8vN0=",
+        "owner": "ayys",
+        "repo": "uv.flake.nix",
+        "rev": "dc280fd06018e49f0a356936e0dcb0afe3673fac",
+        "type": "github"
       },
       "original": {
-        "path": "./uv",
-        "type": "path"
+        "owner": "ayys",
+        "repo": "uv.flake.nix",
+        "type": "github"
       }
     },
     "fenix": {

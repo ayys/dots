@@ -28,7 +28,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ayys-uv = {
-      url = "path:./uv";
+      url = "github:ayys/uv.flake.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

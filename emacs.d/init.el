@@ -1,4 +1,5 @@
 (load-file (expand-file-name "prelude.el" (file-name-directory (or load-file-name buffer-file-name))))
+(load-file (expand-file-name "packages/sxhkd-mode.el" (file-name-directory (or load-file-name buffer-file-name))))
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;Key bindings;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -865,3 +866,10 @@ parses its input."
 
 (use-package kubed
   :bind ("C-c k" . kubed-transient))
+
+(use-package kubel
+  :after (vterm)
+  :config (kubel-vterm-setup))
+(use-package kubectl)
+
+(use-package sxhkd-mode)

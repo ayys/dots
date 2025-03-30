@@ -1,5 +1,12 @@
 #! /bin/sh
 
+export PANEL_FIFO=/tmp/panel-fifo
+export PANEL_HEIGHT=24
+export PANEL_FONT="-*-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
+export PANEL_WM_NAME=bspwm_panel
+
+
+
 function dates {
     date +'%Y.%m.%d %a ' | tr '\n' ' '
     for tz in $(cat ~/.config/tz.txt);
