@@ -718,7 +718,7 @@ parses its input."
 ;;;;;;;;;;;;Terminal;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package eat :ensure t
-  :bind (("M-RET" . eat-project))
+  :bind (("M-RET" . ayys/eat-project))
   :bind (:map eat-mode-map
           ("M-<return>" . ayys/eat-terminal-split))
   :hook (eat-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
@@ -856,8 +856,6 @@ parses its input."
         project-relative-file)))   ;; Display filenames relative to project root
   )
 
-
-
 (use-package guru-mode
   :hook ((prog-mode . guru-mode)))
 
@@ -870,6 +868,5 @@ parses its input."
 (use-package kubel
   :after (vterm)
   :config (kubel-vterm-setup))
-(use-package kubectl)
 
 (use-package sxhkd-mode)

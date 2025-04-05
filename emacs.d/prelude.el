@@ -180,6 +180,30 @@ If the current buffer is an Eat buffer, switch to the previous buffer instead."
       (eat-project))))
 
 
+(defun ayys/eat-project (&optional arg)
+  "
+Fork of eat-project that optionally ignores the current project if
+user is not in one.
+
+
+Start Eat in the current project's root directory.
+
+Start a new Eat session, or switch to an already active session.
+Return the buffer selected (or created).
+
+With a non-numeric prefix ARG, create a new session.
+
+With a numeric prefix ARG (like
+\\[universal-argument] 42 \\[eat-project]), switch to the session with
+that number, or create it if it doesn't already exist."
+  (interactive "P")
+  (require 'project)
+  (if-let* ((project-name (project-current nil)) (default-directory (project-root (project-current t))))
+    (setq eat-buffer-name (project-prefixed-buffer-name "eat"))
+    (setq eat-buffer-name "*eat*"))
+  (eat nil arg))
+
+
 
 
 (setq global-mark-ring-max 256)
