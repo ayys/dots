@@ -1,5 +1,12 @@
 { config, pkgs, inputs,  ... }:
-
+let emacs = pkgs.emacsWithPackagesFromUsePackage {
+    config = ../emacs.d/init.el;
+    defaultInitFile = true;
+    alwaysEnsure = true;
+    package = pkgs.emacs-git;
+    extraEmacsPackages = epkgs: [
+    ];
+  }; in
 {
   imports =
     [
@@ -52,14 +59,7 @@
   services.emacs = {
     enable = true;
     defaultEditor = true;
-    package = pkgs.emacsWithPackagesFromUsePackage {
-      config = ../emacs.d/init.el;
-      defaultInitFile = true;
-      alwaysEnsure = true;
-      package = pkgs.emacs-git;
-      extraEmacsPackages = epkgs: [
-      ];
-    };
+    package = emacs;
   };
 
   # Configure keymap in X11
@@ -86,6 +86,11 @@
       };
       exwm = {
         enable = true;
+        loadScript = ''
+  (require 'exwm)
+  (require 'exwm-config)
+  (exwm-config-default)
+'';
       };
     };
   };
