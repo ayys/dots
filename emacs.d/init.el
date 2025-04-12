@@ -870,3 +870,11 @@ parses its input."
   :config (kubel-vterm-setup))
 
 (use-package sxhkd-mode)
+
+
+(use-package solaire-mode
+  :ensure t
+  :hook
+  ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
+  :config
+  (solaire-global-mode +1))
