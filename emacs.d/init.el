@@ -4,7 +4,7 @@
 ;;;;;;;;;;;;Key bindings;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package avy :ensure t
-  :bind (("C-z p" . avy-goto-char-timer)))
+  :bind (("C-z C-z" . avy-goto-char-timer)))
 (use-package ace-window
   :ensure t
   :bind (("M-o" . ace-window)))
@@ -109,10 +109,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package windmove
   :ensure t
-  :bind (("C-c h" . windmove-left)
-          ("C-c l" . windmove-right)
-          ("C-c k" . windmove-up)
-          ("C-c j" . windmove-down)))
+  :bind (( "C-z h" . windmove-left)
+          ("C-z l" . windmove-right)
+          ("C-z k" . windmove-up)
+          ("C-z j" . windmove-down)))
 (use-package consult
   :ensure t
   :bind (         ;; Replacing default keybindings with consult versions

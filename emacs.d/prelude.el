@@ -208,3 +208,6 @@ that number, or create it if it doesn't already exist."
 
 (setq global-mark-ring-max 256)
 (setq mark-ring-max 256)
+
+
+(setq disabled-command-function nil) ;; enable all disabled commands

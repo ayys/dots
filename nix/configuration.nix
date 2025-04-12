@@ -157,6 +157,7 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
       man-pages
       man-pages-posix
       inputs.ayys-uv.packages."${pkgs.system}".uv
+      firefox
     ];
   };
 

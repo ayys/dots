@@ -94,7 +94,6 @@
     postman
     insomnia
     pyenv
-    qemu_full
     redis
     ripgrep
     rofi
@@ -121,6 +120,8 @@
     xdo
     xcape
     dig
+    nyxt
+    qemu_kvm
     (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
   ];
 
@@ -154,6 +155,11 @@
     ".local/bin/panel".source = ../bspwm/panel;
     ".local/bin/panel_bar".source = ../bspwm/panel_bar;
     ".local/bin/panel_colors".source = ../bspwm/panel_colors;
+    ".tmux.conf".source = ../tmux/tmux.conf;
+    ".tmux" = {
+      source: ../tmux/tmux;
+      recursive = true;
+    };
     ".Xmodmap".source = ../Xmodmap;
   };
 
@@ -177,11 +183,6 @@ export WASMENV_DIR PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
 '';
   };
 
-
-  programs.firefox = {
-    enable  = true;
-    package = pkgs.firefox-bin;
-  };
 
   home.file.".local/bin/rb" = {
     text = ''
@@ -270,7 +271,40 @@ export WASMENV_DIR PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
   fonts.fontconfig.enable = true;
 
 
-  services.picom.enable = true;
+  services.picom = {
+    enable = true;
+    backend = "glx"; # or "xrender" if glx gives you issues
+    vSync = true;
+
+    # Optional: additional tweaks
+    settings = {
+
+      # Subtle fading animations
+      fading = true;
+      fade-delta = 10;         # Lower = slower fade (10ms between steps)
+      fade-in-step = 0.05;     # 0.0–1.0, controls fade-in speed
+      fade-out-step = 0.05;    # same for fade-out
+      no-fading-openclose = false;
+
+
+      # Rounded corners for a modern look
+      corner-radius = 6;
+
+      # Optional: Shadow tweaks (less harsh)
+      shadow = true;
+      shadow-radius = 10;
+      shadow-opacity = 0.2;
+      shadow-offset-x = -5;
+      shadow-offset-y = -5;
+
+      # Avoid flickering
+      unredir-if-possible = false;      
+
+      refresh-rate = 75;  # match your monitor
+    };
+  };
+
+  
   systemd.user.targets.graphical-session.target.enable = true; # Ensure the graphical session target is enabled  
 
 
