@@ -138,13 +138,11 @@
   
   home.file = {
     ".config/tmuxinator/backend.yaml".source = ../tmuxinator/backend.yaml;
-    ".config/awesome/rc.lua".source = ../awesome/rc.lua;    
-    ".config/emacs/init.el".source = ../emacs.d/init.el;
-    ".config/emacs/prelude.el".source = ../emacs.d/prelude.el;
-    ".config/emacs/early-init.el".source = ../emacs.d/early-init.el;
-    ".config/emacs/navapali-maps.el".source = ../emacs.d/navapali-maps.el;
-    ".config/emacs/copilot.el".source = ../emacs.d/copilot.el;
-    ".config/emacs/packages/sxhkd-mode.el".source = ../emacs.d/packages/sxhkd-mode.el;
+    ".config/awesome/rc.lua".source = ../awesome/rc.lua;
+    ".config/emacs" = {
+      source = ../emacs.d;
+      recursive = true;
+    };
     ".config/bspwm/bspwmrc".source = ../bspwm/bspwmrc;
     ".config/sxhkd/sxhkdrc".source = ../bspwm/sxhkdrc;
     ".config/hypr/hyprland.conf".source = ../hypr/hyprland.conf;
@@ -156,10 +154,10 @@
     ".local/bin/panel_bar".source = ../bspwm/panel_bar;
     ".local/bin/panel_colors".source = ../bspwm/panel_colors;
     ".tmux.conf".source = ../tmux/tmux.conf;
-    ".tmux" = {
-      source: ../tmux/tmux;
-      recursive = true;
-    };
+    # ".tmux" = {
+    #   source = ../tmux/tmux;
+    #   recursive = true;
+    # };
     ".Xmodmap".source = ../Xmodmap;
   };
 
