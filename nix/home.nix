@@ -157,6 +157,10 @@
     #   source = ../tmux/tmux;
     #   recursive = true;
     # };
+    "~/.config/nyxt" = {
+      source = ../nyxt;
+      recursive = true;
+    };
     ".Xmodmap".source = ../Xmodmap;
   };
 
