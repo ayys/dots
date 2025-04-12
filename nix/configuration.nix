@@ -123,7 +123,7 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
     description = "Ayush";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
-      dolphin
+      kdePackages.dolphin
       noto-fonts
       vistafonts
       go-font
@@ -133,7 +133,9 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
       fira-code
       fira-code-symbols
       hack-font
-      (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Hack" ]; })
+      nerd-fonts.fira-code
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.hack
       python311Packages.python
       python311Packages.ipython
       python311Packages.pip
@@ -283,6 +285,6 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
   # this value at the release version of the first install of this system.
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "24.05"; # Did you read the comment?
+  system.stateVersion = "25.05"; # Did you read the comment?
 
 }

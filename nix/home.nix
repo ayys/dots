@@ -26,7 +26,7 @@
     };
   };
 
-  home.stateVersion = "23.05"; # Please read the comment before changing.
+  home.stateVersion = "25.05"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
 
@@ -40,7 +40,6 @@
     fira-code
     fira-code-symbols
     hack-font
-    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "Hack" ]; })
     dina-font
     source-code-pro
     lohit-fonts.devanagari
