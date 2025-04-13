@@ -3,7 +3,7 @@ super + Return
 
 # program launcher
 super + p
-	dmenu_run
+	rofi -show run
 
 super + w
         feh --recursive --bg-fill --randomize ~/git/dots/wallpapers/

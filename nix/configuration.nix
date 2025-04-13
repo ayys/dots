@@ -1,12 +1,15 @@
 { config, pkgs, inputs,  ... }:
 let emacs = pkgs.emacsWithPackagesFromUsePackage {
-    config = ../emacs.d/init.el;
-    defaultInitFile = true;
-    alwaysEnsure = true;
-    package = pkgs.emacs-git;
-    extraEmacsPackages = epkgs: [
-    ];
-  }; in
+      config = ../emacs.d/init.el;
+      defaultInitFile = true;
+      alwaysEnsure = true;
+      package = pkgs.emacs-git;
+      extraEmacsPackages = epkgs: [
+      ];
+    };
+    nvidiaPackage = config.boot.kernelPackages.nvidiaPackages.legacy_390;
+    nvidiaX11Package = pkgs.linuxKernel.packages.linux_5_15.nvidia_x11_legacy390;
+in
 {
   imports =
     [
@@ -28,6 +31,13 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.kernelModules = ["nvidia"];
+  boot.initrd.kernelModules = ["nvidia"];
+  boot.extraModulePackages = [nvidiaPackage];
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
+  
+  hardware.enableRedistributableFirmware = true;
 
 
   ## Networking logic
@@ -64,12 +74,22 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
 
   # Configure keymap in X11
   services.xserver = {
+    videoDrivers = ["nvidiaLegacy390"];
     enable = true;
     xkb = {
       layout = "us";
       variant = "";
       options = "ctrl:nocaps";
     };
+    exportConfiguration = true;
+    modules = [pkgs.linuxKernel.packages.linux_5_15.nvidia_x11_legacy390_patched.bin];
+    extraConfig = ''
+      Section "Device"
+        Identifier "NvidiaCard"
+        Driver     "nvidia"
+        BusID      "PCI:7:0:0"
+      EndSection
+    '';
     windowManager = {
       awesome = {
         enable = true;
@@ -81,25 +101,26 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
       bspwm = {
         enable = true;
       };
-      herbstluftwm = {
-        enable = true;
-      };
-      exwm = {
-        enable = true;
-        loadScript = ''
-  (require 'exwm)
-  (require 'exwm-config)
-  (exwm-config-default)
-'';
-      };
     };
+  };
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = [nvidiaX11Package.out];
+    extraPackages32 = [nvidiaX11Package.lib32];
+  };
+  hardware.nvidia = {
+    modesetting.enable = true;
+    open = false;
+    nvidiaSettings = true;
+    package = nvidiaPackage;
   };
 
   # Enable CUPS to print documents.
   services.printing.enable = false;
 
   # Enable sound with pipewire.
-  hardware.pulseaudio.enable = false;
+  services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -160,6 +181,96 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
       man-pages-posix
       inputs.ayys-uv.packages."${pkgs.system}".uv
       firefox
+      # fonts
+      noto-fonts
+      vistafonts
+      go-font
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      hack-font
+      dina-font
+      source-code-pro
+      lohit-fonts.devanagari
+      cascadia-code
+
+      aspell
+      atuin
+      autoconf
+      automake
+      bison
+      chromium
+      cmake
+      cmake
+      corepack
+      delta
+      devenv
+      docker
+      doppler
+      editorconfig-core-c
+      extra-cmake-modules
+      eza
+      file
+      fmt
+      fortune
+      gcc
+      gdb
+      gdbgui
+      gettext
+      gh
+      gnumake
+      go
+      gperf
+      htop
+      inkscape
+      jq
+      json_c
+      k9s
+      kitty
+      kubectl
+      libcap
+      libtool
+      m4
+      mysql84
+      nasm
+      nix-index
+      nodejs
+      pavucontrol
+      pkg-config
+      postgresql_16
+      postman
+      insomnia
+      pyenv
+      redis
+      ripgrep
+      rofi
+      slack
+      # steam-run
+      thefuck
+      tmux
+      tmuxinator
+      tmuxinator
+      tree
+      unzip
+      hydroxide
+      xclip
+      yarn
+      yq
+      xdiskusage
+      bacon
+      live-server
+      sxhkd
+      xtitle
+      lemonbar
+      xdo
+      xcape
+      dig
+      nyxt
+      qemu_kvm
+      (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
+
     ];
   };
 
@@ -176,7 +287,7 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
 
   # # Hint Electon apps to use wayland
   # environment.sessionVariables = {
-  #   NIXOS_OZONE_WL = "1";
+  #   LD_LIBRARY_PATH =  [ "/run/opengl-driver/lib" ];
   # };
   services.dbus.enable = true;
   xdg.portal = {
@@ -188,12 +299,14 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
   };
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.nvidia.acceptLicense = true;
 
   environment.systemPackages = with pkgs; [
     vim
     wget
     killall
     inputs.rust-overlay.packages.x86_64-linux.stable.toolchain
+    nvidiaPackage
   ];
 
   documentation.dev.enable = true;
@@ -212,10 +325,23 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
     }))
 
     (self: super: {
-      waybar = super.waybar.overrideAttrs (oldAttrs: {
-        mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-      });
+      linuxKernel = super.linuxKernel // {
+        packages = super.linuxKernel.packages // {
+          linux_5_15 = super.linuxKernel.packages.linux_5_15.extend (kernelSelf: kernelSuper: {
+            nvidia_x11_legacy390_patched = kernelSuper.nvidia_x11_legacy390.overrideAttrs (old: {
+              postInstall = (old.postInstall or "") + ''
+              ext_dir="$bin/lib/xorg/modules/extensions"
+              target=$(find "$ext_dir" -name 'libglx.so.*' | head -n1)
+              if [ -n "$target" ]; then
+                ln -sf "$(basename "$target")" "$ext_dir/libglx.so"
+              fi
+            '';
+            });
+          });
+        };
+      };
     })
+
   ];
 
   programs.nix-ld.enable = true;
@@ -227,6 +353,10 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
+
+
+  programs.direnv.enable = true;
+
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;

@@ -16,112 +16,14 @@
     homeDirectory = "/home/ayys";
   };
 
-  # nix.package = pkgs.nix;
-  nixpkgs = {
-    config = {
-      # Disable if you don't want unfree packages
-      allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
-      allowUnfreePredicate = _: true;
-    };
-  };
 
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
 
-    # fonts
-    noto-fonts
-    vistafonts
-    go-font
-    noto-fonts-cjk-sans
-    noto-fonts-emoji
-    liberation_ttf
-    fira-code
-    fira-code-symbols
-    hack-font
-    dina-font
-    source-code-pro
-    lohit-fonts.devanagari
-    cascadia-code
     # END fonts
 
-    aspell
-    atuin
-    autoconf
-    automake
-    bison
-    chromium
-    cmake
-    cmake
-    corepack
-    delta
-    devenv
-    docker
-    doppler
-    editorconfig-core-c
-    extra-cmake-modules
-    eza
-    file
-    fmt
-    fortune
-    gcc
-    gdb
-    gdbgui
-    gettext
-    gh
-    gnumake
-    go
-    gperf
-    htop
-    inkscape
-    jq
-    json_c
-    k9s
-    kitty
-    kubectl
-    libcap
-    libtool
-    m4
-    mysql84
-    nasm
-    nix-index
-    nodejs
-    pavucontrol
-    pkg-config
-    postgresql_16
-    postman
-    insomnia
-    pyenv
-    redis
-    ripgrep
-    rofi
-    slack
-    steam-run
-    thefuck
-    tmux
-    tmuxinator
-    tmuxinator
-    tree
-    unzip
-    hydroxide
-    xclip
-    yarn
-    yq
-    xdiskusage
-    gitoxide
-    bacon
-    live-server
-    sxhkd
-    dmenu
-    xtitle
-    lemonbar
-    xdo
-    xcape
-    dig
-    nyxt
-    qemu_kvm
-    (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
+
   ];
 
 
@@ -153,15 +55,46 @@
     ".local/bin/panel_bar".source = ../bspwm/panel_bar;
     ".local/bin/panel_colors".source = ../bspwm/panel_colors;
     ".tmux.conf".source = ../tmux/tmux.conf;
-    # ".tmux" = {
-    #   source = ../tmux/tmux;
-    #   recursive = true;
-    # };
     "~/.config/nyxt" = {
       source = ../nyxt;
       recursive = true;
     };
     ".Xmodmap".source = ../Xmodmap;
+    ".local/bin/rb" = {
+      text = ''
+    #!/bin/sh
+    nixos-rebuild --flake $HOME/git/dots/nix#ayys --use-remote-sudo switch
+  '';
+      executable = true;
+    };
+    ".local/bin/gc" = {
+      text = ''  
+    #!/bin/sh
+    nix-collect-garbage -d
+  '';
+      executable = true;
+    };
+    ".local/bin/re" = {
+      text = ''
+    #!/bin/sh
+    systemctl restart --user emacs
+  '';
+      executable = true;
+    };
+    ".local/bin/linear-firefox" = {
+      text = ''
+    #!/bin/sh
+    firefox --new-window --kiosk "https://linear.app"
+  '';
+      executable = true;
+    };
+    ".local/bin/tm-be" = {
+      text = ''
+    #!/bin/sh
+    tmuxinator backend
+  '';
+      executable = true;
+    };
   };
 
   home.sessionVariables = {
@@ -170,7 +103,17 @@
   home.shellAliases = {
     ls="exa";
   };
-  programs.zoxide.enable = true;
+
+  programs.git = {
+    enable = true;
+    package = pkgs.git;
+    userName  = "ayys";
+    extraConfig = {
+      push = { autoSetupRemote = true; };
+    };
+  };
+
+
   programs.bash = {
     enable = true;
     bashrcExtra = ''
@@ -185,62 +128,13 @@ export WASMENV_DIR PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
   };
 
 
-  home.file.".local/bin/rb" = {
-    text = ''
-    #!/bin/sh
-    nixos-rebuild --flake $HOME/git/dots/nix#ayys --use-remote-sudo switch
-  '';
-    executable = true;
-  }; 
-
-  home.file.".local/bin/gc" = {
-    text = ''  
-    #!/bin/sh
-    nix-collect-garbage -d
-  '';
-    executable = true;
-  }; 
-
-
-  home.file.".local/bin/linear-firefox" = {
-    text = ''
-    #!/bin/sh
-    firefox --new-window --kiosk "https://linear.app"
-  '';
-    executable = true;
-  }; 
-
-  home.file.".local/bin/re" = {
-    text = ''
-    #!/bin/sh
-    systemctl restart --user emacs
-  '';
-    executable = true;
-  }; 
-
-  home.file.".local/bin/tm-be" = {
-    text = ''
-    #!/bin/sh
-    tmuxinator backend
-  '';
-    executable = true;
-  };
-
   home.sessionPath = [
-    "$HOME/.local/bin"    
+    "$HOME/.local/bin"
   ];
 
   programs.direnv.enable = true;
 
-  programs.git = {
-    enable = true;
-    package = pkgs.git;
-    userName  = "ayys";
-    extraConfig = {
-      push = { autoSetupRemote = true; };
-    };
-  };
-
+  
   systemd.user.services.set-wallpaper = {
     Unit.Description = "Set wallpaper using feh";
     Install.WantedBy = [ "graphical-session.target" ];
@@ -310,7 +204,7 @@ export WASMENV_DIR PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
 
 
   # Let Home Manager install and manage itself.
-   programs.home-manager = {
-     enable = true;
-   };
+  programs.home-manager = {
+    enable = true;
+  };
 }
