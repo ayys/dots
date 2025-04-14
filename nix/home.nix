@@ -101,7 +101,7 @@
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
   };
   home.shellAliases = {
-    ls="exa";
+    ls="eza";
   };
 
   programs.git = {

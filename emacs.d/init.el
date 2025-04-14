@@ -22,7 +22,7 @@
   :hook ((dashboard-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
   :init
   (setq dashboard-banner-logo-title "าयउ ऽकषउ")
-  (setq dashboard-startup-banner "~/junk/dashboard_pic.png")
+  (setq dashboard-startup-banner "~/docs/junk/dashboard_pic.png")
   (setq dashboard-set-heading-icons t)
   (setq dashboard-items '((projects . 5)
                            (bookmarks . 5)))
@@ -878,3 +878,6 @@ parses its input."
   ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
   :config
   (solaire-global-mode +1))
+
+
+(use-package wat-ts-mode :ensure t)

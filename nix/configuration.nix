@@ -163,6 +163,12 @@ in
       python311Packages.python-lsp-server
       python311Packages.requests
       python311Packages.pylsp-mypy
+      zoxide
+      xorg.libX11
+      gnumake
+      xorg.libX11.dev
+      xorg.libXft
+      xorg.libXinerama
       python311Packages.python-lsp-ruff
       python311Packages.ruff
       hackgen-nf-font
@@ -320,8 +326,8 @@ in
     (_: super: let pkgs = inputs.rust-overlay.inputs.nixpkgs.legacyPackages.${super.system}; in inputs.rust-overlay.overlays.default pkgs pkgs)
 
     (import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/emacs-overlay/archive/6fd1f939e4453206d131744aee904c019f216ecd.tar.gz";
-      sha256 = "060gc3vv5552iqv6ljclnv2f784l77xqd2ilccfb5790xkd5i08m";
+      url = "https://github.com/nix-community/emacs-overlay/archive/147f6b98f17b0d66866eb8923a6ae6fe9c23b65e.tar.gz";
+      sha256 = "0r5q63rf6i4sm5aaxd915731vbfihhfslnhayr41kmbgkvm02ihr";
     }))
 
     (self: super: {
