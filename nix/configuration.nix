@@ -147,6 +147,7 @@ in
       kdePackages.dolphin
       noto-fonts
       vistafonts
+      guix
       go-font
       noto-fonts-cjk-sans
       noto-fonts-emoji
@@ -163,7 +164,43 @@ in
       python311Packages.python-lsp-server
       python311Packages.requests
       python311Packages.pylsp-mypy
-      zoxide
+      xorg.libX11
+      gnumake
+      xorg.libX11.dev
+      xorg.libXft
+      xorg.libXinerama
+      python311Packages.python-lsp-ruff
+      python311Packages.ruff
+      hackgen-nf-font
+      mplus-outline-fonts.githubRelease
+      dina-font
+      source-code-pro
+      lohit-fonts.devanagari
+      proggyfonts
+      inputs.ayys-st.packages."${pkgs.system}".st
+      inputs.wasmenv.packages."${pkgs.system}".wasmenv
+      xorg.xmodmap
+      feh
+      meson
+      wasmer
+      man-pages
+      man-pages-posix
+      go-font
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
+      liberation_ttf
+      fira-code
+      fira-code-symbols
+      hack-font
+      nerd-fonts.fira-code
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.hack
+      python311Packages.python
+      python311Packages.ipython
+      python311Packages.pip
+      python311Packages.python-lsp-server
+      python311Packages.requests
+      python311Packages.pylsp-mypy
       xorg.libX11
       gnumake
       xorg.libX11.dev
@@ -376,6 +413,22 @@ in
     wantedBy = [ "graphical-session.target" ];
   };
 
+  systemd.services.guix-daemon = {
+    enable = true;
+    description = "Build daemon for GNU Guix";
+    serviceConfig = {
+      ExecStart = "${pkgs.guix.out}/bin/guix-daemon --build-users-group=guixbuild --substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org'";
+      Environment="GUIX_LOCPATH=/root/.guix-profile/lib/locale";
+      RemainAfterExit="yes";
+      StandardOutput="syslog";
+      StandardError="syslog";
+      TaskMax= "8192";
+    };
+    wantedBy = [ "multi-user.target" ];
+  };
+
+
+
   nix.settings.auto-optimise-store = true;
   nix.optimise.automatic = true;
 
@@ -410,6 +463,7 @@ in
   networking.extraHosts = ''
 127.0.0.1 frontend.local
 127.0.0.1 backend.local
+127.0.0.1 www.crysys.hu
   '';
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
