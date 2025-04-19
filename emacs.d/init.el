@@ -3,8 +3,14 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;Key bindings;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(use-package quelpa)
+
 (use-package avy :ensure t
-  :bind (("C-z C-z" . avy-goto-char-timer)))
+  :bind (("C-z C-z" . avy-goto-char-timer)
+          ("C-z C-l" . avy-goto-line)
+          ("C-z C-s" . avy-isearch)
+          ("C-z C-w" . avy-goto-word-1)))
 (use-package ace-window
   :ensure t
   :bind (("M-o" . ace-window)))
@@ -150,6 +156,7 @@
     ("C-o" . vertico-quick-exit)
     ("M-o" . kb/vertico-quick-embark)  ; Ensure kb/vertico-quick-embark is defined
     ("M-G" . vertico-multiform-grid)
+    ("M-B" . vertico-multiform-buffer)
     ("M-F" . vertico-multiform-flat)
     ("M-R" . vertico-multiform-reverse)
     ("M-U" . vertico-multiform-unobtrusive)
@@ -860,7 +867,7 @@ parses its input."
   :hook ((prog-mode . guru-mode)))
 
 (use-package terraform-mode)
-(use-package denote)
+
 
 (use-package kubed
   :bind ("C-c k" . kubed-transient))
@@ -881,3 +888,38 @@ parses its input."
 
 
 (use-package wat-ts-mode :ensure t)
+
+
+;; (use-package hideshow
+;;   :hook (prog-mode . (lambda ()
+;;                        (unless (eq major-mode 'tree-sitter-query-mode)
+;;                          (hs-minor-mode)))))
+
+
+(use-package org-modern)
+
+(use-package geiser-guile)
+
+
+(use-package denote
+  :ensure t
+  :hook (dired-mode . denote-dired-mode)
+  :bind
+  (("C-c n n" . denote)
+    ("C-c n r" . denote-rename-file)
+    ("C-c n l" . denote-link)
+    ("C-c n b" . denote-backlinks)
+    ("C-c n d" . denote-dired)
+    ("C-c n g" . denote-grep))
+  :config
+  (setq denote-directory (expand-file-name "~/docs/notes/"))
+
+  ;; Automatically rename Denote buffers when opening them so that
+  ;; instead of their long file name they have, for example, a literal
+  ;; "[D]" followed by the file's title.  Read the doc string of
+  ;; `denote-rename-buffer-format' for how to modify this.
+  (denote-rename-buffer-mode 1))
+
+
+
+(use-package debpaste)

@@ -55,7 +55,7 @@
   (consult-buffer '(consult--source-vterm)))
 (add-hook 'prog-mode-hook 'outline-minor-mode)
 (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
-(add-hook 'prog-mode-hook 'hs-minor-mode)
+
 (setq byte-compile-warnings '(cl-functions)
       message-log-max t
       create-lockfiles nil
@@ -78,9 +78,9 @@
 (delete-selection-mode 1)
 (set-default 'cursor-type 'bar)
 ;; Font stuff
-(setq font-name "-SAJA-Cascadia Code-semilight-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-(setq-default frame-alist `((font . ,font-name)))
-(add-to-list 'default-frame-alist `(font . ,font-name))
+;; (setq font-name "-SAJA-Cascadia Code-semilight-normal-normal-*-14-*-*-*-m-0-iso10646-1")
+;; (setq-default frame-alist `((font . ,font-name)))
+;; (add-to-list 'default-frame-alist `(font . ,font-name))
 ;; macOS Key Modifiers
 (setq mac-command-modifier 'meta
       mac-option-modifier 'super
@@ -211,3 +211,20 @@ that number, or create it if it doesn't already exist."
 
 
 (setq disabled-command-function nil) ;; enable all disabled commands
+
+
+(global-hl-line-mode 0)
+(set-mouse-color "#040416")
+
+(pixel-scroll-precision-mode 1) ;; Emacs 29+ only
+
+
+(defun ayys/git-init-repo (dir)
+  "Create a new Git repository in the specified DIR."
+  (interactive "GDirectory to create new Git repo in: ")
+  (unless (file-exists-p dir)
+    (make-directory dir t))
+  (let ((default-directory (file-name-as-directory dir)))
+    (shell-command "git init")
+    (message "Initialized empty Git repository in %s" dir)
+    (dired dir)))

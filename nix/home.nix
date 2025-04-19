@@ -113,6 +113,11 @@
     };
   };
 
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+  };
+
 
   programs.bash = {
     enable = true;
@@ -124,6 +129,9 @@ export HISTCONTROL=ignoreboth:erasedups
 WASMENV_DIR="/home/ayys/.config/wasmenv"
 [ -s "/home/ayys/.config/wasmenv/wasmenv.sh" ] && source "/home/ayys/.config/wasmenv/wasmenv.sh"
 export WASMENV_DIR PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
+
+GUIX_PROFILE="/home/ayys/.guix-profile"
+. "$GUIX_PROFILE/etc/profile"
 '';
   };
 
