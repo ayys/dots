@@ -1,8 +1,8 @@
 (require 'package)
 
-;; (setq package-archives nil) ;; nix handles this
+(setq package-archives nil) ;; nix handles this
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+;; (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
 
 ;; sometimes a key to just activate the mark is wanted
 (global-set-key "\M-i" (lambda () (interactive) (activate-mark)))

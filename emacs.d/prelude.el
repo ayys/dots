@@ -78,9 +78,9 @@
 (delete-selection-mode 1)
 (set-default 'cursor-type 'bar)
 ;; Font stuff
-;; (setq font-name "-SAJA-Cascadia Code-semilight-normal-normal-*-14-*-*-*-m-0-iso10646-1")
-;; (setq-default frame-alist `((font . ,font-name)))
-;; (add-to-list 'default-frame-alist `(font . ,font-name))
+(setq font-name "-APPL-Monaco-regular-normal-normal-*-*-*-*-*-*-0-iso10646-1")
+(setq-default frame-alist `((font . ,font-name)))
+(add-to-list 'default-frame-alist `(font . ,font-name))
 ;; macOS Key Modifiers
 (setq mac-command-modifier 'meta
       mac-option-modifier 'super
@@ -228,3 +228,50 @@ that number, or create it if it doesn't already exist."
     (shell-command "git init")
     (message "Initialized empty Git repository in %s" dir)
     (dired dir)))
+
+
+(set-mouse-color "gold")
+
+
+(defun background-brightness ()
+  "Roughly determine brightness of current background using luminance formula."
+  (let* ((bg (frame-parameter nil 'background-color))
+         (rgb (color-values bg)) ;; returns (R G B) each in range 0-65535
+         (r (/ (or (nth 0 rgb) 0) 65535.0))
+         (g (/ (or (nth 1 rgb) 0) 65535.0))
+         (b (/ (or (nth 2 rgb) 0) 65535.0)))
+    (+ (* 0.2126 r) (* 0.7152 g) (* 0.0722 b))))
+
+(defun effective-theme-mode ()
+  "Get effective background mode: 'light or 'dark."
+  (or frame-background-mode
+      (if (> (background-brightness) 0.5) 'light 'dark)))
+
+
+(defun set-mouse-cursor-color-based-on-theme ()
+  "Set mouse cursor color based on light/dark theme."
+  (let ((mouse-color
+          (pcase (effective-theme-mode)
+            ('dark  "gold")      ;; Deep Sky Blue
+            ('light "Royal Blue") ;; Crimson
+            (_      "#FF00FF")))) ;; fallback: magenta
+    (set-mouse-color mouse-color)))
+
+(advice-add 'load-theme :after (lambda (&rest _)
+                                 (set-mouse-cursor-color-based-on-theme)))
+(advice-add 'disable-theme :after (lambda (&rest _)
+                                 (set-mouse-cursor-color-based-on-theme)))
+
+;; Set initial mouse cursor color based on current theme
+(set-mouse-cursor-color-based-on-theme)
+
+
+
+
+(defun ayys/forge-insert-commit-titles-in-pr-buffer ()
+  "Insert commit titles (no hashes) automatically in PR buffer."
+  (when (string-match-p "new-pullreq" (buffer-name))
+    (goto-char (point-max))
+    (insert (shell-command-to-string "git log --pretty=format:'- %s' origin/main..HEAD"))))
+
+(add-hook 'forge-create-pullreq-hook #'ayys/forge-insert-commit-titles-in-pr-buffer)
