@@ -458,6 +458,7 @@ in
 
   virtualisation.docker.enable = true;
 
+  networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 8000 3000 22 ];
   networking.extraHosts = ''
