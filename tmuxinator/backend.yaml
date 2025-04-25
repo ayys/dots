@@ -5,12 +5,13 @@ windows:
   - server:
       layout: tiled
       panes:
-        - make migrate hypercorn config=local_postgres
+        - make -C backend migrate hypercorn config=local_postgres
   - auxilary:
       layout: tiled
       panes:
         - docker-compose -f compose.yaml up
-        - make celery config=local_postgres
+        - make -C backend celery config=local_postgres
+        - make -C backend autobuild_celery config=local_postgres
   - k9s:
       layout: tiled
       panes:
