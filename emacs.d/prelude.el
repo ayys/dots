@@ -92,8 +92,6 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
-;; Ido mode disable
-(ido-mode 'buffers)
 (defun open-project-readme ()
   "Open the README.md file in the project root, ignoring case."
   (let ((root (projectile-project-root)))
