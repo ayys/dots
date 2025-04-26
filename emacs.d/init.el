@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (load-file (expand-file-name "prelude.el" (file-name-directory (or load-file-name buffer-file-name))))
 (load-file (expand-file-name "packages/sxhkd-mode.el" (file-name-directory (or load-file-name buffer-file-name))))
 (use-package avy :ensure t
@@ -671,6 +672,9 @@ parses its input."
 (use-package guru-mode
   :hook ((prog-mode . guru-mode)))
 (use-package terraform-mode)
+(use-package guru-mode
+  :hook ((prog-mode . guru-mode)))
+(use-package terraform-mode)
 (use-package kubed
   :bind ("C-c k" . kubed-transient))
 (use-package sxhkd-mode)
@@ -749,3 +753,9 @@ parses its input."
     (cl-pushnew (or target (erc-default-target) (current-buffer))
       erc-track-exclude
       :test #'equal)))
+(use-package yasnippet
+    :bind (("M-+" . yas-expand)
+         ("M-*" . yas-insert-snippet))
+  :config (yas-global-mode 1)
+  )
+(use-package yasnippet-snippets)

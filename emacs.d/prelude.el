@@ -1,4 +1,4 @@
-;; Load custom file
+;; Load custom file  -*- lexical-binding: t; -*-
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file :no-error-if-file-is-missing)
