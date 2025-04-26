@@ -214,7 +214,7 @@ that number, or create it if it doesn't already exist."
 
 
 (global-hl-line-mode 0)
-(set-mouse-color "#040416")
+(set-mouse-color "purple")
 
 (pixel-scroll-precision-mode 1) ;; Emacs 29+ only
 
@@ -228,9 +228,6 @@ that number, or create it if it doesn't already exist."
     (shell-command "git init")
     (message "Initialized empty Git repository in %s" dir)
     (dired dir)))
-
-
-(set-mouse-color "gold")
 
 
 (defun background-brightness ()
@@ -261,7 +258,11 @@ that number, or create it if it doesn't already exist."
                                  (set-mouse-cursor-color-based-on-theme)))
 (advice-add 'disable-theme :after (lambda (&rest _)
                                  (set-mouse-cursor-color-based-on-theme)))
-
+;; run set-mouse-cursor-color-based-on-theme on frame load
+(add-hook 'after-make-frame-functions
+          (lambda (frame)
+            (select-frame frame)
+            (set-mouse-cursor-color-based-on-theme)))
 ;; Set initial mouse cursor color based on current theme
 (set-mouse-cursor-color-based-on-theme)
 

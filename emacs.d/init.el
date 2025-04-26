@@ -1,11 +1,5 @@
 (load-file (expand-file-name "prelude.el" (file-name-directory (or load-file-name buffer-file-name))))
 (load-file (expand-file-name "packages/sxhkd-mode.el" (file-name-directory (or load-file-name buffer-file-name))))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;Key bindings;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-(use-package quelpa)
-
 (use-package avy :ensure t
   :bind (("C-z C-z" . avy-goto-char-timer)
           ("C-z C-l" . avy-goto-line)
@@ -14,15 +8,6 @@
 (use-package ace-window
   :ensure t
   :bind (("M-o" . ace-window)))
-(use-package key-chord
-  :config (key-chord-define-global ";;" "\C-e;"))
-(use-package bind-chord)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;Appearance;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package dashboard
   :ensure t
   :hook ((dashboard-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
@@ -58,14 +43,14 @@
                             (:sunset . ef-maris-dark)))
   :config (circadian-setup))
 (use-package nyan-mode :ensure t
-  :hook ((fundamental-mode . nyan-mode))
+  :hook ((prog-mode . nyan-mode))
   :config
   (nyan-start-animation))
 (use-package powerline
   :load-path "~/git/powerline"
   :init (progn
           (setq powerline-display-minor-modes nil)
-          (setq powerline-arrow-shape 'arrow14) ;; give your mode-line curves
+          (setq powerline-arrow-shape 'arrow14)
           (setq powerline-image-apple-rgb t)
           (setq powerline-default-separator-dir '(right . left))
           (setq powerline-default-separator 'wave))
@@ -107,12 +92,6 @@
     (diminish 'visual-line-mode "")
     (diminish 'whitespace-mode "")
     (diminish 'yas-minor-mode "")))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;Navigation;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package windmove
   :ensure t
   :bind (( "C-z h" . windmove-left)
@@ -121,7 +100,7 @@
           ("C-z j" . windmove-down)))
 (use-package consult
   :ensure t
-  :bind (         ;; Replacing default keybindings with consult versions
+  :bind (
           ("C-s" . consult-line)           ; Line-based search
           ("C-x b" . consult-buffer)       ; Enhanced buffer switcher
           ("C-x v" . consult-vterm-buffer)       ; vterm buffer switcher
@@ -135,7 +114,7 @@
   (setq xref-show-xrefs-function #'consult-xref
     xref-show-definitions-function #'consult-xref)
   (consult-customize :preview-key nil)
-  (setq consult-narrow-key "<") ;; "C-+"
+  (setq consult-narrow-key "<")
   (autoload 'projectile-project-root "projectile")
   (setq consult-project-function (lambda (_) (projectile-project-root))))
 (use-package vertico
@@ -168,7 +147,6 @@
   (vertico-count 5)
   (vertico-resize t)
   (vertico-cycle nil)
-  ;; Extensions
   (vertico-grid-separator "       ")
   (vertico-grid-lookahead 20)
   (vertico-buffer-display-action '(display-buffer-reuse-window))
@@ -181,9 +159,6 @@
     (interactive)
     (when (vertico-quick-jump)
       (embark-act arg)))
-  ;; Workaround for problem with `tramp' hostname completions. This overrides
-  ;; the completion style specifically for remote files! See
-  ;; https://github.com/minad/vertico#tramp-hostname-completion
   (defun kb/basic-remote-try-completion (string table pred point)
     (and (vertico--remote-p string)
       (completion-basic-try-completion string table pred point)))
@@ -195,10 +170,7 @@
        kb/basic-remote-try-completion kb/basic-remote-all-completions nil))
   :config
   (vertico-mode)
-  ;; Extensions
   (vertico-multiform-mode)
-  ;; Prefix the current candidate with “» ”. From
-  ;; https://github.com/minad/vertico/wiki#prefix-current-candidate-with-arrow
   (advice-add #'vertico--format-candidate :around
     (lambda (orig cand prefix suffix index _start)
       (setq cand (funcall orig cand prefix suffix index _start))
@@ -210,16 +182,9 @@
   )
 (use-package marginalia
   :ensure t
-  ;; Bind `marginalia-cycle' locally in the minibuffer.  To make the binding
-  ;; available in the *Completions* buffer, add it to the
-  ;; `completion-list-mode-map'.
   :bind (:map minibuffer-local-map
           ("M-A" . marginalia-cycle))
-  ;; The :init section is always executed.
   :init
-  ;; Marginalia must be activated in the :init section of use-package such that
-  ;; the modep gets enabled right away. Note that this forces loading the
-  ;; package.
   (require 'marginalia)
   (marginalia-mode))
 (use-package orderless
@@ -237,11 +202,6 @@
        orderless-prefixes
        orderless-initialism
        orderless-regexp
-       ;; orderless-flex
-       ;; orderless-strict-leading-initialism
-       ;; orderless-strict-initialism
-       ;; orderless-strict-full-initialism
-       ;; orderless-without-literal          ; Recommended for dispatches instead
        ))
   (orderless-style-dispatchers
     '(prot-orderless-literal-dispatcher
@@ -294,21 +254,13 @@ parses its input."
   :ensure t
   :after drag-stuff)
 (use-package ripgrep :ensure t
-  
   :bind (("C-c r" . ripgrep-regexp))
   :config
   (rg-enable-default-bindings))
-;; Persist history over Emacs restarts. Vertico sorts by history position.
 (use-package savehist
   :ensure t
   :init
   (savehist-mode))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;Editing;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package separedit :ensure t
   :config (setq separedit-default-mode 'markdown-mode)
   :bind ("C-c '" . 'separedit))
@@ -335,7 +287,6 @@ parses its input."
   :config (repeat-mode t))
 (use-package wrap-region
   :ensure t
-  
   :hook (prog-mode . wrap-region-mode)
   :config
   (wrap-region-global-mode t))
@@ -366,26 +317,12 @@ parses its input."
                            "IndianRed1"
                            "IndianRed3"
                            "IndianRed4"))
-  (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
-  (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
-  (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
-  (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
-  (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
-  (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
-  (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
-  (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold)
   (set-face-attribute 'hl-paren-face nil :weight 'ultra-bold))
 (use-package drag-stuff
   :ensure t
   :hook (prog-mode . drag-stuff-mode )
   :bind (("M-p" . drag-stuff-up)
           ("M-n" . drag-stuff-down)))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;Development;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package rust-mode
   :init
   (setq rust-mode-treesitter-derive t)
@@ -400,33 +337,16 @@ parses its input."
   :hook (rust-ts-mode . lsp-deferred)
   :config
   (setq lsp-inlay-hint-enable t))
-
-;; (use-package rustic
-;;   :ensure t
-;;   :config
-;;   (setq rustic-format-on-save t)
-;;   (setq lsp-inlay-hint-enable t)
-;;   :hook
-;;   (rustic-mode . tree-sitter-hl-mode)
-;;   (rustic-mode . lsp)
-;;   (rustic-mode . lsp-inlay-hints-mode)
-;;   (rustic-mode . lsp-ui-mode)
-;;   :custom
-;;   (rustic-rustfmt-config-alist '((edition . "2021"))))
-
 (use-package lsp-mode :ensure t
   :hook ((tsx-ts-mode . lsp-deferred)
           (rust-ts-mode . lsp-deferred)))
-
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode
   :bind (("M-." . lsp-find-definition)
           ("M-?" . lsp-find-references)))
-
 (use-package lsp-python-ms
   :ensure t
-  
   :hook ((python-mode . (lambda ()
                           (require 'lsp-python-ms)
                           (ayys/py-auto-lsp)))
@@ -439,19 +359,6 @@ parses its input."
   :config
   (treesit-auto-add-to-auto-mode-alist 'all)
   (global-treesit-auto-mode))
-(use-package tree-sitter :ensure t
-  :hook ((python-ts-mode . lsp-deferred)
-          (rust-ts-mode . lsp-deferred)
-          (rust-ts-mode . lsp-inlay-hints-mode)
-          (rust-ts-mode . lsp-ui-mode))
-  :config
-  (add-to-list 'tree-sitter-major-mode-language-alist '(python-ts-mode . python))
-  (add-to-list 'tree-sitter-major-mode-language-alist '(graphql-ts-mode . graphql))
-  (add-to-list 'tree-sitter-major-mode-language-alist '(yaml-ts-mode . yaml))
-  (add-to-list 'tree-sitter-major-mode-language-alist '(rust-ts-mode . rust)))
-(use-package tree-sitter-langs
-  :load-path "~/git/tree-sitter-langs"
-  :ensure t)
 (use-package projectile
   :ensure t
   :after vertico
@@ -482,12 +389,6 @@ parses its input."
   (setq company-idle-delay 0))
 (use-package company-posframe :ensure t
   :config (company-posframe-mode t))
-(use-package yasnippet
-  :hook (prog-mode . yas-minor-mode)
-  :bind (("C-c y" . yas-expand))
-  :ensure t)
-(use-package yasnippet-snippets
-  :ensure t)
 (use-package flycheck
   :ensure t)
 (use-package paredit
@@ -524,15 +425,11 @@ parses its input."
           ("\\.jsp\\'" . web-mode)
           ("\\.jspf\\'" . web-mode)
           ("\\.tag\\'" . web-mode)))
-
-
 (use-package editorconfig
   :ensure t
   :config
   (editorconfig-mode 1))
-
 (use-package lua-mode :ensure t)
-
 (use-package graphql-mode
   :ensure t
   :mode ("\\.graphql\\'" "\\.gql\\'"))
@@ -545,17 +442,12 @@ parses its input."
   :config
   (direnv-mode)
   :custom (setq direnv-always-show-summary nil))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;version control;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package magit
   :ensure t
   :config
   (define-key magit-mode-map ";" 'my/magit-new-branch-from-main)
   (setq magit-prefer-remote-upstream t)
+  (setq magit-refresh-status-buffer nil)
   :bind
   (("C-x m" . magit-diff-unstaged)
     ("C-x C-g" . magit-status-quick)
@@ -565,14 +457,6 @@ parses its input."
   :after magit
   :config
   (magit-todos-mode))
-(use-package magit-delta
-  :ensure t
-  :hook (magit-mode . magit-delta-mode)
-  :config
-  (setq magit-delta-delta-args
-    '("--24-bit-color" "always"
-       "--features" "magit-delta"
-       "--color-only")))
 (use-package forge
   :ensure t
   :after magit
@@ -598,12 +482,6 @@ parses its input."
   :config
   (add-hook 'prog-mode-hook 'git-gutter-mode))
 (use-package gited)
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;file management;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package dired
   :ensure f
   :hook (dired-mode . dired-hide-details-mode)
@@ -639,7 +517,6 @@ parses its input."
     (dired-rainbow-define image "#C5727F" ("tiff" "tif" "cdr" "gif" "ico" "jpeg" "jpg" "png" "psd" "eps" "svg"))
     (dired-rainbow-define log "#AB8431" ("log"))
     (dired-rainbow-define shell "#E38752" ("awk" "bash" "bat" "sed" "sh" "zsh" "vim"))
-    ;; Both Light and Dark Themes
     (dired-rainbow-define interpreted "#98B384" ("py" "ipynb" "rb" "pl" "t" "msql" "mysql" "pgsql" "sql" "r" "clj" "cljs" "scala" "js"))
     (dired-rainbow-define compiled "#99B8A0" ("asm" "cl" "lisp" "el" "c" "h" "c++" "h++" "hpp" "hxx" "m" "cc" "cs" "cp" "cpp" "go" "f" "for" "ftn" "f90" "f95" "f03" "f08" "s" "rs" "hi" "hs" "pyc" ".java"))
     (dired-rainbow-define executable "#A17FA7" ("exe" "msi"))
@@ -657,15 +534,8 @@ parses its input."
   :config
   (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
   (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;org and markdown;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package org
   :ensure t
-  
   :bind
   (("C-c a" . org-agenda)
     ("C-c C-h" . org-html-export-to-html)
@@ -683,23 +553,18 @@ parses its input."
     '("AUTO" "polyglossia" t ("xelatex" "lualatex"))))
 (use-package org-bullets
   :ensure t
-  
   :hook (org-mode . org-bullets-mode))
 (use-package org-appear
   :ensure t
-  
   :hook (org-mode . org-appear-mode))
 (use-package org-superstar
   :ensure t
-  
   :hook (org-mode . org-superstar-mode)
   :config
   (setq org-superstar-special-todo-items t))
 (use-package org-rainbow-tags :ensure t
-  
   :hook ((org-mode . org-rainbow-tags-mode)))
 (use-package markdown-mode
-  
   :ensure t
   :mode (("README\\.md\\'" . gfm-mode)
           ("\\.md\\'" . markdown-mode)
@@ -718,41 +583,29 @@ parses its input."
   :config
   (progn
     (setq org-project-capture-backend
-          (make-instance 'org-project-capture-project-backend))
+      (make-instance 'org-project-capture-project-backend))
     (setq org-project-capture-per-project-filepath ".todo/TODO.org")
     (org-project-capture-per-project)))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;Terminal;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package eat :ensure t
   :bind (("M-RET" . ayys/eat-project))
   :bind (:map eat-mode-map
           ("M-<return>" . ayys/eat-terminal-split))
   :hook (eat-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
-(use-package vterm
-  :ensure t
-  :bind (:map vterm-mode-map ("C-q" . vterm-send-next-key))
-  :config (setq vterm-shell "bash")
-  (global-set-key (kbd "C-z v") 'vterm)
-  :hook ((vterm-mode . (lambda () (interactive) (display-line-numbers-mode 0)))))
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;Misc;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package emacs
+  :config
+  (progn
+    (setq auto-window-vscroll nil)
+    (setq fast-but-imprecise-scrolling t)
+    (setq redisplay-dont-pause t)
+    (setq jit-lock-defer-time 0.05)
+    (setq redisplay-skip-fontification-on-input t))
   :bind (("C-'" . load-theme)
           ("C-\"" . disable-theme)
+          ("M-j" . duplicate-dwim)
           ("C-c C-/" . revert-buffer-no-confirm)
           ("C-:" . goto-line)))
-(use-package focus
+(use-packaoge focus
   :bind (("C-c C-l C-f" . focus-mode))
-  :ensure t)
-(use-package ag
   :ensure t)
 (use-package which-key
   :ensure t
@@ -774,69 +627,21 @@ parses its input."
 (use-package valign :ensure t
   :hook ((org-mode . valign-mode)
           (markdown-mode . valign-mode))
-  :config (setq valign-fancy-bar nil) ;; non-nil for fancy unicode bar
+  :config (setq valign-fancy-bar nil)
   )
-
-
 (use-package string-inflection
   :ensure t
   :bind ("C-c C-u" . string-inflection-all-cycle))
-(use-package elfeed
-  :ensure t
-  :defer t
-  :commands (elfeed)
-  :custom
-  (url-queue-timeout 30)
-  (elfeed-feeds
-    '(("https://mazzo.li/rss.xml" c low-level unix)
-       ("https://simblob.blogspot.com/feeds/posts/default" gamedev math algorithms)
-       ("https://box2d.org/posts/index.xml" gamedev math algorithms)
-       "https://davidgomes.com/rss/"
-       ("https://fabiensanglard.net/rss.xml" retrogaming)
-       ("https://ferd.ca/feed.rss" distsys)
-       "https://blog.singleton.io/index.xml"
-       ("https://johnnysswlab.com/feed/" cpp performance)
-       ("https://jvns.ca/atom.xml" webdev)
-       ("https://matklad.github.io/feed.xml" low-level programming)
-       ("https://jonathan-frere.com/index.xml" programming)
-       ("https://notes.eatonphil.com/rss.xml" distsys programming)
-       ("https://samwho.dev/blog" programming visualization)
-       ("https://wingolog.org/feed/atom" compilers guile scheme)
-       ("https://jakelazaroff.com/rss.xml" webdev)
-       ("https://www.localfirstnews.com/rss/" local-first)
-       ("https://www.internalpointers.com/rss" networking concurrency)
-       ("https://hazelweakly.me/rss.xml" observability)
-       ("https://norvig.com/rss-feed.xml" software)
-       ("https://hnrss.org/frontpage" hackernews)
-       ("https://blog.rust-lang.org/feed.xml" rust)
-       ("https://turreta.com/feed/" rust)
-       ("http://blog.japaric.io/index.xml" rust)
-       ("https://pypi.org/rss/project/django/releases.xml" python django release pypi)
-       ("https://pythonspeed.com/atom.xml" python))))
-
-
-(use-package recentf
-  :bind (("C-x C-r" . recentf-open-files))
-  :config (progn
-            (setq recentf-max-menu-items 50)
-            (setq recentf-max-saved-items 50)))
-
-
 (use-package webjump
   :bind (("C-c C-o" . webjump)))
 (use-package rfc-mode)
-
 (use-package ido
   :config (ido-mode -1))
-
-
 (use-package copilot
   :bind (:map copilot-completion-map
           ("<tab>" . copilot-accept-completion)
           ("TAB" . copilot-accept-completion))
-  ;; :hook ((prog-mode . copilot-mode))
   )
-
 (use-package ibuffer-projectile
   :ensure t
   :init
@@ -846,7 +651,6 @@ parses its input."
       (unless (eq ibuffer-sorting-mode 'alphabetic)
         (ibuffer-do-sort-by-alphabetic))))
   :config
-  ;; define size-h column (human readable)
   (define-ibuffer-column size-h
     (:name "Size" :inline t)
     (cond
@@ -854,56 +658,31 @@ parses its input."
       ((> (buffer-size) 100000) (format "%7.0fk" (/ (buffer-size) 1000.0)))
       ((> (buffer-size) 1000) (format "%7.1fk" (/ (buffer-size) 1000.0)))
       (t (format "%8dB" (buffer-size)))))
-  
   (setq ibuffer-formats
     '((mark modified read-only " "
         (name 25 25 :left :elide)
         " "
-        (size-h 9 -1 :right)       ;; use human readable size
+        (size-h 9 -1 :right)
         " "
         (mode 16 16 :left :elide)
         " "
-        project-relative-file)))   ;; Display filenames relative to project root
+        project-relative-file)))
   )
-
 (use-package guru-mode
   :hook ((prog-mode . guru-mode)))
-
 (use-package terraform-mode)
-
-
 (use-package kubed
   :bind ("C-c k" . kubed-transient))
-
-(use-package kubel
-  :after (vterm)
-  :config (kubel-vterm-setup))
-
 (use-package sxhkd-mode)
-
-
 (use-package solaire-mode
   :ensure t
   :hook
   ((change-major-mode after-revert ediff-prepare-buffer) . turn-on-solaire-mode)
   :config
   (solaire-global-mode +1))
-
-
 (use-package wat-ts-mode :ensure t)
-
-
-;; (use-package hideshow
-;;   :hook (prog-mode . (lambda ()
-;;                        (unless (eq major-mode 'tree-sitter-query-mode)
-;;                          (hs-minor-mode)))))
-
-
 (use-package org-modern)
-
 (use-package geiser-guile)
-
-
 (use-package denote
   :ensure t
   :hook (dired-mode . denote-dired-mode)
@@ -916,98 +695,57 @@ parses its input."
     ("C-c n g" . denote-grep))
   :config
   (setq denote-directory (expand-file-name "~/docs/notes/"))
-
-  ;; Automatically rename Denote buffers when opening them so that
-  ;; instead of their long file name they have, for example, a literal
-  ;; "[D]" followed by the file's title.  Read the doc string of
-  ;; `denote-rename-buffer-format' for how to modify this.
   (denote-rename-buffer-mode 1))
-
-
-
+(use-package debbugs)
 (use-package debpaste)
-
-
-;;; My ERC configuration -*- lexical-binding: t -*-
-
 (use-package erc
   :config
-  ;; Prefer SASL to NickServ, colorize nicknames, and show side panels
-  ;; with joined channels and members
   (setopt erc-modules
-          (seq-union '(sasl nicks bufbar nickbar scrolltobottom)
-                     erc-modules))
-
+    (seq-union '(sasl nicks bufbar nickbar scrolltobottom)
+      erc-modules))
   :custom
-  ;; Protect me from accidentally sending excess lines.
   (erc-inhibit-multiline-input t)
   (erc-send-whitespace-lines t)
   (erc-ask-about-multiline-input t)
-  ;; Scroll all windows to prompt when submitting input.
   (erc-scrolltobottom-all t)
-
-  ;; Reconnect automatically using a fancy strategy.
   (erc-server-reconnect-function #'erc-server-delayed-check-reconnect)
   (erc-server-reconnect-timeout 30)
-
-  ;; Show new buffers in the current window instead of a split.
   (erc-interactive-display 'buffer)
-
-  ;; Insert a newline when I hit <RET> at the prompt, and prefer
-  ;; something more deliberate for actually sending messages.
   :bind (:map erc-mode-map
-              ("RET" . nil)
-              ("C-RET" . #'erc-send-current-line))
-
-  ;; Emphasize buttonized text in notices.
+          ("RET" . nil)
+          ("C-<return>" . #'erc-send-current-line))
   :custom-face (erc-notice-face ((t (:slant italic :weight unspecified)))))
-
 (use-package erc-sasl
-  ;; Since my account name is the same as my nick, free me from having
-  ;; to hit C-u before M-x erc to trigger a username prompt.
   :custom (erc-sasl-user :nick))
-
 (use-package erc-join
-  ;; Join #emacs and #erc whenever I connect to Libera.Chat.
   :custom (erc-autojoin-channels-alist '((Libera.Chat "#guix"))))
-
 (use-package erc-fill
   :custom
-  ;; Prefer one message per line without continuation indicators.
   (erc-fill-function #'erc-fill-wrap)
   (erc-fill-static-center 18)
-
   :bind (:map erc-fill-wrap-mode-map ("C-c =" . #'erc-fill-wrap-nudge)))
-
 (use-package erc-track
-  ;; Prevent JOINs and PARTs from lighting up the mode-line.
   :config (setopt erc-track-faces-priority-list
-                  (remq 'erc-notice-face erc-track-faces-priority-list))
-
+            (remq 'erc-notice-face erc-track-faces-priority-list))
   :custom (erc-track-priority-faces-only 'all))
-
 (use-package erc-goodies
-  ;; Turn on read indicators when joining channels.
   :hook (erc-join . my-erc-enable-keep-place-indicator-on-join))
-
+(use-package persistent-scratch
+  :config (persistent-scratch-setup-default))
 (defvar my-erc-read-indicator-channels '("#emacs")
   "Channels in which to show a `keep-place-indicator'.")
-
 (defun my-erc-enable-keep-place-indicator-on-join ()
   "Enable read indicators for certain queries or channels."
   (when (member (erc-default-target) my-erc-read-indicator-channels)
     (erc-keep-place-indicator-mode +1)))
-
-;; Handy commands from the Emacs Wiki.
 (defun erc-cmd-TRACK (&optional target)
   "Start tracking TARGET or that of current buffer."
   (setq erc-track-exclude
-        (delete (or target (erc-default-target) (current-buffer))
-                erc-track-exclude)))
-
+    (delete (or target (erc-default-target) (current-buffer))
+      erc-track-exclude)))
 (defun erc-cmd-UNTRACK (&optional target)
   "Stop tracking TARGET or that of current buffer."
   (setq erc-track-exclude
-        (cl-pushnew (or target (erc-default-target) (current-buffer))
-                    erc-track-exclude
-                    :test #'equal)))
+    (cl-pushnew (or target (erc-default-target) (current-buffer))
+      erc-track-exclude
+      :test #'equal)))
