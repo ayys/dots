@@ -144,118 +144,32 @@ in
     description = "Ayush";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
-      kdePackages.dolphin
-      noto-fonts
-      vistafonts
-      guix
-      go-font
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
-      liberation_ttf
-      fira-code
-      fira-code-symbols
-      hack-font
-      nerd-fonts.fira-code
-      nerd-fonts.droid-sans-mono
-      nerd-fonts.hack
-      python311Packages.python
-      python311Packages.ipython
-      python311Packages.pip
-      python311Packages.python-lsp-server
-      python311Packages.requests
-      python311Packages.pylsp-mypy
-      xorg.libX11
-      gnumake
-      xorg.libX11.dev
-      xorg.libXft
-      xorg.libXinerama
-      python311Packages.python-lsp-ruff
-      python311Packages.ruff
-      hackgen-nf-font
-      mplus-outline-fonts.githubRelease
-      dina-font
-      source-code-pro
-      lohit-fonts.devanagari
-      proggyfonts
-      inputs.ayys-st.packages."${pkgs.system}".st
-      inputs.wasmenv.packages."${pkgs.system}".wasmenv
-      xorg.xmodmap
-      feh
-      meson
-      wasmer
-      man-pages
-      man-pages-posix
-      go-font
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
-      liberation_ttf
-      fira-code
-      fira-code-symbols
-      hack-font
-      nerd-fonts.fira-code
-      nerd-fonts.droid-sans-mono
-      nerd-fonts.hack
-      python311Packages.python
-      python311Packages.ipython
-      python311Packages.pip
-      python311Packages.python-lsp-server
-      python311Packages.requests
-      python311Packages.pylsp-mypy
-      xorg.libX11
-      gnumake
-      xorg.libX11.dev
-      xorg.libXft
-      xorg.libXinerama
-      python311Packages.python-lsp-ruff
-      python311Packages.ruff
-      hackgen-nf-font
-      mplus-outline-fonts.githubRelease
-      dina-font
-      source-code-pro
-      lohit-fonts.devanagari
-      proggyfonts
-      inputs.ayys-st.packages."${pkgs.system}".st
-      inputs.wasmenv.packages."${pkgs.system}".wasmenv
-      xorg.xmodmap
-      feh
-      meson
-      wasmer
-      man-pages
-      man-pages-posix
-      inputs.ayys-uv.packages."${pkgs.system}".uv
-      firefox
-      # fonts
-      noto-fonts
-      vistafonts
-      go-font
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
-      liberation_ttf
-      fira-code
-      fira-code-symbols
-      hack-font
-      dina-font
-      source-code-pro
-      lohit-fonts.devanagari
-      cascadia-code
-
+      (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
       aspell
       atuin
       autoconf
       automake
+      bacon
       bison
+      cascadia-code
       chromium
-      cmake
       cmake
       corepack
       delta
       devenv
+      dig
+      dina-font
       docker
       doppler
       editorconfig-core-c
       extra-cmake-modules
       eza
+      feh
       file
+      fira-code
+      fira-code-symbols
+      firefox
+      fd
       fmt
       fortune
       gcc
@@ -265,55 +179,90 @@ in
       gh
       gnumake
       go
+      go-font
       gperf
+      guix
+      hack-font
+      hackgen-nf-font
       htop
+      hydroxide
       inkscape
+      inputs.ayys-st.packages."${pkgs.system}".st
+      inputs.ayys-uv.packages."${pkgs.system}".uv
+      inputs.wasmenv.packages."${pkgs.system}".wasmenv
+      insomnia
       jq
       json_c
       k9s
+      kdePackages.dolphin
       kitty
       kubectl
+      lemonbar
       libcap
+      liberation_ttf
       libtool
+      live-server
+      lohit-fonts.devanagari
       m4
+      man-pages
+      man-pages-posix
+      meson
+      mplayer
+      mplus-outline-fonts.githubRelease
       mysql84
       nasm
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.fira-code
+      nerd-fonts.hack
       nix-index
       nodejs
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-emoji
+      nyxt
       pavucontrol
       pkg-config
       postgresql_16
       postman
-      insomnia
+      proggyfonts
       pyenv
+      python311Packages.ipython
+      python311Packages.pip
+      python311Packages.pylsp-mypy
+      python311Packages.python
+      python311Packages.python-lsp-ruff
+      python311Packages.python-lsp-server
+      python311Packages.requests
+      python311Packages.ruff
+      qemu_kvm
       redis
       ripgrep
       rofi
       slack
-      # steam-run
-      thefuck
+      source-code-pro
+      sxhkd
+      pay-respects
       tmux
-      tmuxinator
       tmuxinator
       tree
       unzip
-      hydroxide
+      victor-mono
+      vistafonts
+      wasmer
+      xcape
       xclip
+      xdiskusage
+      xdo
+      xorg.libX11
+      xorg.libX11.dev
+      xorg.libXft
+      xorg.libXinerama
+      xorg.xmodmap
+      xtitle
       yarn
       yq
-      xdiskusage
-      bacon
-      live-server
-      sxhkd
-      xtitle
-      lemonbar
-      xdo
-      xcape
-      dig
-      nyxt
-      qemu_kvm
-      (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
-
+      zip
+      code-cursor
     ];
   };
 

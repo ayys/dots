@@ -12,7 +12,7 @@
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     ayys-st = {
-      url = "github:ayys/st";
+      url = "github:ayys/st/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     wasmenv = {

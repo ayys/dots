@@ -1,6 +1,6 @@
 ;; -*- lexical-binding: t; -*-
-(load-file (expand-file-name "prelude.el" (file-name-directory (or load-file-name buffer-file-name))))
-(load-file (expand-file-name "packages/sxhkd-mode.el" (file-name-directory (or load-file-name buffer-file-name))))
+(load-file (expand-file-name "./prelude.el" user-emacs-directory))
+(load-file (expand-file-name "packages/sxhkd-mode.el" user-emacs-directory))
 (use-package avy :ensure t
   :bind (("C-z C-z" . avy-goto-char-timer)
           ("C-z C-l" . avy-goto-line)
@@ -110,6 +110,7 @@
           ("C-c d" . consult-ripgrep)      ; run ripgrep on project
           ("C-c h" . consult-outline)      ; Grep for headings in the file
           ("C-x <SPC>" . consult-global-mark)      ; Grep for headings in the file
+          ("C-c f" . consult-fd)      ; Grep for headings in the file
           )
   :config
   (setq xref-show-xrefs-function #'consult-xref
@@ -558,26 +559,26 @@ parses its input."
 (use-package org-appear
   :ensure t
   :hook (org-mode . org-appear-mode))
-(use-package org-superstar
-  :ensure t
-  :hook (org-mode . org-superstar-mode)
-  :config
-  (setq org-superstar-special-todo-items t))
+;; (use-package org-superstar
+;;   :ensure t
+;;   :hook (org-mode . org-superstar-mode)
+;;   :config
+;;   (setq org-superstar-special-todo-items t))
 (use-package org-rainbow-tags :ensure t
   :hook ((org-mode . org-rainbow-tags-mode)))
-(use-package markdown-mode
-  :ensure t
-  :mode (("README\\.md\\'" . gfm-mode)
-          ("\\.md\\'" . markdown-mode)
-          ("\\.mdx\\'" . markdown-mode)
-          ("\\.markdown\\'" . markdown-mode))
-  :hook ((org-mode . auto-fill-mode)
-          (markdown-mode . auto-fill-mode)
-          (org-mode . display-fill-column-indicator-mode)
-          (markdown-mode . display-fill-column-indicator-mode))
-  :init (setq markdown-command "multimarkdown")
-  :config
-  (setq markdown-fontify-code-blocks-natively t))
+;; (use-package markdown-mode
+;;   :ensure t
+;;   :mode (("README\\.md\\'" . gfm-mode)
+;;           ("\\.md\\'" . markdown-mode)
+;;           ("\\.mdx\\'" . markdown-mode)
+;;           ("\\.markdown\\'" . markdown-mode))
+;;   :hook ((org-mode . auto-fill-mode)
+;;           (markdown-mode . auto-fill-mode)
+;;           (org-mode . display-fill-column-indicator-mode)
+;;           (markdown-mode . display-fill-column-indicator-mode))
+;;   :init (setq markdown-command "multimarkdown")
+;;   :config
+;;   (setq markdown-fontify-code-blocks-natively t))
 (use-package org-project-capture
   :bind (("C-c n p" . org-project-capture-project-todo-completing-read))
   :ensure t
@@ -605,7 +606,7 @@ parses its input."
           ("M-j" . duplicate-dwim)
           ("C-c C-/" . revert-buffer-no-confirm)
           ("C-:" . goto-line)))
-(use-packaoge focus
+(use-package focus
   :bind (("C-c C-l C-f" . focus-mode))
   :ensure t)
 (use-package which-key

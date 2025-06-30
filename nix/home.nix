@@ -55,7 +55,7 @@
     ".local/bin/panel_bar".source = ../bspwm/panel_bar;
     ".local/bin/panel_colors".source = ../bspwm/panel_colors;
     ".tmux.conf".source = ../tmux/tmux.conf;
-    "~/.config/nyxt" = {
+    ".config/nyxt" = {
       source = ../nyxt;
       recursive = true;
     };

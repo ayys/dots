@@ -274,3 +274,21 @@ that number, or create it if it doesn't already exist."
     (insert (shell-command-to-string "git log --pretty=format:'- %s' origin/main..HEAD"))))
 
 (add-hook 'forge-create-pullreq-hook #'ayys/forge-insert-commit-titles-in-pr-buffer)
+
+
+
+;; world-clock config
+
+(setq zoneinfo-style-world-list
+      '(("Europe/Madrid" "Madrid")           ; Spain
+        ("America/Los_Angeles" "SanFran")
+        ("Asia/Calcutta" "India")
+        ("Asia/Kathmandu" "Kathmandu")       ; Nepal
+        ("Europe/Helsinki" "Helsinki")       ; Finland
+        ("Asia/Tehran" "Tehran")             ; Iran
+        ("Europe/Vienna" "Vienna")))         ; Austria
+
+
+
+(setq world-clock-time-format "%T\t%Z\t%d %b\t%A")
+(global-set-key (kbd "C-x <prior>") 'world-clock)
