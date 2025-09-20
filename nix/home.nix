@@ -31,7 +31,8 @@
     Unit.Description = "Hydroxide - ProtonMail Bridge";
     Install.WantedBy = [ "default.target" ];
     Service = {
-      ExecStart = "${pkgs.hydroxide}/bin/hydroxide serve";
+      Environment = "HYDROXIDE_CARDDAV_PORT=8082";
+      ExecStart = "${pkgs.hydroxide}/bin/hydroxide -carddav-port 8081 serve";
       Restart = "always"; 
       RestartSec = 5;
     };
@@ -63,7 +64,7 @@
     ".local/bin/rb" = {
       text = ''
     #!/bin/sh
-    nixos-rebuild --flake $HOME/git/dots/nix#ayys --use-remote-sudo switch
+    nixos-rebuild --flake $HOME/git/dots/nix#ayys --sudo switch
   '';
       executable = true;
     };
@@ -130,8 +131,19 @@ WASMENV_DIR="/home/ayys/.config/wasmenv"
 [ -s "/home/ayys/.config/wasmenv/wasmenv.sh" ] && source "/home/ayys/.config/wasmenv/wasmenv.sh"
 export WASMENV_DIR PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
 
-GUIX_PROFILE="/home/ayys/.guix-profile"
-. "$GUIX_PROFILE/etc/profile"
+# GUIX_PROFILE="/home/ayys/.guix-profile"
+# . "$GUIX_PROFILE/etc/profile"
+
+# Load pyenv automatically by appending
+# the following to 
+# ~/.bash_profile if it exists, otherwise ~/.profile (for login shells)
+# and ~/.bashrc (for interactive shells) :
+
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init - bash)"
+
+# Restart your shell for the changes to take effect.
 '';
   };
 

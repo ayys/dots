@@ -144,22 +144,24 @@ in
     description = "Ayush";
     extraGroups = [ "networkmanager" "wheel" "docker" ];
     packages = with pkgs; [
-      (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
+      # (google-cloud-sdk.withExtraComponents [google-cloud-sdk.components.gke-gcloud-auth-plugin])
       aspell
       atuin
       autoconf
       automake
       bacon
       bison
+      open-dyslexic
+      teams-for-linux
       cascadia-code
       chromium
+      multimarkdown
       cmake
       corepack
       delta
       devenv
       dig
       dina-font
-      docker
       doppler
       editorconfig-core-c
       extra-cmake-modules
@@ -181,14 +183,13 @@ in
       go
       go-font
       gperf
-      guix
       hack-font
       hackgen-nf-font
       htop
       hydroxide
       inkscape
       inputs.ayys-st.packages."${pkgs.system}".st
-      inputs.ayys-uv.packages."${pkgs.system}".uv
+      uv
       inputs.wasmenv.packages."${pkgs.system}".wasmenv
       insomnia
       jq
@@ -219,21 +220,21 @@ in
       noto-fonts
       noto-fonts-cjk-sans
       noto-fonts-emoji
-      nyxt
+      # nyxt
       pavucontrol
       pkg-config
       postgresql_16
       postman
       proggyfonts
       pyenv
-      python311Packages.ipython
-      python311Packages.pip
-      python311Packages.pylsp-mypy
-      python311Packages.python
-      python311Packages.python-lsp-ruff
-      python311Packages.python-lsp-server
-      python311Packages.requests
-      python311Packages.ruff
+      python313Packages.ipython
+      python313Packages.pip
+      python313Packages.pylsp-mypy
+      python313Packages.python
+      python313Packages.python-lsp-ruff
+      python313Packages.python-lsp-server
+      python313Packages.requests
+      python313Packages.ruff
       qemu_kvm
       redis
       ripgrep
@@ -248,7 +249,7 @@ in
       unzip
       victor-mono
       vistafonts
-      wasmer
+      # wasmer
       xcape
       xclip
       xdiskusage
@@ -258,11 +259,15 @@ in
       xorg.libXft
       xorg.libXinerama
       xorg.xmodmap
+      poetry
       xtitle
       yarn
       yq
       zip
       code-cursor
+      dive # look into docker image layers
+      podman-tui # status of containers in the terminal
+      podman-compose # start group of containers for dev
     ];
   };
 
@@ -362,19 +367,19 @@ in
     wantedBy = [ "graphical-session.target" ];
   };
 
-  systemd.services.guix-daemon = {
-    enable = true;
-    description = "Build daemon for GNU Guix";
-    serviceConfig = {
-      ExecStart = "${pkgs.guix.out}/bin/guix-daemon --build-users-group=guixbuild --substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org'";
-      Environment="GUIX_LOCPATH=/root/.guix-profile/lib/locale";
-      RemainAfterExit="yes";
-      StandardOutput="syslog";
-      StandardError="syslog";
-      TaskMax= "8192";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
+  # systemd.services.guix-daemon = {
+  #   enable = true;
+  #   description = "Build daemon for GNU Guix";
+  #   serviceConfig = {
+  #     ExecStart = "${pkgs.guix.out}/bin/guix-daemon --build-users-group=guixbuild --substitute-urls='https://ci.guix.gnu.org https://bordeaux.guix.gnu.org'";
+  #     Environment="GUIX_LOCPATH=/root/.guix-profile/lib/locale";
+  #     RemainAfterExit="yes";
+  #     StandardOutput="syslog";
+  #     StandardError="syslog";
+  #     TaskMax= "8192";
+  #   };
+  #   wantedBy = [ "multi-user.target" ];
+  # };
 
 
 
@@ -405,7 +410,19 @@ in
 
   fonts.fontconfig.enable = true;
 
-  virtualisation.docker.enable = true;
+  virtualisation = {
+    containers.enable = true;
+    podman = {
+      enable = true;
+
+      # Create a `docker` alias for podman, to use it as a drop-in replacement
+      dockerCompat = true;
+
+      # Required for containers under podman-compose to be able to talk to each other.
+      defaultNetwork.settings.dns_enabled = true;
+    };
+  };
+
 
   networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
   # Open ports in the firewall.

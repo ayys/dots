@@ -1,0 +1,31 @@
+# Emacs backup files
+#*#
+*~
+
+# Temporary files
+*.tmp
+*.temp
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Nix
+result
+result-*
+
+# Logs
+*.log
+
+# Cache directories
+.cache/
+*.cache/
+
+# Build artifacts
+build/
+dist/ 

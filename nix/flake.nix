@@ -5,10 +5,6 @@
     nixpkgs = {
       url = "github:NixOS/nixpkgs/nixos-unstable";
     };
-
-    nixpkgs-unstable = {
-      url = "github:NixOS/nixpkgs/nixos-unstable";
-    };
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     ayys-st = {
@@ -25,10 +21,6 @@
     };
     rust-overlay = {
       url = "github:nix-community/fenix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    ayys-uv = {
-      url = "github:ayys/uv.flake.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
