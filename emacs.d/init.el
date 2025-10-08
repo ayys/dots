@@ -589,10 +589,10 @@ parses its input."
     (setq org-project-capture-per-project-filepath ".todo/TODO.org")
     (org-project-capture-per-project)))
 (use-package eat :ensure t
-  :bind (("M-RET" . ayys/eat-project))
-  :bind (:map eat-mode-map
-          ("M-<return>" . ayys/eat-terminal-split))
+  :bind (("M-RET" . ayys/consult-project-eat-buffers))
+  :bind (:map eat-mode-map ("M-<return>" . ayys/consult-project-eat-buffers))
   :hook (eat-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
+
 (use-package emacs
   :config
   (progn
@@ -759,4 +759,10 @@ parses its input."
          ("M-*" . yas-insert-snippet))
   :config (yas-global-mode 1)
   )
+
 (use-package yasnippet-snippets)
+
+
+
+;; read epub files
+(use-package nov)

@@ -1,2 +1,2 @@
-Europe/Madrid
+America/Los_Angeles
 Asia/Kathmandu

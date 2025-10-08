@@ -164,18 +164,33 @@ interactive `pyvenv-activate' function before `lsp'"
   (magit-branch-and-checkout (string-to-branch-name (read-string "Branch name: ")) "main"))
 
 
+(defun ayys/eat-project (&optional arg)
+  "
+Fork of eat-project that optionally ignores the current project if
+user is not in one.
 
 
+Start Eat in the current project's root directory.
 
-(defun ayys/eat-terminal-split ()
-  "Create a new Eat terminal in a split frame and switch to it.
-If the current buffer is an Eat buffer, switch to the previous buffer instead."
-  (interactive)
-  (if (string-match-p "eat\\*$" (buffer-name))
-      (switch-to-prev-buffer)
-    (let ((split-window (split-window-below)))
-      (select-window split-window)
-      (eat-project))))
+Start a new Eat session, or switch to an already active session.
+Return the buffer selected (or created).
+
+With a non-numeric prefix ARG, create a new session.
+
+With a numeric prefix ARG (like
+\\[universal-argument] 42 \\[eat-project]), switch to the session with
+that number, or create it if it doesn't already exist."
+  (interactive "P")
+  (require 'project)
+
+  (let ((init-dir default-directory))  ;; init-dir is where eat should launch
+    (if-let* ((project-name (project-current nil))
+               (project-root (project-root project-name)))
+      (setq init-dir project-root
+            eat-buffer-name (project-prefixed-buffer-name "eat"))
+      (setq eat-buffer-name "*eat*"))
+    (let ((default-directory init-dir))
+      (eat nil arg))))
 
 
 (defun ayys/eat-project (&optional arg)
@@ -196,12 +211,66 @@ With a numeric prefix ARG (like
 that number, or create it if it doesn't already exist."
   (interactive "P")
   (require 'project)
-  (if-let* ((project-name (project-current nil)) (default-directory (project-root (project-current t))))
-    (setq eat-buffer-name (project-prefixed-buffer-name "eat"))
-    (setq eat-buffer-name "*eat*"))
-  (eat nil arg))
+
+  (let ((init-dir default-directory))  ;; init-dir is where eat should launch
+    (if-let* ((project-name (project-current nil))
+               (project-root (project-root project-name)))
+      (setq init-dir project-root
+            eat-buffer-name (project-prefixed-buffer-name "eat"))
+      (setq eat-buffer-name "*eat*"))
+    (let ((default-directory init-dir))
+      (eat nil arg))))
 
 
+
+(defun ayys/consult-project-eat-buffers (&optional force-consult)
+    "List and switch to open project 'eat' buffers.
+If no 'eat' buffers exist, create one. If buffers exist, allows
+the user to optionally create a new one as well."
+  (interactive "P")
+  (require 'project)
+  (require 'consult)
+
+  (let* ((project-name (project-current nil))
+          (project-buffers (and project-name (project-buffers project-name)))
+          (eat-buffers (cl-remove-if-not
+                         (lambda (buf)
+                           (with-current-buffer buf
+                             (and (eq major-mode 'eat-mode)
+                               (member buf project-buffers))))
+                         (buffer-list)))
+          (existing-source `( :name "Eat buffers in current project"
+                              :category buffer
+                              :action (lambda (buffer) (switch-to-buffer buffer))
+                              :items ,(mapcar 'buffer-name eat-buffers)))
+          (create-source `(:name "Create new shell"
+                            :items ("(Create new eat buffer for project)")
+                            :hidden: nil
+                            :action (lambda (_) (ayys/eat-project t))))
+          (exit-eat-source `(:name "Exit out of eat"
+                            :items ("(Exit eat)")
+                            :hidden: nil
+                            :action (lambda (_) (switch-to-prev-buffer))))
+
+          (sources (append (if (eq major-mode 'eat-mode) (list exit-eat-source) nil) (list existing-source create-source))))
+    (cond
+      ;; case -1: force-consult is true
+      (force-consult (consult-buffer sources))
+
+      ;; case 0: currently in eat buffer
+      ((eq major-mode 'eat-mode) (switch-to-prev-buffer))
+      
+      ;; case 1: currently not in project
+      ((null project-name) (ayys/eat-project))
+
+      ;; case 2: in project, but no eat buffers exist yet
+      ((null eat-buffers) (ayys/eat-project))
+
+      ;; case 3: there is one eat buffer
+      ((eq (length eat-buffers) 1) (switch-to-buffer (car eat-buffers)))
+
+      ;; case 4: multiple buffers exist. list existing and offer a create option too
+      (t (consult-buffer sources)))))
 
 
 (setq global-mark-ring-max 256)
@@ -280,15 +349,13 @@ that number, or create it if it doesn't already exist."
 ;; world-clock config
 
 (setq zoneinfo-style-world-list
-      '(("Europe/Madrid" "Madrid")           ; Spain
-        ("America/Los_Angeles" "SanFran")
-        ("Asia/Calcutta" "India")
-        ("Asia/Kathmandu" "Kathmandu")       ; Nepal
-        ("Europe/Helsinki" "Helsinki")       ; Finland
-        ("Asia/Tehran" "Tehran")             ; Iran
-        ("Europe/Vienna" "Vienna")))         ; Austria
+  '(("America/Los_Angeles" "SanFran")
+     ("Asia/Calcutta" "India")
+     ("Asia/Kathmandu" "Kathmandu")       ; Nepal
+     ))
 
 
 
 (setq world-clock-time-format "%T\t%Z\t%d %b\t%A")
 (global-set-key (kbd "C-x <prior>") 'world-clock)
+

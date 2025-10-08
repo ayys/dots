@@ -268,6 +268,9 @@ in
       dive # look into docker image layers
       podman-tui # status of containers in the terminal
       podman-compose # start group of containers for dev
+      pgcli
+      pass
+      gnupg
     ];
   };
 
@@ -275,6 +278,9 @@ in
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = false;
   services.displayManager.autoLogin.user = "ayys";
+
+  # Enable pass secret service
+  services.passSecretService.enable = true;
 
   # programs.hyprland = {
   #   enable = true; 

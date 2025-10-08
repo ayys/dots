@@ -20,10 +20,15 @@
   home.stateVersion = "25.05"; # Please read the comment before changing.
 
   home.packages = with pkgs; [
+    (writeShellScriptBin "switch_kbdlayout" ''
+# switch between us and np keyboard layouts
 
-    # END fonts
-
-
+if [ $(setxkbmap -query | grep layout | cut -d ' ' -f 6) = "us" ]; then
+    setxkbmap np
+else
+    setxkbmap us
+fi
+    '')
   ];
 
 
