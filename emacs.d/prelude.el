@@ -78,7 +78,7 @@
 (delete-selection-mode 1)
 (set-default 'cursor-type 'bar)
 ;; Font stuff
-(setq font-name "-APPL-Monaco-regular-normal-normal-*-*-*-*-*-*-0-iso10646-1")
+(setq font-name "-SAJA-Cascadia Mono-regular-normal-normal-*-*-*-*-*-m-0-iso10646-1")
 (setq-default frame-alist `((font . ,font-name)))
 (add-to-list 'default-frame-alist `(font . ,font-name))
 ;; macOS Key Modifiers
