@@ -477,6 +477,12 @@ parses its input."
                   :height 0.7
                   :italic t))))
 (use-package git-link
+  :config
+  (progn
+    (add-to-list 'git-link-remote-alist '("lyric" git-link-gitlab) t)
+    (add-to-list 'git-link-homepage-remote-alist '("lyric" git-link-homepage-github) t)
+    (add-to-list 'git-link-commit-remote-alist '("lyric" git-link-commit-gitlab) t))
+  :bind (("C-c C-g" . git-link-dispatch))
   :ensure t)
 (use-package git-gutter
   :ensure t
