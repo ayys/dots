@@ -31,8 +31,8 @@
         system = "x86_64-linux";
         specialArgs = { inherit inputs; };
         modules = [
-          (import ./configuration.nix)
-          home-manager.nixosModules.home-manager
+          ./configuration.nix
+          home-manager.nixosModules.default
           {
             home-manager.backupFileExtension = "backup";
             home-manager.useGlobalPkgs = true;
