@@ -645,11 +645,7 @@ parses its input."
 (use-package rfc-mode)
 (use-package ido
   :config (ido-mode -1))
-(use-package copilot
-  :bind (:map copilot-completion-map
-          ("<tab>" . copilot-accept-completion)
-          ("TAB" . copilot-accept-completion))
-  )
+
 (use-package ibuffer-projectile
   :ensure t
   :init
