@@ -1,5 +1,8 @@
 ;; Load custom file  -*- lexical-binding: t; -*-
 
+(require 's)
+
+
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file :no-error-if-file-is-missing)
 
@@ -8,14 +11,12 @@
 (setq use-package-verbose t)
 (global-set-key (kbd "<XF86AudioRaiseVolume>") 'text-scale-increase)
 (global-set-key (kbd "<XF86AudioLowerVolume>") 'text-scale-decrease)
-(require 'linum)
+
 ;; Basic Settings
 (setq org-confirm-babel-evaluate nil)
 
 ;; C-c <Right> <Left> to undo and redo window configuration
 (tab-bar-history-mode)
-
-
 (global-unset-key (kbd "C-z"))
 (defun vterm-all-names ()
   (let ((buffer-names (mapcar #'buffer-name (buffer-list))))
@@ -65,7 +66,7 @@
       ispell-dictionary "en_US-large"
       line-spacing 2
       auth-sources '((:source "~/.authinfo.gpg"))
-      epg-gpg-program "~/junk/gnupg/gnupg-2.4.0/bin/gpg"
+      epg-gpg-program (executable-find "gpg")
       warning-minimum-level :emergency
       visible-bell nil
       ring-bell-function 'ignore
@@ -75,6 +76,10 @@
 (savehist-mode 1)
 (global-subword-mode 1)
 (global-display-line-numbers-mode 1)
+(setopt display-line-numbers-width 3)           ; Set a minimum width
+(add-hook 'text-mode-hook 'visual-line-mode)
+
+
 (delete-selection-mode 1)
 (set-default 'cursor-type 'bar)
 ;; Font stuff
@@ -124,22 +129,6 @@
           (car venv-path))
       (pyvenv-deactivate)
       nil)))
-(defun ayys/py-auto-lsp ()
-  "Turn on lsp mode in a Python project with some automated logic.
-Try to automatically determine which pyenv virtual environment to
-activate based on the project name, using
-`ayys/py-workon-project-venv'. If successful, call `lsp'. If we
-cannot determine the virtualenv automatically, first call the
-interactive `pyvenv-activate' function before `lsp'"
-  (interactive)
-  (let ((pvenv (if (and (boundp 'pyvenv-virtual-env-name) pyvenv-virtual-env-name)
-                   pyvenv-virtual-env-name
-                 (ayys/py-workon-project-venv))))
-    (if pvenv
-        (lsp)
-      (progn
-        (call-interactively #'pyvenv-activate)
-        (lsp)))))
 
 (defun my-fetch-all-forge-topics ()
   "Fetch all topics from the forge remote."
@@ -193,36 +182,6 @@ that number, or create it if it doesn't already exist."
       (eat nil arg))))
 
 
-(defun ayys/eat-project (&optional arg)
-  "
-Fork of eat-project that optionally ignores the current project if
-user is not in one.
-
-
-Start Eat in the current project's root directory.
-
-Start a new Eat session, or switch to an already active session.
-Return the buffer selected (or created).
-
-With a non-numeric prefix ARG, create a new session.
-
-With a numeric prefix ARG (like
-\\[universal-argument] 42 \\[eat-project]), switch to the session with
-that number, or create it if it doesn't already exist."
-  (interactive "P")
-  (require 'project)
-
-  (let ((init-dir default-directory))  ;; init-dir is where eat should launch
-    (if-let* ((project-name (project-current nil))
-               (project-root (project-root project-name)))
-      (setq init-dir project-root
-            eat-buffer-name (project-prefixed-buffer-name "eat"))
-      (setq eat-buffer-name "*eat*"))
-    (let ((default-directory init-dir))
-      (eat nil arg))))
-
-
-
 (defun ayys/consult-project-eat-buffers (&optional force-consult)
     "List and switch to open project 'eat' buffers.
 If no 'eat' buffers exist, create one. If buffers exist, allows
@@ -251,27 +210,20 @@ the user to optionally create a new one as well."
                             :items ("(Exit eat)")
                             :hidden: nil
                             :action (lambda (_) (switch-to-prev-buffer))))
-
           (sources (append (if (eq major-mode 'eat-mode) (list exit-eat-source) nil) (list existing-source create-source))))
     (cond
       ;; case -1: force-consult is true
       (force-consult (consult-buffer sources))
-
       ;; case 0: currently in eat buffer
       ((eq major-mode 'eat-mode) (switch-to-prev-buffer))
-      
       ;; case 1: currently not in project
       ((null project-name) (ayys/eat-project))
-
       ;; case 2: in project, but no eat buffers exist yet
       ((null eat-buffers) (ayys/eat-project))
-
       ;; case 3: there is one eat buffer
       ((eq (length eat-buffers) 1) (switch-to-buffer (car eat-buffers)))
-
       ;; case 4: multiple buffers exist. list existing and offer a create option too
       (t (consult-buffer sources)))))
-
 
 (setq global-mark-ring-max 256)
 (setq mark-ring-max 256)
@@ -296,7 +248,6 @@ the user to optionally create a new one as well."
     (message "Initialized empty Git repository in %s" dir)
     (dired dir)))
 
-
 (defun background-brightness ()
   "Roughly determine brightness of current background using luminance formula."
   (let* ((bg (frame-parameter nil 'background-color))
@@ -310,7 +261,6 @@ the user to optionally create a new one as well."
   "Get effective background mode: 'light or 'dark."
   (or frame-background-mode
       (if (> (background-brightness) 0.5) 'light 'dark)))
-
 
 (defun set-mouse-cursor-color-based-on-theme ()
   "Set mouse cursor color based on light/dark theme."
@@ -333,9 +283,6 @@ the user to optionally create a new one as well."
 ;; Set initial mouse cursor color based on current theme
 (set-mouse-cursor-color-based-on-theme)
 
-
-
-
 (defun ayys/forge-insert-commit-titles-in-pr-buffer ()
   "Insert commit titles (no hashes) automatically in PR buffer."
   (when (string-match-p "new-pullreq" (buffer-name))
@@ -344,18 +291,102 @@ the user to optionally create a new one as well."
 
 (add-hook 'forge-create-pullreq-hook #'ayys/forge-insert-commit-titles-in-pr-buffer)
 
-
-
 ;; world-clock config
-
 (setq zoneinfo-style-world-list
   '(("America/Los_Angeles" "SanFran")
      ("Asia/Calcutta" "India")
-     ("Asia/Kathmandu" "Kathmandu")       ; Nepal
-     ))
-
-
+     ("Asia/Kathmandu" "Kathmandu")))
 
 (setq world-clock-time-format "%T\t%Z\t%d %b\t%A")
 (global-set-key (kbd "C-x <prior>") 'world-clock)
 
+
+
+;; Automatically reread from disk if the underlying file changes
+(setopt auto-revert-avoid-polling t)
+;; Some systems don't do file notifications well; see
+;; https://todo.sr.ht/~ashton314/emacs-bedrock/11
+(setopt auto-revert-interval 5)
+(setopt auto-revert-check-vc-info t)
+(global-auto-revert-mode)
+
+
+;; Fix archaic defaults
+(setopt sentence-end-double-space nil)
+
+
+;; Make right-click do something sensible
+(when (display-graphic-p)
+  (context-menu-mode))
+
+
+(defun bedrock--backup-file-name (fpath)
+  "Return a new file path of a given file path.
+If the new path's directories does not exist, create them."
+  (let* ((backupRootDir "~/.emacs.d/emacs-backup/")
+         (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath )) ; remove Windows driver letter in path
+         (backupFilePath (replace-regexp-in-string "//" "/" (concat backupRootDir filePath "~") )))
+    (make-directory (file-name-directory backupFilePath) (file-name-directory backupFilePath))
+    backupFilePath))
+(setopt make-backup-file-name-function 'bedrock--backup-file-name)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;
+;;;   Minibuffer/completion settings
+;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; For help, see: https://www.masteringemacs.org/article/understanding-minibuffer-completion
+
+(setopt enable-recursive-minibuffers t)                ; Use the minibuffer whilst in the minibuffer
+(setopt completion-cycle-threshold 1)                  ; TAB cycles candidates
+(setopt completions-detailed t)                        ; Show annotations
+(setopt tab-always-indent 'complete)                   ; When I hit TAB, try to complete, otherwise, indent
+(setopt completion-styles '(basic initials substring)) ; Different styles to match input to candidates
+
+(setopt completion-auto-help 'always)                  ; Open completion always; `lazy' another option
+(setopt completions-max-height 20)                     ; This is arbitrary
+(setopt completions-detailed t)
+(setopt completions-format 'one-column)
+(setopt completions-group t)
+(setopt completion-auto-select 'second-tab)            ; Much more eager
+;(setopt completion-auto-select t)                     ; See `C-h v completion-auto-select' for more possible values
+
+(keymap-set minibuffer-mode-map "TAB" 'minibuffer-complete) ; TAB acts more like how it does in the shell
+
+
+;; Mode line information
+(setopt line-number-mode t)                        ; Show current line in modeline
+(setopt column-number-mode t)                      ; Show column as well
+
+(setopt x-underline-at-descent-line nil)           ; Prettier underlines
+(setopt switch-to-buffer-obey-display-actions t)   ; Make switching buffers more consistent
+
+(setopt show-trailing-whitespace t)        ; By default, underline trailing spaces
+(setopt indicate-buffer-boundaries 'left)  ; Show buffer top and bottom in the margin
+
+;; Enable horizontal scrolling
+(setopt mouse-wheel-tilt-scroll t)
+(setopt mouse-wheel-flip-direction t)
+
+
+;; Misc. UI tweaks
+(blink-cursor-mode -1)                                ; Steady cursor
+(pixel-scroll-precision-mode)                         ; Smooth scrolling
+
+
+;; Modes to highlight the current line with
+(let ((hl-line-hooks '(text-mode-hook prog-mode-hook)))
+  (mapc (lambda (hook) (add-hook hook 'hl-line-mode)) hl-line-hooks))
+
+
+
+(use-package whitespace
+  :demand t ; Ensures the package is loaded immediately if you want the keybinding to work right away
+  :config
+  (keymap-global-set "C-c w" 'whitespace-mode))
+
+;; Keybindings for built-in or already-loaded functions can also be set directly:
+(global-set-key [M-S-down] 'duplicate-dwim)
+(global-set-key [M-S-up] 'duplicate-dwim)

@@ -24,7 +24,7 @@
   :ensure t)
 (use-package doom-themes :ensure t)
 (use-package ef-themes :ensure t)
-(use-package cyberpunk-theme)
+(use-package cyberpunk-theme :ensure t)
 (use-package catppuccin-theme :ensure t)
 (use-package nyx-theme :ensure t)
 (use-package hima-theme  :ensure t)
@@ -48,7 +48,7 @@
   :config
   (nyan-start-animation))
 (use-package powerline
-  :load-path "~/git/powerline"
+  :load-path (expand-file-name "./packages/powerline" user-emacs-directory)
   :init (progn
           (setq powerline-display-minor-modes nil)
           (setq powerline-arrow-shape 'arrow14)
@@ -68,7 +68,6 @@
     (diminish 'abbrev-mode "")
     (diminish 'auto-revert-mode "")
     (diminish 'company-mode "")
-    (diminish 'copile-mode "")
     (diminish 'counsel-mode "")
     (diminish 'drag-stuff-mode "")
     (diminish 'eldoc-mode "")
@@ -78,8 +77,6 @@
     (diminish 'global-whitespace-mode "")
     (diminish 'helm-mode "")
     (diminish 'ivy-mode "")
-    (diminish 'lsp-mode "")
-    (diminish 'lsp-lens-mode "")
     (diminish 'projectile-mode "")
     (diminish 'python-mode "")
     (diminish 'python-ts-mode "")
@@ -264,7 +261,7 @@ parses its input."
   :init
   (savehist-mode))
 (use-package separedit :ensure t
-  :config (setq separedit-default-mode 'markdown-mode)
+  :config (setq separedit-default-mode 'markdown-ts-mode)
   :bind ("C-c '" . 'separedit))
 (use-package goto-last-change)
 (use-package expand-region
@@ -300,8 +297,7 @@ parses its input."
   (setq undo-tree-visualizer-diff t)
   (setq undo-tree-auto-save-history t)
   (setq undo-tree-history-directory-alist '(("." . "~/.config/emacs/undo")))
-  (setq undo-tree-visualizer-relative-timestamps t)
-  (setq undo-tree-visualizer-timestamps t))
+  (setq undo-tree-visualizer-relative-timestamps t))
 (use-package smartparens :ensure t
   :config
   (smartparens-global-mode)
@@ -327,34 +323,7 @@ parses its input."
           ("M-n" . drag-stuff-down)))
 (use-package rust-mode
   :init
-  (setq rust-mode-treesitter-derive t)
-  :bind (:map rust-ts-mode-map
-          ("M-j" . lsp-ui-imenu)
-          ("M-?" . lsp-find-references)
-          ("C-c C-c a" . lsp-execute-code-action)
-          ("C-c C-c r" . lsp-rename)
-          ("C-c C-c q" . lsp-workspace-restart)
-          ("C-c C-c Q" . lsp-workspace-shutdown)
-          ("C-c C-c s" . lsp-rust-analyzer-status))
-  :hook (rust-ts-mode . lsp-deferred)
-  :config
-  (setq lsp-inlay-hint-enable t))
-(use-package lsp-mode :ensure t
-  :hook ((tsx-ts-mode . lsp-deferred)
-          (rust-ts-mode . lsp-deferred)))
-(use-package lsp-ui
-  :ensure t
-  :commands lsp-ui-mode
-  :bind (("M-." . lsp-find-definition)
-          ("M-?" . lsp-find-references)))
-(use-package lsp-python-ms
-  :ensure t
-  :hook ((python-mode . (lambda ()
-                          (require 'lsp-python-ms)
-                          (ayys/py-auto-lsp)))
-          (python-ts-mode . (lambda ()
-                              (require 'lsp-python-ms)
-                              (ayys/py-auto-lsp)))))
+  (setq rust-mode-treesitter-derive t))
 (use-package treesit-auto
   :custom
   (treesit-auto-install 'prompt)
@@ -388,7 +357,8 @@ parses its input."
   :config
   (add-to-list 'company-backends 'company-clang)
   (setq company-minimum-prefix-length 2)
-  (setq company-idle-delay 0))
+  (setq company-idle-delay 0.1)
+  (setq company-tooltip-idle-delay 0.1))
 (use-package company-posframe :ensure t
   :config (company-posframe-mode t))
 (use-package flycheck
@@ -572,19 +542,13 @@ parses its input."
 ;;   (setq org-superstar-special-todo-items t))
 (use-package org-rainbow-tags :ensure t
   :hook ((org-mode . org-rainbow-tags-mode)))
-;; (use-package markdown-mode
-;;   :ensure t
-;;   :mode (("README\\.md\\'" . gfm-mode)
-;;           ("\\.md\\'" . markdown-mode)
-;;           ("\\.mdx\\'" . markdown-mode)
-;;           ("\\.markdown\\'" . markdown-mode))
-;;   :hook ((org-mode . auto-fill-mode)
-;;           (markdown-mode . auto-fill-mode)
-;;           (org-mode . display-fill-column-indicator-mode)
-;;           (markdown-mode . display-fill-column-indicator-mode))
-;;   :init (setq markdown-command "multimarkdown")
-;;   :config
-;;   (setq markdown-fontify-code-blocks-natively t))
+(use-package markdown-ts-mode
+  :mode (("README\\.md\\'" . markdown-ts-mode)
+          ("\\.md\\'" . markdown-ts-mode)
+          ("\\.mdx\\'" . markdown-ts-mode)
+          ("\\.markdown\\'" . markdown-ts-mode))
+  :hook ((markdown-ts-mode . auto-fill-mode)
+          (markdown-ts-mode . display-fill-column-indicator-mode)))
 (use-package org-project-capture
   :bind (("C-c n p" . org-project-capture-project-todo-completing-read))
   :ensure t
@@ -627,14 +591,14 @@ parses its input."
   (require 'all-the-icons-completion)
   (all-the-icons-completion-mode))
 (use-package noman
-  :load-path "~/git/noman.el")
+  :load-path (expand-file-name "./packages/noman.el/" user-emacs-directory))
 (use-package exec-path-from-shell
   :ensure t
   :config
   (exec-path-from-shell-initialize))
 (use-package valign :ensure t
   :hook ((org-mode . valign-mode)
-          (markdown-mode . valign-mode))
+          (markdown-ts-mode . valign-mode))
   :config (setq valign-fancy-bar nil)
   )
 (use-package string-inflection
@@ -675,12 +639,9 @@ parses its input."
 (use-package guru-mode
   :hook ((prog-mode . guru-mode)))
 (use-package terraform-mode)
-(use-package guru-mode
-  :hook ((prog-mode . guru-mode)))
-(use-package terraform-mode)
 (use-package kubed
   :bind ("C-c k" . kubed-transient))
-(use-package sxhkd-mode)
+(use-package sxhkd-mode :ensure t)
 (use-package solaire-mode
   :ensure t
   :hook
@@ -757,14 +718,40 @@ parses its input."
       erc-track-exclude
       :test #'equal)))
 (use-package yasnippet
-    :bind (("M-+" . yas-expand)
+  :ensure t
+  :diminish yas-minor-mode
+  :bind (("M-+" . yas-expand)
          ("M-*" . yas-insert-snippet))
-  :config (yas-global-mode 1)
-  )
+  :config
+  (setq yas-snippet-dirs
+        (list (expand-file-name "snippets" user-emacs-directory)))
+  (yas-global-mode 1)
+  (yas-reload-all))
 
-(use-package yasnippet-snippets)
+(use-package yasnippet-snippets
+  :ensure t
+  :after yasnippet)
 
 
 
 ;; read epub files
 (use-package nov)
+
+
+(use-package dired-sidebar
+  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+  :ensure t
+  :commands (dired-sidebar-toggle-sidebar)
+  :init
+  (add-hook 'dired-sidebar-mode-hook
+            (lambda ()
+              (unless (file-remote-p default-directory)
+                (auto-revert-mode))))
+  :config
+  (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
+  (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
+
+  (setq dired-sidebar-subtree-line-prefix "__")
+  (setq dired-sidebar-theme 'vscode)
+  (setq dired-sidebar-use-term-integration t)
+  (setq dired-sidebar-use-custom-font t))

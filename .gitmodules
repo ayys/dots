@@ -1,0 +1,6 @@
+[submodule "emacs.d/packages/powerline"]
+	path = emacs.d/packages/powerline
+	url = https://github.com/ayys/powerline
+[submodule "emacs.d/packages/noman.el"]
+	path = emacs.d/packages/noman.el
+	url = https://github.com/andykuszyk/noman.el

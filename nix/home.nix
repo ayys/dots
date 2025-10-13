@@ -165,7 +165,8 @@ eval "$(pyenv init - bash)"
     Install.WantedBy = [ "graphical-session.target" ];
     Service.ExecStart = "${pkgs.writeShellScript "wallpaper-switch" ''
         #!bash
-        ${pkgs.feh}/bin/feh --bg-scale --randomize ~/git/dots/wallpapers/
+        # ${pkgs.feh}/bin/feh --no-fehbg --bg-scale --randomize ~/git/dots/wallpapers/
+        ${pkgs.feh}/bin/feh --no-fehbg --bg-scale ~/git/dots/wallpapers/33.png
       ''}";
   };
 
