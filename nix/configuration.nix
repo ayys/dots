@@ -8,7 +8,7 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
       ];
     };
     nvidiaPackage = config.boot.kernelPackages.nvidiaPackages.legacy_390;
-    nvidiaX11Package = pkgs.linuxKernel.packages.linux_5_15.nvidia_x11_legacy390;
+    nvidiaX11Package = pkgs.linuxKernel.packages.linux_6_6.nvidia_x11_legacy390;
 in
 {
   imports =
@@ -32,10 +32,8 @@ in
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  boot.kernelModules = ["nvidia"];
-  boot.initrd.kernelModules = ["nvidia"];
   boot.extraModulePackages = [nvidiaPackage];
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_5_15;
+  boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_6;
   
   hardware.enableRedistributableFirmware = true;
 
@@ -74,7 +72,7 @@ in
 
   # Configure keymap in X11
   services.xserver = {
-    videoDrivers = ["nvidiaLegacy390"];
+    videoDrivers = ["nvidia"];
     enable = true;
     xkb = {
       layout = "us";
@@ -82,14 +80,7 @@ in
       options = "ctrl:nocaps";
     };
     exportConfiguration = true;
-    modules = [pkgs.linuxKernel.packages.linux_5_15.nvidia_x11_legacy390_patched.bin];
-    extraConfig = ''
-      Section "Device"
-        Identifier "NvidiaCard"
-        Driver     "nvidia"
-        BusID      "PCI:7:0:0"
-      EndSection
-    '';
+    modules = [pkgs.linuxKernel.packages.linux_6_6.nvidia_x11_legacy390_patched.bin];
     windowManager = {
       awesome = {
         enable = true;
@@ -110,7 +101,7 @@ in
     extraPackages32 = [nvidiaX11Package.lib32];
   };
   hardware.nvidia = {
-    modesetting.enable = true;
+    modesetting.enable = false;
     open = false;
     nvidiaSettings = true;
     package = nvidiaPackage;
@@ -271,6 +262,7 @@ in
       pgcli
       pass
       gnupg
+      paperkey
     ];
   };
 
@@ -330,7 +322,7 @@ in
     (self: super: {
       linuxKernel = super.linuxKernel // {
         packages = super.linuxKernel.packages // {
-          linux_5_15 = super.linuxKernel.packages.linux_5_15.extend (kernelSelf: kernelSuper: {
+          linux_6_6 = super.linuxKernel.packages.linux_6_6.extend (kernelSelf: kernelSuper: {
             nvidia_x11_legacy390_patched = kernelSuper.nvidia_x11_legacy390.overrideAttrs (old: {
               postInstall = (old.postInstall or "") + ''
               ext_dir="$bin/lib/xorg/modules/extensions"

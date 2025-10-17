@@ -14,7 +14,7 @@
   :hook ((dashboard-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
   :init
   (setq dashboard-banner-logo-title "าयउ ऽकषउ")
-  (setq dashboard-startup-banner "~/docs/junk/dashboard_pic.png")
+  (setq dashboard-startup-banner "~/pics/emacs_dashboard_pic.png")
   (setq dashboard-set-heading-icons t)
   (setq dashboard-items '((projects . 5)
                            (bookmarks . 5)))

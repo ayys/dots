@@ -13,25 +13,25 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/code" =
-    { device = "/dev/disk/by-label/CODE";
+  fileSystems."/home/ayys/git" =
+    { device = "/dev/disk/by-label/git";
       fsType = "ext4";
     };
 
 
   fileSystems."/" =
-    { device = "/dev/disk/by-label/NIXROOT";
+    { device = "/dev/disk/by-label/NIXOS";
       fsType = "ext4";
     };
  
   fileSystems."/boot" =
-    { device = "/dev/disk/by-label/NIXBOOT";
+    { device = "/dev/disk/by-label/BOOT";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-label/NIXHOME";
+    { device = "/dev/disk/by-label/HOME";
       fsType = "ext4";
     };
 

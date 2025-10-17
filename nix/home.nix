@@ -87,6 +87,12 @@ fi
   '';
       executable = true;
     };
+
+    ".emacs" = {
+      text = ''
+(setq user-emacs-directory (file-truename "~/.config/emacs"))
+  '';
+    };
     ".local/bin/linear-firefox" = {
       text = ''
     #!/bin/sh
@@ -113,11 +119,47 @@ fi
   programs.git = {
     enable = true;
     package = pkgs.git;
-    userName  = "ayys";
-    extraConfig = {
-      push = { autoSetupRemote = true; };
-    };
+
+    # 1. default (fallback) personal config
+    userName = "Ayush Jha";
+    userEmail = "ayys@duck.com";
+
+    signing.signByDefault = true;
+    signing.key = "8D0723A80F4F6443";
+
+    includes = [
+      {
+        condition = "gitdir:~/git/lyric/";
+        contents = {
+          user = {
+            email = "ayush.jha@lyric.ai";
+            name = "Ayush Jha";
+
+            # lyric gpg key
+            signingKey = "40C47431C735861E";
+          };
+          commit.gpgSign = true;
+        };
+      }
+      {
+        condition = "gitdir:~/git/mvv/";
+        contents = {
+          user = {
+            email = "ayush@multiversal.ventures";
+            name = "Ayush Jha";
+            signingKey = "/home/ayys/.ssh/mvv-key.pub";
+          };
+          commit = {
+            gpgSign = true;
+            gpgformat = "ssh";
+          };
+        };
+      }
+    ];
+
   };
+
+  services.gpg-agent.enable = true;
 
   programs.zoxide = {
     enable = true;
