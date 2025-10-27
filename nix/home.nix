@@ -120,6 +120,45 @@ fi
     enable = true;
     package = pkgs.git;
 
+    delta.enable = true;
+
+    extraConfig = {
+      pull.rebase = true;
+
+      column.ui = "auto";
+
+      branch.sort = "-committerdate";
+      tag.sort = "version:refname";
+
+      help.autocorrect = "prompt";
+
+      commit.verbose = true;
+
+      rerere = {
+        enabled = true;
+        autoupdate = true;
+      };
+
+      fetch = {
+        prune = true;
+        pruneTags = true;
+        all = true;
+      };
+
+      push = {
+        default = "simple";
+        autoSetupRemote = true;
+        followTags = true;
+      };
+
+      diff = {
+        algorithm = "histogram";
+        colorMoved = "zebra";
+        mnemonicPrefix = true;
+        renames = true;
+      };
+    };
+
     # 1. default (fallback) personal config
     userName = "Ayush Jha";
     userEmail = "ayys@duck.com";

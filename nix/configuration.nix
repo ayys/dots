@@ -27,6 +27,7 @@ in
   };
 
   nix.settings.trusted-users = ["root" "@wheel"];
+  users.extraGroups.vboxusers.members = ["ayys"];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -34,6 +35,7 @@ in
 
   boot.extraModulePackages = [nvidiaPackage];
   boot.kernelPackages = pkgs.linuxKernel.packages.linux_6_6;
+  boot.kernelParams = [ "kvm.enable_virt_at_load=0" ];
   
   hardware.enableRedistributableFirmware = true;
 
@@ -263,6 +265,9 @@ in
       pass
       gnupg
       paperkey
+      guile
+      perl
+      parallel
     ];
   };
 
@@ -409,9 +414,15 @@ in
   fonts.fontconfig.enable = true;
 
   virtualisation = {
+    virtualbox.host = {
+      enable = true;
+      enableExtensionPack = true;
+      enableHardening = false;
+    };
     containers.enable = true;
     podman = {
       enable = true;
+      autoPrune.enable = true;
 
       # Create a `docker` alias for podman, to use it as a drop-in replacement
       dockerCompat = true;
