@@ -418,6 +418,7 @@ parses its input."
   :ensure t
   :config
   (define-key magit-mode-map ";" 'my/magit-new-branch-from-main)
+  (setq magit-clone-default-directory "~/git/")
   (setq magit-prefer-remote-upstream t)
   (setq magit-refresh-status-buffer nil)
   :bind
@@ -449,6 +450,10 @@ parses its input."
 (use-package git-link
   :config
   (progn
+    (add-to-list 'git-link-remote-alist '("mvv" git-link-github) t)
+    (add-to-list 'git-link-homepage-remote-alist '("mvv" git-link-homepage-github) t)
+    (add-to-list 'git-link-commit-remote-alist '("mvv" git-link-commit-github) t)
+
     (add-to-list 'git-link-remote-alist '("lyric" git-link-gitlab) t)
     (add-to-list 'git-link-homepage-remote-alist '("lyric" git-link-homepage-github) t)
     (add-to-list 'git-link-commit-remote-alist '("lyric" git-link-commit-gitlab) t))
@@ -717,22 +722,6 @@ parses its input."
     (cl-pushnew (or target (erc-default-target) (current-buffer))
       erc-track-exclude
       :test #'equal)))
-(use-package yasnippet
-  :ensure t
-  :diminish yas-minor-mode
-  :bind (("M-+" . yas-expand)
-         ("M-*" . yas-insert-snippet))
-  :config
-  (setq yas-snippet-dirs
-        (list (expand-file-name "snippets" user-emacs-directory)))
-  (yas-global-mode 1)
-  (yas-reload-all))
-
-(use-package yasnippet-snippets
-  :ensure t
-  :after yasnippet)
-
-
 
 ;; read epub files
 (use-package nov)
@@ -755,3 +744,75 @@ parses its input."
   (setq dired-sidebar-theme 'vscode)
   (setq dired-sidebar-use-term-integration t)
   (setq dired-sidebar-use-custom-font t))
+
+
+(use-package minimal-theme)
+
+
+(use-package remember
+  :commands remember
+  :bind ("C-c r" . remember)
+  :config (setq remember-notes-initial-major-mode 'org-mode))
+
+(use-package totp-auth)
+
+
+
+(use-package tempel
+  :bind
+  ("s->" . tempel-end)
+  ("s-}" . tempel-next)
+  ("s-{" . tempel-previous)
+  :hook (prog-mode . abbrev-mode)
+  (prog-mode . tempel-abbrev-mode)
+  (org-mode . abbrev-mode)
+  (org-mode . tempel-abbrev-mode))
+
+(use-package tempel-collection
+  :after tempel)
+
+(use-package olivetti)
+
+
+
+(use-package elfeed
+  :hook
+  (elfeed-show-mode . visual-line-mode) ; make reading pretty
+  (elfeed-show-mode . olivetti-mode   ) ; make reading pretty
+
+  :config
+  (progn
+    (add-hook 'elfeed-show-mode-hook #'variable-pitch-mode)
+    (add-hook 'elfeed-search-mode-hook #'variable-pitch-mode)
+    (set-face-attribute 'variable-pitch nil
+      :family "Noto Serif"
+      :height 1.1)
+    (set-fontset-font "fontset-default" 'devanagari
+      "Noto Serif Devanagari")
+    (setq elfeed-feeds
+      '(
+         "https://arthasarokar.com/feed"
+         "https://bizpati.com/feed"
+         "https://gorkhapatraonline.com/rss"
+         "https://himalpress.com/feed/"
+         "https://kendrabindu.com/feed"
+         "https://khabarhub.com/feed/"
+         "https://nagariknews.nagariknetwork.com/feed"
+         "https://nepalnews.com/feed"
+         "https://nepalsamaya.com/feed"
+         "https://techmandu.com/feed/"
+         "https://techsathi.com/feed"
+         "https://thahakhabar.com/rss/"
+         "https://ujyaaloonline.com/rss"
+         "https://ukeraa.com/feed/"
+         "https://www.ajakoartha.com/feed"
+         "https://www.arthapath.com/feed/"
+         "https://www.cinkhabar.com/feed"
+         "https://www.eadarsha.com/feed"
+         "https://www.himalkhabar.com/feed"
+         "https://www.lokaantar.com/feed/"
+         "https://www.onlinekhabar.com/feed"
+         "https://www.ratopati.com/feed"
+         "https://www.setopati.com/feed"
+         "https://www.techpana.com/feed"
+         ))))

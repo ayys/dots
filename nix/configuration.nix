@@ -64,12 +64,23 @@ in
   services.displayManager.defaultSession = "none+bspwm";
   services.desktopManager.plasma6.enable = true;
   services.displayManager.sddm.wayland.enable = false;
-  
-  
+
   services.emacs = {
     enable = true;
     defaultEditor = true;
     package = emacs;
+  };
+
+  services.evremap = {
+    enable = true;
+    settings = {
+      device_name = "Keychron Keychron V10";
+      dual_role   = [{
+        input = "KEY_CAPSLOCK";
+        hold = ["KEY_LEFTCTRL"];
+        tap = ["KEY_ESC"];
+      }];
+    };
   };
 
   # Configure keymap in X11
@@ -79,7 +90,7 @@ in
     xkb = {
       layout = "us";
       variant = "";
-      options = "ctrl:nocaps";
+      # options = "ctrl:nocaps";
     };
     exportConfiguration = true;
     modules = [pkgs.linuxKernel.packages.linux_6_6.nvidia_x11_legacy390_patched.bin];
@@ -268,6 +279,12 @@ in
       guile
       perl
       parallel
+
+      haunt
+      nerd-fonts.droid-sans-mono
+      comic-mono
+      azeret-mono
+      ibm-plex
     ];
   };
 

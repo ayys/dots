@@ -116,13 +116,22 @@ fi
     ls="eza";
   };
 
+
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+  };
+
   programs.git = {
     enable = true;
     package = pkgs.git;
 
-    delta.enable = true;
+    settings = {
+      user = {
+        name = "Ayush Jha";
+        email = "ayys@duck.com";
+      };
 
-    extraConfig = {
       pull.rebase = true;
 
       column.ui = "auto";
@@ -160,8 +169,6 @@ fi
     };
 
     # 1. default (fallback) personal config
-    userName = "Ayush Jha";
-    userEmail = "ayys@duck.com";
 
     signing.signByDefault = true;
     signing.key = "8D0723A80F4F6443";
@@ -190,7 +197,9 @@ fi
           };
           commit = {
             gpgSign = true;
-            gpgformat = "ssh";
+          };
+          gpg = {
+            format = "ssh";
           };
         };
       }
