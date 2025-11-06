@@ -50,4 +50,4 @@ bspc config borderless_monocle   true
 bspc config gapless_monocle      true
 
 
-feh --recursive --bg-fill --randomize ~/git/dots/wallpapers/ &
+# feh --recursive --bg-fill --randomize ~/git/dots/wallpapers/ &

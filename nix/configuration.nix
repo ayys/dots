@@ -253,8 +253,8 @@ in
       unzip
       victor-mono
       vistafonts
-      # wasmer
       xcape
+      clang-tools
       xclip
       xdiskusage
       xdo
@@ -285,6 +285,22 @@ in
       comic-mono
       azeret-mono
       ibm-plex
+
+      keybase
+
+      inputs.musu.packages."${pkgs.system}".musu
+
+      gimp
+      tokei
+
+      pandoc
+      miktex
+
+      audacious
+
+      xorg.xdpyinfo
+
+      ## add new programs here
     ];
   };
 
@@ -410,7 +426,13 @@ in
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  services.openssh = {
+    enable = true;
+    settings = {
+      X11Forwarding = true;
+    };
+    
+  };
 
   services.nginx = {
     enable = true;
@@ -428,7 +450,16 @@ in
     };
   };
 
-  fonts.fontconfig.enable = true;
+  fonts.fontconfig = {
+    enable = true;
+    antialias = true;
+    subpixel.rgba ="rgb";
+    subpixel.lcdfilter = "light";
+    hinting = {
+      enable = true;
+      style = "full";
+    };
+  };
 
   virtualisation = {
     virtualbox.host = {

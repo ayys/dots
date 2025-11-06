@@ -11,6 +11,10 @@
       url = "github:ayys/st/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    musu = {
+      url = "github:ayys/musu/2ebd98c";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };    
     wasmenv = {
       url = "github:ayys/wasmenv/0.2.6";
       inputs.nixpkgs.follows = "nixpkgs";

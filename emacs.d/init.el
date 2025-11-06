@@ -41,7 +41,7 @@
   (setq calendar-latitude 27.71)
   (setq calendar-longitude 85.32)
   (setq circadian-themes '((:sunrise . ef-maris-light)
-                            (:sunset . ef-maris-dark)))
+                            (:sunset . doom-gruvbox)))
   :config (circadian-setup))
 (use-package nyan-mode :ensure t
   :hook ((prog-mode . nyan-mode))
@@ -79,12 +79,17 @@
     (diminish 'ivy-mode "")
     (diminish 'projectile-mode "")
     (diminish 'python-mode "")
+    (diminish 'git-gutter-mode "")
+    (diminish 'paredit-mode "")
+    (diminish 'company-posframe-mode "")
+    (diminish 'editorconfig-mode "")
     (diminish 'python-ts-mode "")
     (diminish 'rainbow-mode "")
     (diminish 'ruff-format-on-save-mode "")
     (diminish 'rustic-mode "🦀ic")
     (diminish 'rust-ts-mode "🦀ts")
     (diminish 'rust-mode "🦀")
+    (diminish 'guru-mode "")
     (diminish 'tree-sitter-mode "")
     (diminish 'undo-tree-mode "")
     (diminish 'visual-line-mode "")
@@ -816,3 +821,42 @@ parses its input."
          "https://www.setopati.com/feed"
          "https://www.techpana.com/feed"
          ))))
+
+
+(use-package spacious-padding
+  :hook (fundamental-mode . spacious-padding-mode))
+
+
+(use-package treemacs
+  :bind ("s-z" . treemacs)
+  :custom
+  (treemacs-is-never-other-window t)
+  :hook
+  (treemacs-mode . treemacs-project-follow-mode))
+
+
+
+(use-package gptel
+  :ensure t
+  :init
+  (setq gptel-api-key 'gptel-api-key-from-auth-source)
+
+  (setf (alist-get 'gemini gptel-backends)
+        (gptel-make-gemini
+         :model "gemini-2.5-flash" ; Use your preferred model
+         :api-key gptel-api-key    ; This references the function set above
+         :name "Gemini-Flash"))
+
+  :config
+  (setq gptel-default-model "gemini-2.5-flash"
+        gptel-model "gemini-2.5-flash"))
+
+
+(use-package pandoc)
+
+
+
+(defun my-md-to-org-region (start end)
+  "Convert region from markdown to org"
+  (interactive "r")
+  (shell-command-on-region start end "pandoc -f markdown -t org" t t))

@@ -40,6 +40,24 @@
         "type": "github"
       }
     },
+    "flakeutils_2": {
+      "inputs": {
+        "systems": "systems_3"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -79,6 +97,28 @@
       "original": {
         "owner": "triyanox",
         "repo": "lla",
+        "type": "github"
+      }
+    },
+    "musu": {
+      "inputs": {
+        "flakeutils": "flakeutils_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1762254521,
+        "narHash": "sha256-+1PiGKVbqnVWIbna5mcVB84W5TXD1/WkPKWqS093Vck=",
+        "owner": "ayys",
+        "repo": "musu",
+        "rev": "2ebd98cccbc1545ee9352cb3e701d029d4f919c8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ayys",
+        "ref": "2ebd98c",
+        "repo": "musu",
         "type": "github"
       }
     },
@@ -165,6 +205,7 @@
         "ayys-st": "ayys-st",
         "home-manager": "home-manager",
         "lla": "lla",
+        "musu": "musu",
         "nixpkgs": "nixpkgs_2",
         "rust-overlay": "rust-overlay",
         "wasmenv": "wasmenv"
@@ -253,6 +294,21 @@
         "type": "github"
       }
     },
+    "systems_4": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
     "utils": {
       "inputs": {
         "systems": "systems_2"
@@ -273,7 +329,7 @@
     },
     "utils_2": {
       "inputs": {
-        "systems": "systems_3"
+        "systems": "systems_4"
       },
       "locked": {
         "lastModified": 1731533236,

@@ -93,13 +93,6 @@ fi
 (setq user-emacs-directory (file-truename "~/.config/emacs"))
   '';
     };
-    ".local/bin/linear-firefox" = {
-      text = ''
-    #!/bin/sh
-    firefox --new-window --kiosk "https://linear.app"
-  '';
-      executable = true;
-    };
     ".local/bin/tm-be" = {
       text = ''
     #!/bin/sh
@@ -125,6 +118,7 @@ fi
   programs.git = {
     enable = true;
     package = pkgs.git;
+    lfs.enable = true;
 
     settings = {
       user = {
@@ -193,13 +187,10 @@ fi
           user = {
             email = "ayush@multiversal.ventures";
             name = "Ayush Jha";
-            signingKey = "/home/ayys/.ssh/mvv-key.pub";
+            signingKey = "A938C8A25F6F962F";
           };
           commit = {
             gpgSign = true;
-          };
-          gpg = {
-            format = "ssh";
           };
         };
       }
@@ -256,7 +247,7 @@ eval "$(pyenv init - bash)"
     Service.ExecStart = "${pkgs.writeShellScript "wallpaper-switch" ''
         #!bash
         # ${pkgs.feh}/bin/feh --no-fehbg --bg-scale --randomize ~/git/dots/wallpapers/
-        ${pkgs.feh}/bin/feh --no-fehbg --bg-scale ~/git/dots/wallpapers/33.png
+        ${pkgs.feh}/bin/feh --no-fehbg --bg-scale ~/git/dots/wallpapers/034.png
       ''}";
   };
 
