@@ -40,7 +40,7 @@
   :init
   (setq calendar-latitude 27.71)
   (setq calendar-longitude 85.32)
-  (setq circadian-themes '((:sunrise . ef-maris-light)
+  (setq circadian-themes '((:sunrise . doom-gruvbox-light)
                             (:sunset . doom-gruvbox)))
   :config (circadian-setup))
 (use-package nyan-mode :ensure t
@@ -423,7 +423,7 @@ parses its input."
   :ensure t
   :config
   (define-key magit-mode-map ";" 'my/magit-new-branch-from-main)
-  (setq magit-clone-default-directory "~/git/")
+  1(setq magit-clone-default-directory "~/git/")
   (setq magit-prefer-remote-upstream t)
   (setq magit-refresh-status-buffer nil)
   :bind

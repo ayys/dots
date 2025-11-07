@@ -300,6 +300,10 @@ in
 
       xorg.xdpyinfo
 
+      fastfetch
+
+      kdePackages.spectacle
+
       ## add new programs here
     ];
   };
