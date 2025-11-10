@@ -1,0 +1,29 @@
+/* Move all toolbars to the bottom */
+/* Source: Based on community hacks like MrOtherGuy's */
+
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+/* Move the navigation toolbar (which holds the address bar) and tabs to the bottom */
+#browser > #toolbar-menubar,
+#browser > #tabbrowser-tabs,
+#browser > #nav-bar,
+#browser > #PersonalToolbar,
+#browser > #urlbar-container {
+  -moz-box-ordinal-group: 10 !important; /* Forces order to the end */
+  order: 10 !important;
+}
+
+/* Ensure content fills the top */
+#appcontent {
+  -moz-box-ordinal-group: 1 !important;
+  order: 1 !important;
+}
+
+/* Correct the titlebar area if it interferes */
+:root:not([sizemode="fullscreen"]) #navigator-toolbox {
+  display: flex !important;
+  flex-direction: column-reverse !important; /* Flips the entire toolbar area */
+}
+
+/* Hide some unnecessary top elements if needed */
+/* #urlbar-container { margin-bottom: 0px !important; } */

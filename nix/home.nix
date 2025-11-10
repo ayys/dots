@@ -272,6 +272,37 @@ eval "$(pyenv init - bash)"
 
   fonts.fontconfig.enable = true;
 
+  programs.firefox = {
+    enable = true;
+    languagePacks = [
+      "ne-NP" "en-US"
+    ];
+    profiles.default = {
+      settings = {
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "browser.startup.homepage" = "https://illegal-in-nepal.org";
+        "sidebar.verticalTabs" = true;
+        "browser.aboutConfig.showWarning" = false;
+
+        "browser.download.useDownloadDir" = false;
+        "browser.download.dir" = "/home/ayys/dwn";
+        "browser.download.folderList" = 2; # this is needed to tell firefox to switch to the dir above
+        "browser.ctrlTab.sortByRecentlyUsed" = true;
+
+        "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
+        "browser.newtabpage.activity-stream.impressionId" = "{eb042959-5732-43b2-9673-b40a0e776344}";
+        "browser.newtabpage.activity-stream.section.highlights.includeBookmarks" = false;
+        "browser.newtabpage.activity-stream.section.highlights.includeDownloads" = false;
+        "browser.newtabpage.activity-stream.showSearch" = false;
+        "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+        "browser.newtabpage.pinned" = ''[{"url":"https://search.nixos.org/packages","label":"NixOS Search - Packages - brow.sh"},{"url":"https://github.com/","label":"GitHub"},{"url":"https://claimsxten.atlassian.net/jira/your-work","label":"Jira"},{"url":"https://gemini.google.com/"},{"url":"https://www.reddit.com/"},{"url":"https://mail.proton.me/"},{"url":"https://savvytime.com/"},{"url":"https://miti.bikram.io/"}]'';
+
+        
+      };
+      userChrome = builtins.readFile ../firefox/userChrome.css;
+    };
+  };
+
 
   services.picom = {
     enable = true;

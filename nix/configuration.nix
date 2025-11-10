@@ -179,7 +179,6 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
       file
       fira-code
       fira-code-symbols
-      firefox
       fd
       fmt
       fortune
@@ -311,7 +310,6 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
 
       dict
 
-      fuse
       via
       ## add new programs here
     ];
@@ -389,6 +387,8 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
     })
 
   ];
+
+  
 
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
