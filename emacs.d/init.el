@@ -768,6 +768,8 @@ parses its input."
   ("s-{" . tempel-previous)
   :hook (prog-mode . abbrev-mode)
   (prog-mode . tempel-abbrev-mode)
+  (git-commit-mode . abbrev-mode)
+  (git-commit-mode . tempel-abbrev-mode)
   (org-mode . abbrev-mode)
   (org-mode . tempel-abbrev-mode))
 
