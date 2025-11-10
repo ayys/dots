@@ -59,6 +59,11 @@ in
     ];
   };
 
+
+  services.udev.extraRules = ''
+KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="03a1", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
+  '';
+
   # Enable the KDE Plasma Desktop Environment.
   services.displayManager.sddm.enable = true;
   services.displayManager.defaultSession = "none+bspwm";
@@ -304,6 +309,10 @@ in
 
       kdePackages.spectacle
 
+      dict
+
+      fuse
+      via
       ## add new programs here
     ];
   };

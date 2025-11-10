@@ -40,61 +40,71 @@
   :init
   (setq calendar-latitude 27.71)
   (setq calendar-longitude 85.32)
-  (setq circadian-themes '((:sunrise . doom-gruvbox-light)
-                            (:sunset . doom-gruvbox)))
+  (setq circadian-themes '((:sunrise . standard-light-tinted)
+                            (:sunset . doom-gruvbox-dark)))
   :config (circadian-setup))
 (use-package nyan-mode :ensure t
   :hook ((prog-mode . nyan-mode))
   :config
   (nyan-start-animation))
-(use-package powerline
-  :load-path (expand-file-name "./packages/powerline" user-emacs-directory)
-  :init (progn
-          (setq powerline-display-minor-modes nil)
-          (setq powerline-arrow-shape 'arrow14)
-          (setq powerline-image-apple-rgb t)
-          (setq powerline-default-separator-dir '(right . left))
-          (setq powerline-default-separator 'wave))
-  :config (powerline-default-theme))
+;; (use-package powerline
+;;   :load-path (expand-file-name "./packages/powerline" user-emacs-directory)
+;;   :init (progn
+;;           (setq powerline-display-minor-modes nil)
+;;           (setq powerline-arrow-shape 'arrow14)
+;;           (setq powerline-image-apple-rgb t)
+;;           (setq powerline-default-separator-dir '(right . left))
+;;           (setq powerline-default-separator 'wave))
+;;   :config (powerline-default-theme))
 (use-package centered-window :ensure t
   :bind (("C-x C-l" . centered-window-mode))
   :config
   (setq cwm-use-vertical-padding nil)
   (setq cwm-frame-internal-border 0))
-(use-package diminish
-  :ensure t
+;; (use-package diminish
+;;   :ensure t
+;;   :config
+;;   (progn
+;;     (diminish 'abbrev-mode "")
+;;     (diminish 'auto-revert-mode "")
+;;     (diminish 'company-mode "")
+;;     (diminish 'counsel-mode "")
+;;     (diminish 'drag-stuff-mode "")
+;;     (diminish 'eldoc-mode "")
+;;     (diminish 'fixmee-mode "")
+;;     (diminish 'flymake-mode "")
+;;     (diminish 'flyspell-mode "")
+;;     (diminish 'global-whitespace-mode "")
+;;     (diminish 'helm-mode "")
+;;     (diminish 'ivy-mode "")
+;;     (diminish 'projectile-mode "")
+;;     (diminish 'python-mode "")
+;;     (diminish 'git-gutter-mode "")
+;;     (diminish 'paredit-mode "")
+;;     (diminish 'company-posframe-mode "")
+;;     (diminish 'editorconfig-mode "")
+;;     (diminish 'python-ts-mode "")
+;;     (diminish 'rainbow-mode "")
+;;     (diminish 'ruff-format-on-save-mode "")
+;;     (diminish 'rustic-mode "🦀ic")
+;;     (diminish 'rust-ts-mode "🦀ts")
+;;     (diminish 'rust-mode "🦀")
+;;     (diminish 'guru-mode "")
+;;     (diminish 'tree-sitter-mode "")
+;;     (diminish 'undo-tree-mode "")
+;;     (diminish 'visual-line-mode "")
+;;     (diminish 'whitespace-mode "")
+;;     (diminish 'yas-minor-mode "")))
+
+
+(use-package mood-line
   :config
-  (progn
-    (diminish 'abbrev-mode "")
-    (diminish 'auto-revert-mode "")
-    (diminish 'company-mode "")
-    (diminish 'counsel-mode "")
-    (diminish 'drag-stuff-mode "")
-    (diminish 'eldoc-mode "")
-    (diminish 'fixmee-mode "")
-    (diminish 'flymake-mode "")
-    (diminish 'flyspell-mode "")
-    (diminish 'global-whitespace-mode "")
-    (diminish 'helm-mode "")
-    (diminish 'ivy-mode "")
-    (diminish 'projectile-mode "")
-    (diminish 'python-mode "")
-    (diminish 'git-gutter-mode "")
-    (diminish 'paredit-mode "")
-    (diminish 'company-posframe-mode "")
-    (diminish 'editorconfig-mode "")
-    (diminish 'python-ts-mode "")
-    (diminish 'rainbow-mode "")
-    (diminish 'ruff-format-on-save-mode "")
-    (diminish 'rustic-mode "🦀ic")
-    (diminish 'rust-ts-mode "🦀ts")
-    (diminish 'rust-mode "🦀")
-    (diminish 'guru-mode "")
-    (diminish 'tree-sitter-mode "")
-    (diminish 'undo-tree-mode "")
-    (diminish 'visual-line-mode "")
-    (diminish 'whitespace-mode "")
-    (diminish 'yas-minor-mode "")))
+  (mood-line-mode)
+  ;; Use pretty Fira Code-compatible glyphs
+  :custom
+  (setq mood-line-glyph-alist mood-line-glyphs-unicode))
+
+
 (use-package windmove
   :ensure t
   :bind (( "C-z h" . windmove-left)
@@ -573,19 +583,7 @@ parses its input."
   :bind (:map eat-mode-map ("M-<return>" . ayys/consult-project-eat-buffers))
   :hook (eat-mode . (lambda () (interactive) (display-line-numbers-mode 0))))
 
-(use-package emacs
-  :config
-  (progn
-    (setq auto-window-vscroll nil)
-    (setq fast-but-imprecise-scrolling t)
-    (setq redisplay-dont-pause t)
-    (setq jit-lock-defer-time 0.05)
-    (setq redisplay-skip-fontification-on-input t))
-  :bind (("C-'" . load-theme)
-          ("C-\"" . disable-theme)
-          ("M-j" . duplicate-dwim)
-          ("C-c C-/" . revert-buffer-no-confirm)
-          ("C-:" . goto-line)))
+
 (use-package focus
   :bind (("C-c C-l C-f" . focus-mode))
   :ensure t)
@@ -854,9 +852,14 @@ parses its input."
 
 (use-package pandoc)
 
-
-
 (defun my-md-to-org-region (start end)
   "Convert region from markdown to org"
   (interactive "r")
   (shell-command-on-region start end "pandoc -f markdown -t org" t t))
+
+
+(use-package standard-themes
+  :config
+  ;; All customisations here.
+  (setq modus-themes-mixed-fonts t)
+  (setq modus-themes-italic-constructs t))

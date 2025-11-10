@@ -2,16 +2,18 @@
 
 export PANEL_FIFO=/tmp/panel-fifo
 export PANEL_HEIGHT=24
-export PANEL_FONT="-*-fixed-*-*-*-*-10-*-*-*-*-*-*-*"
 export PANEL_WM_NAME=bspwm_panel
 
-
+if [ -z "$PANEL_FONT" ]; then
+    PANEL_FONT="-*-unifont-*-*-*-*-16-*-*-*-*-*-*-*"
+fi
+export PANEL_FONT
 
 function dates {
     date +'%Y.%m.%d %a ' | tr '\n' ' '
     for tz in $(cat ~/.config/tz.txt);
     do
-        echo -e $tz ": "; TZ=$tz date +'%H:%M'
+        echo -e $tz ": "; TZ=$tz date +'%H:%M:%S'
     done | tr '\n' ' '
 }
 
@@ -28,12 +30,12 @@ mkfifo "$PANEL_FIFO"
 
 xtitle -sf 'T%s\n' > "$PANEL_FIFO" &
 echo "S"$(dates) > "$PANEL_FIFO" &
-while sleep 30; do echo "S"$(dates); done > "$PANEL_FIFO" &
+while sleep 1; do echo "S"$(dates)"    "; done > "$PANEL_FIFO" &
 bspc subscribe report > "$PANEL_FIFO" &
 
 . panel_colors
 
-panel_bar < "$PANEL_FIFO" | lemonbar -b -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
+panel_bar < "$PANEL_FIFO" | lemonbar -a 32 -u 2 -n "$PANEL_WM_NAME" -g x$PANEL_HEIGHT -f "$PANEL_FONT" -F "$COLOR_DEFAULT_FG" -B "$COLOR_DEFAULT_BG" | sh &
 
 wid=$(xdo id -m -a "$PANEL_WM_NAME")
 xdo above -t "$(xdo id -N Bspwm -n root | sort | head -n 1)" "$wid"

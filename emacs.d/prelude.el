@@ -25,29 +25,29 @@
 
 (defvar consult--source-vterm
   `(:name     "Vterm"
-              :narrow   ?m
-              :category vterm
-              :face     consult-bookmark
-              :state    ,#'consult--buffer-state
-              :items    ,#'vterm-all-names)
+     :narrow   ?m
+     :category vterm
+     :face     consult-bookmark
+     :state    ,#'consult--buffer-state
+     :items    ,#'vterm-all-names)
   "Bookmark candidate source for `consult-buffer'.")
 
 (setq treesit-language-source-alist
-      '((bash "https://github.com/tree-sitter/tree-sitter-bash")
-	(cmake "https://github.com/uyha/tree-sitter-cmake")
-	(css "https://github.com/tree-sitter/tree-sitter-css")
-	(elisp "https://github.com/Wilfred/tree-sitter-elisp")
-	(go "https://github.com/tree-sitter/tree-sitter-go")
-	(html "https://github.com/tree-sitter/tree-sitter-html")
-	(javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
-	(json "https://github.com/tree-sitter/tree-sitter-json")
-	(make "https://github.com/alemuller/tree-sitter-make")
-	(markdown "https://github.com/ikatyang/tree-sitter-markdown")
-	(python "https://github.com/tree-sitter/tree-sitter-python")
-	(toml "https://github.com/tree-sitter/tree-sitter-toml")
-	(tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
-	(typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
-	(yaml "https://github.com/ikatyang/tree-sitter-yaml")))
+  '((bash "https://github.com/tree-sitter/tree-sitter-bash")
+	   (cmake "https://github.com/uyha/tree-sitter-cmake")
+	   (css "https://github.com/tree-sitter/tree-sitter-css")
+	   (elisp "https://github.com/Wilfred/tree-sitter-elisp")
+	   (go "https://github.com/tree-sitter/tree-sitter-go")
+	   (html "https://github.com/tree-sitter/tree-sitter-html")
+	   (javascript "https://github.com/tree-sitter/tree-sitter-javascript" "master" "src")
+	   (json "https://github.com/tree-sitter/tree-sitter-json")
+	   (make "https://github.com/alemuller/tree-sitter-make")
+	   (markdown "https://github.com/ikatyang/tree-sitter-markdown")
+	   (python "https://github.com/tree-sitter/tree-sitter-python")
+	   (toml "https://github.com/tree-sitter/tree-sitter-toml")
+	   (tsx "https://github.com/tree-sitter/tree-sitter-typescript" "master" "tsx/src")
+	   (typescript "https://github.com/tree-sitter/tree-sitter-typescript" "master" "typescript/src")
+	   (yaml "https://github.com/ikatyang/tree-sitter-yaml")))
 ;; open tsx files with typescript mode
 (add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
 (defun consult-vterm-buffer ()
@@ -58,20 +58,20 @@
 (add-hook 'prog-mode-hook 'display-fill-column-indicator-mode)
 
 (setq byte-compile-warnings '(cl-functions)
-      message-log-max t
-      create-lockfiles nil
-      initial-scratch-message ""
-      initial-major-mode 'fundamental-mode
-      ispell-program-name (executable-find "hunspell")
-      ispell-dictionary "en_US-large"
-      line-spacing 2
-      auth-sources '((:source "~/.authinfo.gpg"))
-      epg-gpg-program (executable-find "gpg")
-      warning-minimum-level :emergency
-      visible-bell nil
-      ring-bell-function 'ignore
-      display-time-day-and-date t
-      x-select-enable-primary nil)
+  message-log-max t
+  create-lockfiles nil
+  initial-scratch-message ""
+  initial-major-mode 'fundamental-mode
+  ispell-program-name (executable-find "hunspell")
+  ispell-dictionary "en_US-large"
+  line-spacing 2
+  auth-sources '((:source "~/.authinfo.gpg"))
+  epg-gpg-program (executable-find "gpg")
+  warning-minimum-level :emergency
+  visible-bell nil
+  ring-bell-function 'ignore
+  display-time-day-and-date t
+  x-select-enable-primary nil)
 ;; UI and Behavior
 (savehist-mode 1)
 (global-subword-mode 1)
@@ -88,8 +88,8 @@
 (add-to-list 'default-frame-alist `(font . ,font-name))
 ;; macOS Key Modifiers
 (setq mac-command-modifier 'meta
-      mac-option-modifier 'super
-      ns-function-modifier 'hyper)
+  mac-option-modifier 'super
+  ns-function-modifier 'hyper)
 ;; Display Time
 (display-time-mode 1)
 (display-time)
@@ -124,17 +124,17 @@
   "Activate the first .venv virtual environment found in the Projectile project."
   (let ((venv-path (directory-files-recursively (projectile-project-root) "^\.venv$" :include-directories t)))
     (if (and venv-path (file-directory-p (car venv-path)))
-        (progn
-          (pyvenv-activate (car venv-path))
-          (car venv-path))
+      (progn
+        (pyvenv-activate (car venv-path))
+        (car venv-path))
       (pyvenv-deactivate)
       nil)))
 
 (defun my-fetch-all-forge-topics ()
   "Fetch all topics from the forge remote."
   (when (and (derived-mode-p 'forge-topic-mode)
-             ;; Add any additional conditions to verify topic creation
-             )
+          ;; Add any additional conditions to verify topic creation
+          )
     (forge-pull)))
 (defun string-to-branch-name (str)
   "Turns a string into a branch name by replacing spaces with dashes and lowercasing it."
@@ -176,14 +176,14 @@ that number, or create it if it doesn't already exist."
     (if-let* ((project-name (project-current nil))
                (project-root (project-root project-name)))
       (setq init-dir project-root
-            eat-buffer-name (project-prefixed-buffer-name "eat"))
+        eat-buffer-name (project-prefixed-buffer-name "eat"))
       (setq eat-buffer-name "*eat*"))
     (let ((default-directory init-dir))
       (eat nil arg))))
 
 
 (defun ayys/consult-project-eat-buffers (&optional force-consult)
-    "List and switch to open project 'eat' buffers.
+  "List and switch to open project 'eat' buffers.
 If no 'eat' buffers exist, create one. If buffers exist, allows
 the user to optionally create a new one as well."
   (interactive "P")
@@ -207,9 +207,9 @@ the user to optionally create a new one as well."
                             :hidden: nil
                             :action (lambda (_) (ayys/eat-project t))))
           (exit-eat-source `(:name "Exit out of eat"
-                            :items ("(Exit eat)")
-                            :hidden: nil
-                            :action (lambda (_) (switch-to-prev-buffer))))
+                              :items ("(Exit eat)")
+                              :hidden: nil
+                              :action (lambda (_) (switch-to-prev-buffer))))
           (sources (append (if (eq major-mode 'eat-mode) (list exit-eat-source) nil) (list existing-source create-source))))
     (cond
       ;; case -1: force-consult is true
@@ -251,16 +251,16 @@ the user to optionally create a new one as well."
 (defun background-brightness ()
   "Roughly determine brightness of current background using luminance formula."
   (let* ((bg (frame-parameter nil 'background-color))
-         (rgb (color-values bg)) ;; returns (R G B) each in range 0-65535
-         (r (/ (or (nth 0 rgb) 0) 65535.0))
-         (g (/ (or (nth 1 rgb) 0) 65535.0))
-         (b (/ (or (nth 2 rgb) 0) 65535.0)))
+          (rgb (color-values bg)) ;; returns (R G B) each in range 0-65535
+          (r (/ (or (nth 0 rgb) 0) 65535.0))
+          (g (/ (or (nth 1 rgb) 0) 65535.0))
+          (b (/ (or (nth 2 rgb) 0) 65535.0)))
     (+ (* 0.2126 r) (* 0.7152 g) (* 0.0722 b))))
 
 (defun effective-theme-mode ()
   "Get effective background mode: 'light or 'dark."
   (or frame-background-mode
-      (if (> (background-brightness) 0.5) 'light 'dark)))
+    (if (> (background-brightness) 0.5) 'light 'dark)))
 
 (defun set-mouse-cursor-color-based-on-theme ()
   "Set mouse cursor color based on light/dark theme."
@@ -274,12 +274,12 @@ the user to optionally create a new one as well."
 (advice-add 'load-theme :after (lambda (&rest _)
                                  (set-mouse-cursor-color-based-on-theme)))
 (advice-add 'disable-theme :after (lambda (&rest _)
-                                 (set-mouse-cursor-color-based-on-theme)))
+                                    (set-mouse-cursor-color-based-on-theme)))
 ;; run set-mouse-cursor-color-based-on-theme on frame load
 (add-hook 'after-make-frame-functions
-          (lambda (frame)
-            (select-frame frame)
-            (set-mouse-cursor-color-based-on-theme)))
+  (lambda (frame)
+    (select-frame frame)
+    (set-mouse-cursor-color-based-on-theme)))
 ;; Set initial mouse cursor color based on current theme
 (set-mouse-cursor-color-based-on-theme)
 
@@ -324,8 +324,8 @@ the user to optionally create a new one as well."
   "Return a new file path of a given file path.
 If the new path's directories does not exist, create them."
   (let* ((backupRootDir "~/.emacs.d/emacs-backup/")
-         (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath )) ; remove Windows driver letter in path
-         (backupFilePath (replace-regexp-in-string "//" "/" (concat backupRootDir filePath "~") )))
+          (filePath (replace-regexp-in-string "[A-Za-z]:" "" fpath )) ; remove Windows driver letter in path
+          (backupFilePath (replace-regexp-in-string "//" "/" (concat backupRootDir filePath "~") )))
     (make-directory (file-name-directory backupFilePath) (file-name-directory backupFilePath))
     backupFilePath))
 (setopt make-backup-file-name-function 'bedrock--backup-file-name)
@@ -339,41 +339,11 @@ If the new path's directories does not exist, create them."
 
 ;; For help, see: https://www.masteringemacs.org/article/understanding-minibuffer-completion
 
-(setopt enable-recursive-minibuffers t)                ; Use the minibuffer whilst in the minibuffer
-(setopt completion-cycle-threshold 1)                  ; TAB cycles candidates
-(setopt completions-detailed t)                        ; Show annotations
-(setopt tab-always-indent 'complete)                   ; When I hit TAB, try to complete, otherwise, indent
-(setopt completion-styles '(basic initials substring)) ; Different styles to match input to candidates
-
-(setopt completion-auto-help 'always)                  ; Open completion always; `lazy' another option
-(setopt completions-max-height 20)                     ; This is arbitrary
-(setopt completions-detailed t)
-(setopt completions-format 'one-column)
-(setopt completions-group t)
-(setopt completion-auto-select 'second-tab)            ; Much more eager
-;(setopt completion-auto-select t)                     ; See `C-h v completion-auto-select' for more possible values
 
 (keymap-set minibuffer-mode-map "TAB" 'minibuffer-complete) ; TAB acts more like how it does in the shell
 
 
-;; Mode line information
-(setopt line-number-mode t)                        ; Show current line in modeline
-(setopt column-number-mode t)                      ; Show column as well
 
-(setopt x-underline-at-descent-line nil)           ; Prettier underlines
-(setopt switch-to-buffer-obey-display-actions t)   ; Make switching buffers more consistent
-
-(setopt show-trailing-whitespace t)        ; By default, underline trailing spaces
-(setopt indicate-buffer-boundaries 'left)  ; Show buffer top and bottom in the margin
-
-;; Enable horizontal scrolling
-(setopt mouse-wheel-tilt-scroll t)
-(setopt mouse-wheel-flip-direction t)
-
-
-;; Misc. UI tweaks
-(blink-cursor-mode -1)                                ; Steady cursor
-(pixel-scroll-precision-mode)                         ; Smooth scrolling
 
 
 ;; Modes to highlight the current line with
@@ -388,5 +358,87 @@ If the new path's directories does not exist, create them."
   (keymap-global-set "C-c w" 'whitespace-mode))
 
 ;; Keybindings for built-in or already-loaded functions can also be set directly:
-(global-set-key [M-S-down] 'duplicate-dwim)
-(global-set-key [M-S-up] 'duplicate-dwim)
+(setopt enable-recursive-minibuffers t)                ; Use the minibuffer whilst in the minibuffer
+(setopt completion-cycle-threshold 1)                  ; TAB cycles candidates
+(setopt completions-detailed t)                        ; Show annotations
+(setopt tab-always-indent 'complete)                   ; When I hit TAB, try to complete, otherwise, indent
+(setopt completion-styles '(basic initials substring)) ; Different styles to match input to candidates
+
+(setopt completion-auto-help 'always)                  ; Open completion always; `lazy' another option
+(setopt completions-max-height 20)                     ; This is arbitrary
+(setopt completions-detailed t)
+(setopt completions-format 'one-column)
+(setopt completions-group t)
+(setopt completion-auto-select 'second-tab)            ; Much more eager
+                                        ;(setopt completion-auto-select t)                     ; See `C-h v completion-auto-select' for more possible values
+
+(blink-cursor-mode t)                                ; Steady cursor
+(pixel-scroll-precision-mode)                         ; Smooth scrolling
+(setq auto-window-vscroll nil)
+(setq fast-but-imprecise-scrolling t)
+(setq redisplay-dont-pause t)
+(setq jit-lock-defer-time 0.05)
+;; Mode line information
+(setopt line-number-mode t)                        ; Show current line in modeline
+(setopt column-number-mode t)                      ; Show column as well
+(setopt x-underline-at-descent-line nil)           ; Prettier underlines
+(setopt switch-to-buffer-obey-display-actions t)   ; Make switching buffers more consistent
+(setopt show-trailing-whitespace t)        ; By default, underline trailing spaces
+(setopt indicate-buffer-boundaries 'left)  ; Show buffer top and bottom in the margin
+;; Enable horizontal scrolling
+(setopt mouse-wheel-tilt-scroll t)
+(setopt mouse-wheel-flip-direction t)
+(setq redisplay-skip-fontification-on-input t)
+
+(use-package emacs
+  :bind (("C-'" . load-theme)
+          ("C-\"" . disable-theme)
+          ("M-j" . duplicate-dwim)
+          ("C-c C-/" . revert-buffer-no-confirm)
+          ("C-:" . goto-line)))
+
+
+
+
+
+(progn ;; a neat and tidy modeline (uses minions)
+  (use-package minions) ;; to hide minor modes; they are useless 99.9999999% of the time
+
+  ;; credit: https://gist.github.com/mmarshall540/e420f6848e39e45c6981e0f0418f5ea2
+  (setopt mode-line-format
+    '("%e"
+       mode-line-front-space
+       ;; removed mode-line-mule-info
+       mode-line-client
+       mode-line-modified
+       mode-line-remote
+       mode-line-window-dedicated
+       ;; removed `display' property from the above constructs
+       "\t"                             ; added
+       mode-line-frame-identification
+       mode-line-buffer-identification
+       "   "
+       mode-line-position
+       mode-line-format-right-align
+       (project-mode-line project-mode-line-format)
+       (vc-mode vc-mode)
+       "  "
+       minions-mode-line-modes
+       mode-line-misc-info
+       "  "                        
+       mode-line-end-spaces))
+  (setopt mode-line-modified
+    '((:eval (if buffer-read-only "R" ""))
+       (:propertize
+         (:eval (if (buffer-modified-p) "×" "")) face warning)))
+  (setopt mode-line-modes (remove "(" (remove ")" mode-line-modes)))
+  (setopt mode-line-position-column-line-format '("%l:%c"))
+  (setopt mode-line-position-line-format '("L%l"))
+  (setopt mode-line-remote
+    '(:eval (if (file-remote-p default-directory) "☎" "")))
+  (setopt mode-line-right-align-edge 'window)
+  (setq display-time-format "%0H:%0M:%0S")
+  (setq display-time-interval 1)
+  (display-time-mode 1)
+  (setq display-time-default-load-average nil)
+  )
