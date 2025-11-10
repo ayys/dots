@@ -272,6 +272,7 @@ eval "$(pyenv init - bash)"
 
   fonts.fontconfig.enable = true;
 
+
   programs.firefox = {
     enable = true;
     languagePacks = [
@@ -288,6 +289,10 @@ eval "$(pyenv init - bash)"
         "browser.download.dir" = "/home/ayys/dwn";
         "browser.download.folderList" = 2; # this is needed to tell firefox to switch to the dir above
         "browser.ctrlTab.sortByRecentlyUsed" = true;
+
+        "browser.tabs.inTitlebar" = 0;
+
+        "browser.toolbars.bookmarks.visibility" = "never";
 
         "browser.newtabpage.activity-stream.feeds.section.topstories" = false;
         "browser.newtabpage.activity-stream.impressionId" = "{eb042959-5732-43b2-9673-b40a0e776344}";
