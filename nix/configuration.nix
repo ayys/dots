@@ -311,7 +311,10 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
       dict
 
       via
+      thunderbird
 
+      gtk3
+      fzf
       ## add new programs here
     ];
   };

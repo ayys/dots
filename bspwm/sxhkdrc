@@ -3,7 +3,11 @@ super + Return
 
 # program launcher
 super + p
-	rofi -show run
+        rofi -show run
+# 	emacsclient -e "(emacs-run-launcher)"
+
+# super + shift + p
+# 	emacsclient -e "(emacs-run-shell)"
 
 super + w
         feh --recursive --bg-fill --randomize ~/git/dots/wallpapers/

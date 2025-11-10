@@ -37,7 +37,7 @@ fi
     Install.WantedBy = [ "default.target" ];
     Service = {
       Environment = "HYDROXIDE_CARDDAV_PORT=8082";
-      ExecStart = "${pkgs.hydroxide}/bin/hydroxide -carddav-port 8081 serve";
+      ExecStart = "${pkgs.hydroxide}/bin/hydroxide -carddav-port 9090 serve";
       Restart = "always"; 
       RestartSec = 5;
     };

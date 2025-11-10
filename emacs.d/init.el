@@ -917,3 +917,104 @@ parses its input."
       (setq default-input-method "devanagari-itrans")))
 
 (add-hook 'set-language-environment-hook 'my-devanagari-setup)
+
+;; apply this font for only devanagari text
+(set-fontset-font t 'devanagari "Noto Sans Devanagari") 
+
+
+(use-package htmlize)
+
+
+
+(use-package yaquake)
+
+;; (defun emacs-run-launcher ()
+;;     "Create and select a frame called emacs-run-launcher which consists only of a minibuffer and has specific dimensions. Run counsel-linux-app on that frame, which is an emacs command that prompts you to select an app and open it in a dmenu like behaviour. Delete the frame after that command has exited"
+;;     (interactive)
+;;     (with-selected-frame (make-frame '((name . "emacs-run-launcher")
+;;                                         (minibuffer . only)
+;;                                         (width . 120)
+;;                                         (height . 11)))
+;;       (unwind-protect
+;;         (setopt show-trailing-whitespace nil)
+;;         (counsel-linux-app)
+;;         (delete-frame))))
+
+
+;; (defun emacs-run-shell ()
+;;   "Creates a temporary, minibuffer-only frame to prompt the user for a
+;;   shell command. The frame is deleted after the command is input, and
+;;   the command is then executed via shell-command."
+;;   (interactive)
+;;   (let (command-to-run)
+;;     ;; 1. Create and select the temporary floating frame
+;;     (with-selected-frame (make-frame '((name . "emacs-run-shell")
+;;                                        (title . "emacs-run-shell") 
+;;                                        (minibuffer . only)
+;;                                        (width . 120)
+;;                                        (height . 11)))
+;;       ;; Use unwind-protect to ensure the frame is deleted even if the
+;;       ;; user cancels or an error occurs during input.
+;;       (unwind-protect
+;;           ;; 2. Read the command string from the minibuffer
+;;           (setq command-to-run (read-string "Shell > "))
+;;         ;; 3. Guaranteed deletion of the frame
+;;         (delete-frame (selected-frame))))
+
+;;     ;; 4. Execute the command (only if input was provided)
+;;     (when (and command-to-run (not (string-empty-p command-to-run)))
+;;       ;; Note: shell-command executes the command and shows output in
+;;       ;; the *Shell Command Output* buffer. Use async-shell-command
+;;       ;; if you want it to run entirely in the background.
+;;       (shell-command command-to-run))))
+
+(defun my-with-yequake-frame (frame-name body-function)
+  "Create a temporary frame with Yequake-style dimensions and
+  minibuffer-only setting, run the BODY-FUNCTION within that frame,
+  and guarantee the frame's deletion afterward.
+
+  FRAME-NAME is the name/title of the temporary frame.
+  BODY-FUNCTION is a zero-argument function to execute."
+  (interactive (error "Not meant to be called interactively"))
+  (with-selected-frame (make-frame `((name . ,frame-name)
+                                    (title . ,frame-name)
+                                    (minibuffer . only)
+                                    ;; Use specific dimensions for consistency
+                                    (width . 120)
+                                    (height . 11)))
+    ;; Use unwind-protect to ensure the frame is deleted even if
+    ;; BODY-FUNCTION errors or the user cancels a prompt.
+    (unwind-protect
+        (funcall body-function)
+      (delete-frame (selected-frame)))))
+
+
+
+(defun emacs-run-launcher ()
+  "Create a temporary, minibuffer-only frame, run `counsel-linux-app`
+  in it, and delete the frame afterward."
+  (interactive)
+  (my-with-yequake-frame
+   "emacs-run-launcher"
+   (lambda ()
+     ;; Optional: your original code had this line, keep it for consistency
+     (setq show-trailing-whitespace nil)
+     (counsel-linux-app))))
+
+
+
+(defun emacs-run-shell ()
+  "Creates a temporary, minibuffer-only frame to prompt the user for a
+  shell command, then executes the command and deletes the frame."
+  (interactive)
+  (let (command-to-run)
+    ;; 1. Use the helper function to manage the frame
+    (my-with-yequake-frame
+     "emacs-run-shell"
+     (lambda ()
+       ;; 2. Read the command string from the minibuffer
+       (setq command-to-run (read-string "Shell > "))))
+
+    ;; 3. Execute the command (outside of the deleted frame)
+    (when (and command-to-run (not (string-empty-p command-to-run)))
+      (shell-command command-to-run))))
