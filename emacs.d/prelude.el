@@ -298,7 +298,7 @@ the user to optionally create a new one as well."
      ("Asia/Kathmandu" "Kathmandu")))
 
 (setq world-clock-time-format "%T\t%Z\t%d %b\t%A")
-(global-set-key (kbd "C-x <prior>") 'world-clock)
+(global-set-key (kbd "s-<prior>") 'world-clock)
 
 
 
@@ -401,44 +401,4 @@ If the new path's directories does not exist, create them."
 
 
 
-(progn ;; a neat and tidy modeline (uses minions)
-  (use-package minions) ;; to hide minor modes; they are useless 99.9999999% of the time
 
-  ;; credit: https://gist.github.com/mmarshall540/e420f6848e39e45c6981e0f0418f5ea2
-  (setopt mode-line-format
-    '("%e"
-       mode-line-front-space
-       ;; removed mode-line-mule-info
-       mode-line-client
-       mode-line-modified
-       mode-line-remote
-       mode-line-window-dedicated
-       ;; removed `display' property from the above constructs
-       "\t"                             ; added
-       mode-line-frame-identification
-       mode-line-buffer-identification
-       "   "
-       mode-line-position
-       mode-line-format-right-align
-       (project-mode-line project-mode-line-format)
-       (vc-mode vc-mode)
-       "  "
-       minions-mode-line-modes
-       mode-line-misc-info
-       "  "                        
-       mode-line-end-spaces))
-  (setopt mode-line-modified
-    '((:eval (if buffer-read-only "R" ""))
-       (:propertize
-         (:eval (if (buffer-modified-p) "×" "")) face warning)))
-  (setopt mode-line-modes (remove "(" (remove ")" mode-line-modes)))
-  (setopt mode-line-position-column-line-format '("%l:%c"))
-  (setopt mode-line-position-line-format '("L%l"))
-  (setopt mode-line-remote
-    '(:eval (if (file-remote-p default-directory) "☎" "")))
-  (setopt mode-line-right-align-edge 'window)
-  (setq display-time-format "%0H:%0M:%0S")
-  (setq display-time-interval 1)
-  (display-time-mode 1)
-  (setq display-time-default-load-average nil)
-  )

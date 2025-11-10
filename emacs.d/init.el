@@ -43,10 +43,10 @@
   (setq circadian-themes '((:sunrise . standard-light-tinted)
                             (:sunset . doom-gruvbox-dark)))
   :config (circadian-setup))
-(use-package nyan-mode :ensure t
-  :hook ((prog-mode . nyan-mode))
-  :config
-  (nyan-start-animation))
+;; (use-package nyan-mode :ensure t
+;;   :hook ((prog-mode . nyan-mode))
+;;   :config
+;;   (nyan-start-animation))
 ;; (use-package powerline
 ;;   :load-path (expand-file-name "./packages/powerline" user-emacs-directory)
 ;;   :init (progn
@@ -865,3 +865,55 @@ parses its input."
   ;; All customisations here.
   (setq modus-themes-mixed-fonts t)
   (setq modus-themes-italic-constructs t))
+
+
+
+
+(use-package minions
+  :config
+  ;; credit: https://gist.github.com/mmarshall540/e420f6848e39e45c6981e0f0418f5ea2
+  (setopt mode-line-format
+    '("%e"
+       mode-line-front-space
+       mode-line-client
+       mode-line-modified
+       mode-line-remote
+       mode-line-window-dedicated
+       (vc-mode vc-mode)
+       ;; removed `display' property from the above constructs
+       "  "                             ; added
+       eshell-command-running-string
+       mode-line-position
+       "  "
+       mode-line-frame-identification
+       mode-line-buffer-identification
+       "  "
+       minions-mode-line-modes
+       mode-line-format-right-align
+       mode-line-misc-info
+       "  "
+       mode-line-end-spaces))
+  (setopt mode-line-modified
+    '((:eval (if buffer-read-only "R" " "))
+       (:propertize
+         (:eval (if (buffer-modified-p) "×" " ")) face warning)))
+  (setopt mode-line-position-column-line-format '("%4lL %cC"))
+  (setopt mode-line-position-line-format '("%lL %8P"))
+  (setopt mode-line-remote
+    '(:eval (if (file-remote-p default-directory) "☎" "")))
+  (setopt mode-line-right-align-edge 'window)
+  (setq display-time-format "%k:%2M:%2S")
+  (setq display-time-interval 1)
+  (display-time-mode 1)
+  (setq display-time-default-load-average nil))
+
+
+
+
+
+(defun my-devanagari-setup ()
+  "Set up my private devanagari environment."
+  (if (equal current-language-environment "Devanagari")
+      (setq default-input-method "devanagari-itrans")))
+
+(add-hook 'set-language-environment-hook 'my-devanagari-setup)
