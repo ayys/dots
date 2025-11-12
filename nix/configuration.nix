@@ -315,7 +315,10 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
 
       gtk3
       fzf
-      ## add new programs here
+      bun
+
+      libreoffice
+      ## add new o
     ];
   };
 

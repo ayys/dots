@@ -48,8 +48,8 @@ bspc rule -a Emacs state=tiled
 bspc config split_ratio           0.50
 bspc config borderless_monocle    true
 bspc config gapless_monocle       true
+bspc config focus_follows_pointer true
 
 bspc rule -a *:*:emacs-run-launcher state=floating
 bspc rule -a *:*:emacs-run-shell state=floating
-
 feh --no-fehbg --bg-scale ~/git/dots/wallpapers/034.png
