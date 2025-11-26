@@ -79,7 +79,7 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
       dual_role   = [{
         input = "KEY_CAPSLOCK";
         hold = ["KEY_LEFTCTRL"];
-        tap = ["KEY_ESC"];
+        tap = ["KEY_ESC"];  # capslock: tap means escape; hold means control
       }];
     };
   };
