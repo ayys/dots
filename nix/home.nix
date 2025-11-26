@@ -73,6 +73,13 @@ fi
   '';
       executable = true;
     };
+    ".local/bin/sr" = {
+      text = ''
+    #!/bin/sh
+    nix search nixpkgs $@
+  '';
+      executable = true;
+    };
     ".local/bin/gc" = {
       text = ''  
     #!/bin/sh
@@ -90,6 +97,7 @@ fi
 
     ".emacs" = {
       text = ''
+;; -*- lexical-binding: t; -*-
 (setq user-emacs-directory (file-truename "~/.config/emacs"))
   '';
     };
@@ -102,6 +110,15 @@ fi
     };
   };
 
+  # home.pointerCursor =  {
+  #   name = "Fuchsia";
+  #   gtk.enable = true;
+  #   x11 = {
+  #     enable = true;
+  #   };
+  #   package = pkgs.fuchsia-cursor;
+  # };
+
   home.sessionVariables = {
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
   };
@@ -110,10 +127,10 @@ fi
   };
 
 
-  programs.delta = {
-    enable = true;
-    enableGitIntegration = true;
-  };
+  # programs.delta = {
+  #   enable = true;
+  #   enableGitIntegration = true;
+  # };
 
   programs.git = {
     enable = true;
@@ -220,11 +237,6 @@ export WASMENV_DIR PANEL_FIFO PANEL_HEIGHT PANEL_FONT PANEL_WM_NAME
 # GUIX_PROFILE="/home/ayys/.guix-profile"
 # . "$GUIX_PROFILE/etc/profile"
 
-# Load pyenv automatically by appending
-# the following to 
-# ~/.bash_profile if it exists, otherwise ~/.profile (for login shells)
-# and ~/.bashrc (for interactive shells) :
-
 export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init - bash)"
@@ -308,6 +320,20 @@ eval "$(pyenv init - bash)"
     };
   };
 
+  services.mpd = {
+    enable = true;
+    musicDirectory = "/mnt/data/music/";
+    extraConfig = ''
+  auto_update "yes"
+  audio_output {
+    # type "alsa"
+    # name "Alsa Sound Server"
+    # device "alsa_output.pci-0000_08_00.1.hdmi-stereo-extra1"
+    type "pipewire"
+    name "PipeWire Server"
+  }
+'';
+  };
 
   services.picom = {
     enable = true;

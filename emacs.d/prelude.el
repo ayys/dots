@@ -393,12 +393,11 @@ If the new path's directories does not exist, create them."
 (use-package emacs
   :bind (("C-'" . load-theme)
           ("C-\"" . disable-theme)
+          ("C-x C-j" . eval-print-last-sexp)
+          ("C-c c" . compile)
           ("M-j" . duplicate-dwim)
           ("C-c C-/" . revert-buffer-no-confirm)
           ("C-:" . goto-line)))
-
-
-
 
 
 

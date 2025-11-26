@@ -3,7 +3,7 @@ let emacs = pkgs.emacsWithPackagesFromUsePackage {
       config = ../emacs.d/init.el;
       defaultInitFile = true;
       alwaysEnsure = true;
-      package = pkgs.emacs-git;
+      package = pkgs.emacs-gtk;
       extraEmacsPackages = epkgs: [
       ];
     };
@@ -64,11 +64,7 @@ in
 KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct}=="03a1", MODE="0660", GROUP="users", TAG+="uaccess", TAG+="udev-acl"
   '';
 
-  # Enable the KDE Plasma Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.displayManager.defaultSession = "none+bspwm";
-  services.desktopManager.plasma6.enable = true;
-  services.displayManager.sddm.wayland.enable = false;
+  
 
   services.emacs = {
     enable = true;
@@ -89,7 +85,27 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
   };
 
   # Configure keymap in X11
+  services.xserver.displayManager = {
+    
+  };
+
+
   services.xserver = {
+    desktopManager = {
+      xfce = {
+        enable = false;
+        enableWaylandSession = false;
+      };
+    };
+    displayManager = {
+      lightdm = {
+        enable = true;
+        greeters.gtk.cursorTheme = {
+          package = pkgs.fuchsia-cursor;
+          size = 24;
+        };
+      };
+    };
     videoDrivers = ["nvidia"];
     enable = true;
     xkb = {
@@ -101,7 +117,7 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
     modules = [pkgs.linuxKernel.packages.linux_6_6.nvidia_x11_legacy390_patched.bin];
     windowManager = {
       awesome = {
-        enable = true;
+        enable = false;
         luaModules = with pkgs.luaPackages; [
           luarocks # is the package manager for Lua modules
           luadbi-mysql # Database abstraction layer
@@ -110,8 +126,12 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
       bspwm = {
         enable = true;
       };
+      windowmaker = {
+        enable = false;
+      };
     };
   };
+  
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -162,23 +182,19 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
       bison
       open-dyslexic
       teams-for-linux
-      cascadia-code
       chromium
       multimarkdown
       cmake
       corepack
-      delta
+      # delta
       devenv
       dig
-      dina-font
       doppler
       editorconfig-core-c
       extra-cmake-modules
       eza
       feh
       file
-      fira-code
-      fira-code-symbols
       fd
       fmt
       fortune
@@ -189,10 +205,7 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
       gh
       gnumake
       go
-      go-font
       gperf
-      hack-font
-      hackgen-nf-font
       htop
       hydroxide
       inkscape
@@ -211,29 +224,20 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
       liberation_ttf
       libtool
       live-server
-      lohit-fonts.devanagari
       m4
       man-pages
       man-pages-posix
       meson
-      mplayer
-      mplus-outline-fonts.githubRelease
+      # mplayer
       mysql84
       nasm
-      nerd-fonts.droid-sans-mono
-      nerd-fonts.fira-code
-      nerd-fonts.hack
       nix-index
       nodejs
-      noto-fonts
-      noto-fonts-cjk-sans
-      noto-fonts-emoji
       # nyxt
       pavucontrol
       pkg-config
       postgresql_16
       postman
-      proggyfonts
       pyenv
       python313Packages.ipython
       python313Packages.pip
@@ -248,15 +252,14 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
       ripgrep
       rofi
       slack
-      source-code-pro
+
       sxhkd
       pay-respects
       tmux
       tmuxinator
       tree
       unzip
-      victor-mono
-      vistafonts
+
       xcape
       clang-tools
       xclip
@@ -283,49 +286,52 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
       guile
       perl
       parallel
-
       haunt
-      nerd-fonts.droid-sans-mono
-      comic-mono
-      azeret-mono
-      ibm-plex
-
       keybase
-
       inputs.musu.packages."${pkgs.system}".musu
-
       gimp
       tokei
-
       pandoc
       miktex
-
       audacious
-
       xorg.xdpyinfo
-
       fastfetch
-
       kdePackages.spectacle
-
       dict
-
       via
       thunderbird
-
       gtk3
       fzf
       bun
-
       libreoffice
-      ## add new o
+      rmpc
+      catnip
+      # gleam development 
+      gleam
+      glas  #  lsp for gleam
+      erlang # gleam depends on erlang
+
+      gtk3
+      gsettings-desktop-schemas
+      ## add new programs here
     ];
   };
-
 
   # Enable automatic login for the user.
   services.displayManager.autoLogin.enable = false;
   services.displayManager.autoLogin.user = "ayys";
+
+  services.nfs = {
+    server = {
+      enable = true;
+      statdPort = 4000;
+      lockdPort = 4001;
+      mountdPort = 4002;      
+      exports = ''
+/mnt/data *(rw,sync,no_subtree_check,all_squash,anonuid=65534,anongid=65534,insecure)
+    '';
+    };
+  };
 
   # Enable pass secret service
   services.passSecretService.enable = true;
@@ -336,12 +342,13 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
   # };
   # programs.waybar.enable = true;
 
-  # # Hint Electon apps to use wayland
-  # environment.sessionVariables = {
-  #   LD_LIBRARY_PATH =  [ "/run/opengl-driver/lib" ];
-  # };
+  # Hint Electon apps to use wayland
+  environment.sessionVariables = {
+    LD_LIBRARY_PATH =  [ "/run/opengl-driver/lib" ];
+  };
   services.dbus.enable = true;
   xdg.portal = {
+    config.common.default = "*";
     enable = true;
     wlr.enable = true;
     extraPortals = [
@@ -371,8 +378,8 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
     (_: super: let pkgs = inputs.rust-overlay.inputs.nixpkgs.legacyPackages.${super.system}; in inputs.rust-overlay.overlays.default pkgs pkgs)
 
     (import (builtins.fetchTarball {
-      url = "https://github.com/nix-community/emacs-overlay/archive/147f6b98f17b0d66866eb8923a6ae6fe9c23b65e.tar.gz";
-      sha256 = "0r5q63rf6i4sm5aaxd915731vbfihhfslnhayr41kmbgkvm02ihr";
+      url = "https://github.com/nix-community/emacs-overlay/archive/44346721298802f8419171d8ff477b086016dc5f.tar.gz";
+      sha256 = "sha256:1p6gw9f6x344av8xvnf4dq4ya66l6cylqbpdnpkkih9vdyzp17ax";
     }))
 
     (self: super: {
@@ -470,15 +477,45 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
     };
   };
 
-  fonts.fontconfig = {
-    enable = true;
-    antialias = true;
-    subpixel.rgba ="rgb";
-    subpixel.lcdfilter = "light";
-    hinting = {
+  fonts = {
+    fontconfig = {
       enable = true;
-      style = "full";
+      antialias = true;
+      subpixel.rgba ="rgb";
+      subpixel.lcdfilter = "light";
+      hinting = {
+        enable = true;
+        style = "full";
+      };
     };
+
+    packages = with pkgs; [
+      fira-code
+      fira-code-symbols
+      source-code-pro
+      victor-mono
+      comic-mono
+      azeret-mono
+      ibm-plex      
+      dina-font
+      cascadia-code
+      go-font
+      hack-font
+      hackgen-nf-font        
+      lohit-fonts.devanagari
+      mplus-outline-fonts.githubRelease
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.fira-code
+      nerd-fonts.hack
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-color-emoji
+      proggyfonts
+      vista-fonts
+      nerd-fonts.droid-sans-mono
+      nerd-fonts.fantasque-sans-mono
+      nerd-fonts.go-mono
+    ];
   };
 
   virtualisation = {
@@ -487,7 +524,18 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
       enableExtensionPack = true;
       enableHardening = false;
     };
-    containers.enable = true;
+    containers = {
+      enable = true;
+      registries.search = ["docker.io"];
+      
+      containersConf.settings = {
+        engine = {
+          compose_warning_logs = false;
+        };
+        
+      };
+    };
+    
     podman = {
       enable = true;
       autoPrune.enable = true;
@@ -503,12 +551,13 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
 
   networking.nameservers = [ "1.1.1.1" "9.9.9.9" ];
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 8000 3000 22 ];
-  networking.extraHosts = ''
-127.0.0.1 frontend.local
-127.0.0.1 backend.local
-127.0.0.1 www.crysys.hu
-  '';
+  networking.firewall.allowedTCPPorts = [ 8000 3000 22 111 2049 4000 4001 4002 20048 ];
+  networking.firewall.allowedUDPPorts = [ 111 2049 4000 4001 4002 20048 ];
+  #   networking.extraHosts = ''
+  # 127.0.0.1 frontend.local
+  # 127.0.0.1 backend.local
+  # 127.0.0.1 www.crysys.hu
+  #   '';
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
