@@ -314,7 +314,7 @@ KERNEL=="hidraw*", SUBSYSTEM=="hidraw", ATTRS{idVendor}=="3434", ATTRS{idProduct
       gtk3
       gsettings-desktop-schemas
 
-      # inputs.star.packages."${pkgs.system}".default
+      inputs.star.packages."${pkgs.system}".default
       ## add new programs here
     ];
   };
