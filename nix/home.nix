@@ -143,6 +143,10 @@ fi
         email = "ayys@duck.com";
       };
 
+      github = {
+        user = "ayys";
+      };
+
       pull.rebase = true;
 
       column.ui = "auto";
@@ -201,6 +205,9 @@ fi
       {
         condition = "gitdir:~/git/mvv/";
         contents = {
+          github = {
+            user = "ayys-mvv";
+          };
           user = {
             email = "ayush@multiversal.ventures";
             name = "Ayush Jha";

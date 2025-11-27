@@ -988,3 +988,37 @@ parses its input."
 
 (use-package gleam-ts-mode
   :mode (rx ".gleam" eos))
+
+
+
+(use-package pr-review
+  :after magit
+  :init
+  (defun mes/pr-review-via-forge ()
+    (interactive)
+    (if-let* ((target (forge--browse-target))
+              (url (if (stringp target) target (forge-get-url target)))
+              (rev-url (pr-review-url-parse url)))
+        (pr-review url)
+      (user-error "No PR to review at point")))
+  :general
+  (general-def pr-review-mode-map
+    :states 'normal
+    "RET" 'pr-review-context-comment
+    "a" 'pr-review-context-action
+    "e" 'pr-review-context-edit
+    "o" 'pr-review-open-in-default-browser
+    "R" 'pr-review-refresh)
+  (general-def pr-review-mode-map
+    :states 'visual
+    "RET" 'pr-review-context-comment)
+  (mes/despot-def pr-review-input-mode-map
+    "c" '("confirm" . pr-review-input-exit)
+    "k" '("cancel" . pr-review-input-abort)
+    "@"	'("mention user" . pr-review-input-mention-user))
+  (mes/tyrant-def
+    "gn" '("gh notifications" . pr-review-notification))
+  (mes/despot-def magit-mode-map
+    "R" '("pr review" . pr-review)
+    "n" '("gh notifications" . pr-review-notification)
+    "r" '("pr review" . mes/pr-review-via-forge)))
